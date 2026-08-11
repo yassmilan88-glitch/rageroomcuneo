@@ -1,0 +1,16 @@
+{
+  "name": "rageroom-cuneo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Sito e sistema di prenotazioni di Rage Room Cuneo",
+  "dependencies": {
+    "@netlify/database": "^1.1.0",
+    "drizzle-orm": "^1.0.0-beta.22",
+    "stripe": "^22.5.0"
+  },
+  "devDependencies": {
+    "@netlify/functions": "^4.3.0",
+    "drizzle-kit": "^1.0.0-beta.22"
+  }
+}
