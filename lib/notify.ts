@@ -117,10 +117,10 @@ function customerEmailHtml(booking: BookingNotification): string {
 </div>`;
 }
 
-async function sendEmail(to: string, subject: string, html: string, replyTo?: string): Promise<boolean> {
+export async function sendEmail(to: string, subject: string, html: string, replyTo?: string): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    console.warn("RESEND_API_KEY non configurata: email di prenotazione non inviata a", to);
+    console.warn("RESEND_API_KEY non configurata: email non inviata a", to);
     return false;
   }
 

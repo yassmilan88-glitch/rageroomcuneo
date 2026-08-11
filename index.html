@@ -87,6 +87,59 @@
   .section-head h2{ font-size: clamp(32px,6vw,52px); margin-top:10px; }
   .section-head p{ color:var(--dim); margin-top:14px; font-size:16px; }
 
+  /* -------- Lista d'attesa -------- */
+  .waitlist{
+    padding: 72px 0;
+    background: radial-gradient(120% 100% at 50% 0%, #1a1020 0%, var(--bg) 60%);
+  }
+  .waitlist-card{
+    position:relative; overflow:hidden; max-width:660px; margin:0 auto; text-align:center;
+    background: linear-gradient(160deg, #1c1220, var(--panel) 58%);
+    border:1px solid rgba(255,46,110,0.38); border-radius:24px; padding:44px 26px;
+    box-shadow: 0 0 0 1px rgba(139,92,246,0.12), 0 26px 60px -32px rgba(255,46,110,0.6);
+  }
+  .waitlist-card::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background: linear-gradient(90deg, var(--pink), var(--violet));
+  }
+  .waitlist .tag{ color: var(--violet); }
+  .waitlist h2{ font-size: clamp(30px,6.4vw,50px); margin-top:10px; }
+  .waitlist h2 .l2{ color:var(--pink); }
+  .wl-sub{ color:#d8d5cc; font-size:16px; margin:14px auto 0; max-width:400px; }
+
+  form[name="lista-attesa"]{ display:grid; gap:12px; max-width:420px; margin:30px auto 0; }
+  form[name="lista-attesa"] input[type="text"],
+  form[name="lista-attesa"] input[type="email"]{
+    width:100%; background:var(--panel-2); border:1px solid var(--line); border-radius:999px;
+    padding:15px 20px; color:var(--text); font-family:'Inter',sans-serif; font-size:15px;
+    transition:border-color .16s ease, box-shadow .16s ease;
+  }
+  form[name="lista-attesa"] input::placeholder{ color:#6e6c73; }
+  form[name="lista-attesa"] input:focus{
+    outline:none; border-color:var(--pink); box-shadow:0 0 0 3px rgba(255,46,110,0.18);
+  }
+  form[name="lista-attesa"] button[type="submit"]{
+    margin-top:4px; width:100%; cursor:pointer; border:none;
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:16px 24px; border-radius:999px; line-height:1.3;
+    background: linear-gradient(90deg, var(--pink), var(--violet)); color:#fff;
+    font-family:'Inter',sans-serif; font-weight:800; font-size:14px;
+    text-transform:uppercase; letter-spacing:0.02em;
+    transition:transform .16s ease, box-shadow .16s ease;
+  }
+  form[name="lista-attesa"] button[type="submit"]:hover:not(:disabled){
+    transform:translateY(-2px); box-shadow:0 12px 28px -12px rgba(255,46,110,0.75);
+  }
+  form[name="lista-attesa"] button[type="submit"]:disabled{ opacity:0.6; cursor:progress; }
+  .wl-note{ font-family:'Space Mono'; font-size:11.5px; color:var(--dim); margin-top:18px; letter-spacing:0.02em; }
+  .wl-msg{
+    background:rgba(255,46,110,0.09); border:1px solid rgba(255,46,110,0.45); color:#ffb3c8;
+    border-radius:12px; padding:12px 15px; font-size:14px; max-width:420px; margin:16px auto 0;
+  }
+  .wl-done h3{ font-family:'Anton'; text-transform:uppercase; font-size:clamp(22px,5vw,32px); letter-spacing:0.02em; }
+  .wl-done p{ color:var(--dim); font-size:15px; max-width:400px; margin:12px auto 0; }
+  .wl-done .wl-check{ font-size:34px; line-height:1; margin-bottom:14px; }
+
   /* -------- Come funziona -------- */
   .steps{ display:grid; grid-template-columns: 1fr; gap:0; border-top:1px solid var(--line); }
   .step{
@@ -270,6 +323,36 @@
 </section>
 
 <div class="hazard"></div>
+
+<section class="waitlist" id="lista-attesa">
+  <div class="wrap">
+    <div class="waitlist-card">
+      <div class="tag">Lista d'attesa</div>
+      <h2 class="display">Non perderti <span class="l2">l'apertura</span></h2>
+      <p class="wl-sub">Iscriviti e sarai il primo a sapere quando apriamo le prenotazioni</p>
+
+      <form name="lista-attesa" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="lista-attesa" />
+        <p hidden><input name="bot-field" /></p>
+        <input type="text" name="nome" placeholder="Il tuo nome" required />
+        <input type="email" name="email" placeholder="La tua email" required />
+        <button type="submit">Voglio essere il primo a sapere quando apriamo 🔔</button>
+      </form>
+
+      <p class="wl-msg" id="wlMsg" hidden></p>
+
+      <div class="wl-done" id="wlDone" hidden>
+        <div class="wl-check">🔔</div>
+        <h3>Ci sei!</h3>
+        <p>Ti scriviamo appena apriamo le prenotazioni. Nessuno spam, promesso.</p>
+      </div>
+
+      <p class="wl-note">Zero spam · Ti scriviamo solo per l'apertura</p>
+    </div>
+  </div>
+</section>
+
+<div class="hazard thin"></div>
 
 <section id="come-funziona">
   <div class="wrap">
@@ -978,6 +1061,43 @@
       monthEl.textContent = 'Calendario non disponibile';
       showMessage('Non riesco a contattare il sistema di prenotazioni. ' + FALLBACK);
     });
+})();
+
+/* --- Lista d'attesa: invio senza ricaricare la pagina --- */
+(function () {
+  var form = document.querySelector('form[name="lista-attesa"]');
+  if (!form) return;
+  var btn = form.querySelector('button[type="submit"]');
+  var msgEl = document.getElementById('wlMsg');
+  var doneEl = document.getElementById('wlDone');
+  var btnLabel = btn.innerHTML;
+
+  form.addEventListener('submit', function (ev) {
+    // Senza fetch il browser fa il POST normale: Netlify raccoglie comunque l'iscrizione.
+    if (!window.fetch || !window.URLSearchParams || !window.FormData) return;
+    ev.preventDefault();
+
+    msgEl.hidden = true;
+    btn.disabled = true;
+    btn.textContent = 'Un attimo…';
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString()
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        form.hidden = true;
+        doneEl.hidden = false;
+      })
+      .catch(function () {
+        btn.disabled = false;
+        btn.innerHTML = btnLabel;
+        msgEl.textContent = 'Iscrizione non riuscita. Riprova tra un attimo oppure scrivici su WhatsApp.';
+        msgEl.hidden = false;
+      });
+  });
 })();
 </script>
 
