@@ -1,2 +1,7 @@
 # Local Netlify folder
 .netlify
+
+# Dipendenze installate: drizzle-kit legge drizzle.config.ts e risolve
+# drizzle-orm da qui, quindi la cartella deve esistere durante il build ma non
+# va versionata.
+node_modules
