@@ -15,7 +15,7 @@ export const COMPANY_EMAIL = process.env.BOOKING_NOTIFY_EMAIL || "rageroomcuneo@
 /** Mittente delle email: deve appartenere a un dominio verificato su Resend. */
 const FROM_EMAIL = process.env.BOOKING_FROM_EMAIL || "Rage Room Cuneo <onboarding@resend.dev>";
 /** Numero WhatsApp del titolare, in formato internazionale senza "+". */
-export const OWNER_WHATSAPP = process.env.OWNER_WHATSAPP_NUMBER || "393295865883";
+export const OWNER_WHATSAPP = process.env.OWNER_WHATSAPP_NUMBER || "393509736066";
 
 export interface BookingNotification {
   id: number;
@@ -117,10 +117,10 @@ function customerEmailHtml(booking: BookingNotification): string {
 </div>`;
 }
 
-async function sendEmail(to: string, subject: string, html: string, replyTo?: string): Promise<boolean> {
+export async function sendEmail(to: string, subject: string, html: string, replyTo?: string): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    console.warn("RESEND_API_KEY non configurata: email di prenotazione non inviata a", to);
+    console.warn("RESEND_API_KEY non configurata: email non inviata a", to);
     return false;
   }
 
