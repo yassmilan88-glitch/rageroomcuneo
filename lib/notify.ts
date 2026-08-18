@@ -29,6 +29,8 @@ export interface BookingNotification {
   time: string;
   end: string;
   depositCents: number;
+  isFullPayment: boolean;
+  gopromo: boolean;
   paid: boolean;
 }
 
@@ -44,6 +46,7 @@ function escapeHtml(value: string): string {
 
 /** Riepilogo compatto usato per WhatsApp e come corpo testuale delle email. */
 export function bookingSummaryText(booking: BookingNotification): string {
+  const paymentLabel = booking.isFullPayment ? "Pagato per intero" : "Riserva";
   const lines = [
     `Nuova prenotazione #${booking.id}`,
     `${booking.roomName} — ${booking.dateLabel}`,
@@ -52,10 +55,11 @@ export function bookingSummaryText(booking: BookingNotification): string {
     `Telefono: ${booking.phone}`,
     `Email: ${booking.email}`,
     booking.paid
-      ? `Acconto incassato: ${formatEuro(booking.depositCents)}`
-      : `Acconto da incassare: ${formatEuro(booking.depositCents)}`,
+      ? `${paymentLabel} incassato: ${formatEuro(booking.depositCents)}`
+      : `Riserva da incassare: ${formatEuro(booking.depositCents)}`,
   ];
   if (booking.notes) lines.push(`Note: ${booking.notes}`);
+  if (booking.gopromo) lines.push(`🎥 Rientra nei primi 50: video POV GoPro omaggio da dare.`);
   return lines.join("\n");
 }
 
@@ -69,13 +73,14 @@ function ownerEmailHtml(booking: BookingNotification): string {
     ["Telefono", booking.phone],
     ["Email", booking.email],
     [
-      "Acconto",
+      booking.isFullPayment ? "Pagamento" : "Riserva",
       booking.paid
-        ? `${formatEuro(booking.depositCents)} — pagato online`
+        ? `${formatEuro(booking.depositCents)} — pagato online${booking.isFullPayment ? " (per intero)" : ""}`
         : `${formatEuro(booking.depositCents)} — da incassare`,
     ],
   ];
   if (booking.notes) rows.push(["Note", booking.notes]);
+  if (booking.gopromo) rows.push(["🎥 Promo", "Nei primi 50 — video POV GoPro omaggio"]);
 
   const body = rows
     .map(
@@ -106,10 +111,11 @@ function customerEmailHtml(booking: BookingNotification): string {
     <tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">Giorno</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(booking.dateLabel)}</td></tr>
     <tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">Orario</td><td style="padding:6px 0;font-weight:600;">${booking.time}–${booking.end}</td></tr>
     <tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">Persone</td><td style="padding:6px 0;font-weight:600;">${peopleLabel(booking.people)}</td></tr>
-    <tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">Acconto</td><td style="padding:6px 0;font-weight:600;">${formatEuro(booking.depositCents)} ${booking.paid ? "pagato online" : "da saldare"}</td></tr>
+    <tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">${booking.isFullPayment ? "Pagamento" : "Riserva"}</td><td style="padding:6px 0;font-weight:600;">${formatEuro(booking.depositCents)} ${booking.paid ? (booking.isFullPayment ? "pagato per intero online" : "pagato online") : "da saldare"}</td></tr>
   </table>
   <p style="margin:20px 0 0;font-size:14px;">Arriva 10 minuti prima: ti diamo casco, tuta e guanti.<br>
-  Il saldo della sessione si paga in sede.</p>
+  ${booking.isFullPayment ? "Hai già saldato tutto: non c'è nulla da pagare in sede." : "Il saldo della sessione si paga in sede."}</p>
+  ${booking.gopromo ? `<p style="margin:16px 0 0;font-size:14px;background:#fff6d8;border-radius:8px;padding:10px 14px;">🎥 Sei tra i primi 50 prenotati: il video POV con la GoPro della tua sessione è in omaggio!</p>` : ""}
   <p style="margin:16px 0 0;font-size:13px;color:#8a8a92;">
     Per spostare o annullare scrivici su <a href="https://wa.me/${OWNER_WHATSAPP}">WhatsApp</a>
     o a <a href="mailto:${COMPANY_EMAIL}">${COMPANY_EMAIL}</a>.<br>${escapeHtml(OPENING_HOURS_LABEL)}

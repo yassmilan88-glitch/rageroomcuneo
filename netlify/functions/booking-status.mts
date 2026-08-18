@@ -1,6 +1,6 @@
 import type { Config } from "@netlify/functions";
 import { timingSafeEqual } from "node:crypto";
-import { confirmAndNotify, findById, publicView } from "../../lib/bookings-store.js";
+import { confirmAndNotify, findById, publicViewWithPromo } from "../../lib/bookings-store.js";
 import { getStripe, isPaymentEnabled } from "../../lib/payments.js";
 
 function tokenMatches(expected: string, provided: string): boolean {
@@ -49,7 +49,7 @@ export default async (req: Request) => {
   }
 
   return Response.json(
-    { ok: true, booking: publicView(booking) },
+    { ok: true, booking: await publicViewWithPromo(booking) },
     { headers: { "Cache-Control": "no-store" } },
   );
 };

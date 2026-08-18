@@ -3,10 +3,10 @@
  * conferma (con relative notifiche) una volta incassato l'acconto.
  */
 
-import { and, eq, sql } from "drizzle-orm";
+import { and, count, eq, lte, sql } from "drizzle-orm";
 import { db } from "../db/index.js";
 import { bookings } from "../db/schema.js";
-import { formatDateIt, getRoom, slotEndTime } from "./booking.js";
+import { depositCentsFor, formatDateIt, getRoom, slotEndTime } from "./booking.js";
 import { notifyBooking } from "./notify.js";
 
 export type BookingRow = typeof bookings.$inferSelect;
@@ -97,6 +97,36 @@ export async function findById(bookingId: number): Promise<BookingRow | undefine
   return row;
 }
 
+/** Promo di lancio: le prime 50 prenotazioni confermate ricevono il video POV con GoPro in omaggio. */
+export const GOPRO_PROMO_LIMIT = 50;
+
+/**
+ * Posizione di questa prenotazione tra le confermate (1 = la prima in assoluto).
+ * Contiamo solo le righe già confermate con id <= a questa, così l'ordine
+ * riflette chi ha effettivamente pagato per primo, non l'ordine di tentativi.
+ */
+async function confirmedPosition(bookingId: number): Promise<number> {
+  const [row] = await db
+    .select({ n: count() })
+    .from(bookings)
+    .where(and(eq(bookings.status, "confirmed"), lte(bookings.id, bookingId)));
+  return row?.n ?? 0;
+}
+
+export async function isGopromoEligible(bookingId: number): Promise<boolean> {
+  const position = await confirmedPosition(bookingId);
+  return position > 0 && position <= GOPRO_PROMO_LIMIT;
+}
+
+/**
+ * L'importo salvato in `deposit_cents` è quello scelto dal cliente: acconto
+ * (5 € a persona) oppure prezzo pieno. Non avendo una colonna dedicata,
+ * lo deduciamo confrontandolo con l'acconto standard per quel numero di persone.
+ */
+function isFullPayment(row: BookingRow): boolean {
+  return row.depositCents > depositCentsFor(row.people);
+}
+
 /** Vista pubblica di una prenotazione, quella che il sito mostra al cliente. */
 export function publicView(row: BookingRow) {
   const room = getRoom(row.room);
@@ -111,8 +141,15 @@ export function publicView(row: BookingRow) {
     people: row.people,
     status: row.status,
     depositCents: row.depositCents,
+    isFullPayment: isFullPayment(row),
     paid: Boolean(row.paidAt),
   };
+}
+
+/** Come `publicView`, ma include se questa prenotazione ha diritto al video GoPro omaggio. */
+export async function publicViewWithPromo(row: BookingRow) {
+  const gopromo = row.status === "confirmed" ? await isGopromoEligible(row.id) : false;
+  return { ...publicView(row), gopromo };
 }
 
 /**
@@ -141,6 +178,7 @@ export async function confirmAndNotify(
   if (!claimed) return (await findById(row.id)) ?? row;
 
   const view = publicView(claimed);
+  const gopromo = await isGopromoEligible(claimed.id);
   await notifyBooking({
     id: claimed.id,
     name: claimed.name,
@@ -153,6 +191,8 @@ export async function confirmAndNotify(
     time: view.time,
     end: view.end,
     depositCents: claimed.depositCents,
+    isFullPayment: view.isFullPayment,
+    gopromo,
     paid: options.paid,
   });
 

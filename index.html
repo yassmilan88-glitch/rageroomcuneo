@@ -71,6 +71,10 @@
     padding:12px 18px; border-radius:999px; text-transform:uppercase; letter-spacing:0.02em;
     white-space:nowrap; flex-shrink:0;
   }
+  .nav-wa{
+    display:flex; align-items:center; justify-content:center; width:40px; height:40px; flex-shrink:0;
+    background:#25D366; color:#0b1a10; border-radius:999px;
+  }
   @media(min-width:760px){ .nav-links{ display:flex; } }
 
   /* -------- Hero -------- */
@@ -93,6 +97,10 @@
   .hero h1 .l2{ color: var(--pink); -webkit-text-stroke: 1px rgba(255,255,255,0.15); }
   .hero p{ margin-top:20px; font-size: clamp(16px,3vw,19px); color:#d8d5cc; max-width:480px; }
   .hero-ctas{ display:flex; flex-wrap:wrap; gap:12px; margin-top:32px; }
+  .promo-banner{
+    margin-top:20px; display:inline-block; background:rgba(255,214,0,0.1); border:1px solid rgba(255,214,0,0.4);
+    color:#ffe9a8; border-radius:10px; padding:11px 16px; font-size:14px; font-weight:600;
+  }
   /* Su telefono i due CTA diventano a piena larghezza: area di tocco più
      generosa e nessun bottone spezzato su due righe. */
   @media(max-width:519px){
@@ -289,6 +297,11 @@
     color:var(--dim); font-size:14px; background:var(--panel); border:1px dashed var(--line);
     border-radius:12px; padding:26px 22px; text-align:center;
   }
+  .bk-closed{
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    padding:26px 22px; text-align:center; font-size:14px; color:var(--dim); line-height:1.6;
+  }
+  .bk-closed strong{ display:block; color:var(--text); font-size:17px; margin-bottom:8px; }
 
   .bk-recap{
     background:var(--panel-2); border:1px solid var(--line); border-left:3px solid var(--pink);
@@ -309,6 +322,14 @@
   }
   .field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color:var(--pink); }
   .field textarea{ resize:vertical; min-height:84px; }
+  .paytype-options{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .paytype-opt{
+    display:flex; flex-direction:column; gap:2px; background:var(--panel-2); border:1px solid var(--line);
+    border-radius:10px; padding:12px 13px; font-size:14px; color:var(--text); cursor:pointer;
+  }
+  .paytype-opt:has(input:checked){ border-color:var(--pink); background:rgba(255,46,110,0.08); }
+  .paytype-opt input{ margin-right:7px; accent-color:var(--pink); }
+  .paytype-opt small{ color:var(--dim); font-size:12px; }
   .bk-error{
     background:rgba(255,46,110,0.09); border:1px solid rgba(255,46,110,0.45); color:#ffb3c8;
     border-radius:10px; padding:12px 15px; font-size:14px;
@@ -374,6 +395,9 @@
       <a href="#contatti">Contatti</a>
     </div>
     <a href="#prenota" class="nav-cta">Prenota</a>
+    <a href="https://wa.me/393509736066" class="nav-wa" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.86 9.86 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.06c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.89-1.25-4.78-4.15-4.93-4.34-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.26-.28.57-.36.76-.36h.55c.18 0 .42-.07.65.5.24.58.81 2 .88 2.15.07.15.11.32.02.51-.09.19-.14.31-.28.47-.14.16-.29.36-.42.48-.14.14-.28.29-.13.56.16.28.7 1.16 1.51 1.88 1.04.93 1.92 1.22 2.19 1.36.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.28.37-.23.62-.14.26.09 1.63.77 1.91.91.28.14.47.21.53.33.07.12.07.68-.17 1.36z"/></svg>
+    </a>
   </nav>
 </header>
 
@@ -381,11 +405,12 @@
   <div class="hero-inner">
     <div class="eyebrow">Coming soon · Madonna dell'Olmo, Cuneo</div>
     <h1 class="display">Spacca.<br>Sfogati.<br><span class="l2">Riparti.</span></h1>
-    <p>La prima rage room di Cuneo. Un posto dove lasciare andare tutto — senza filtri, senza giudizi. Sessioni da 15 minuti, dal mercoledì alla domenica dalle 14:00 (sabato e domenica fino a mezzanotte), prenotabili online da sabato 3 ottobre.</p>
+    <p>La prima rage room di Cuneo. Un posto dove lasciare andare tutto — senza filtri, senza giudizi. Sessioni da 20 minuti, dal mercoledì alla domenica dalle 14:00 (sabato e domenica fino a mezzanotte), prenotabili online da sabato 3 ottobre.</p>
     <div class="hero-ctas">
       <a href="#prenota" class="btn btn-primary">📅 Prenota online</a>
       <a href="#come-funziona" class="btn btn-ghost">Come funziona ↓</a>
     </div>
+    <div class="promo-banner">🎥 I primi 50 prenotati ricevono il video POV con la GoPro della propria sessione in omaggio!</div>
   </div>
 </section>
 
@@ -431,7 +456,7 @@
     <div class="steps">
       <div class="step">
         <div class="num">01</div>
-        <div><h3>Prenoti online</h3><p>Scegli la stanza, il giorno e l'orario dal calendario qui sotto. Blocchi la fascia con un acconto di 5 € a persona, il resto lo paghi in sede.</p></div>
+        <div><h3>Prenoti online</h3><p>Scegli la stanza, il giorno e l'orario dal calendario qui sotto. Blocchi la fascia con una riserva di 5 € a persona, il resto lo paghi in sede.</p></div>
       </div>
       <div class="step">
         <div class="num">02</div>
@@ -439,7 +464,7 @@
       </div>
       <div class="step">
         <div class="num">03</div>
-        <div><h3>Spacchi tutto</h3><p>15 minuti in cui la stanza è solo tua. Scarichi la tensione, respiri, esci diverso da come sei entrato.</p></div>
+        <div><h3>Spacchi tutto</h3><p>20 minuti in cui la stanza è solo tua. Scarichi la tensione, respiri, esci diverso da come sei entrato.</p></div>
       </div>
     </div>
   </div>
@@ -454,16 +479,16 @@
       <h2 class="display">Prezzi</h2>
     </div>
     <div class="price-note">
-      Ogni sessione dura <strong>15 minuti</strong>. Tra una sessione e l'altra lasciamo <strong>10 minuti</strong> per pulire la stanza e ricaricarla di oggetti: per questo gli orari prenotabili partono ogni 25 minuti.<br>
-      Per prenotare online si versa un <strong>acconto di 5 € a persona</strong>, scalato dal totale: il saldo si paga in sede.
+      Ogni sessione dura <strong>20 minuti</strong>. Tra una sessione e l'altra lasciamo <strong>20 minuti</strong> per pulire la stanza e ricaricarla di oggetti: per questo gli orari prenotabili partono ogni 40 minuti.<br>
+      Per prenotare online si versa una <strong>riserva di 5 € a persona</strong>, scalata dal totale: il saldo si paga in sede.
     </div>
     <div class="pricing-grid">
       <div class="price-card">
         <h3>Stanza Singola</h3>
-        <div class="price mono">€30<span>/ persona</span></div>
+        <div class="price mono">€33<span>/ persona</span></div>
         <div class="desc">Per chi vuole sfogarsi da solo, senza distrazioni.</div>
         <ul>
-          <li>15 minuti di sessione</li>
+          <li>20 minuti di sessione</li>
           <li>Kit protezione incluso</li>
           <li>10 oggetti da rompere</li>
         </ul>
@@ -471,10 +496,10 @@
       </div>
       <div class="price-card featured">
         <h3>Stanza Doppia</h3>
-        <div class="price mono">€45<span>/ 2 persone</span></div>
+        <div class="price mono">€55<span>/ 2 persone</span></div>
         <div class="desc">Il più richiesto. Perfetto per sfogarsi in due.</div>
         <ul>
-          <li>15 minuti di sessione</li>
+          <li>20 minuti di sessione</li>
           <li>Kit protezione incluso</li>
           <li>20 oggetti da rompere</li>
           <li>Musica a scelta durante la sessione</li>
@@ -483,12 +508,12 @@
       </div>
       <div class="price-card">
         <h3>Sala Festa</h3>
-        <div class="price mono">€95<span>/ da 3 a 5</span></div>
+        <div class="price mono">€28<span>/ persona</span></div>
         <div class="desc">Addii al nubilato, compleanni, team building.</div>
         <ul>
-          <li>15 minuti di sessione</li>
+          <li>20 minuti di sessione</li>
           <li>Kit protezione incluso</li>
-          <li>Oggetti illimitati</li>
+          <li>10 oggetti a testa</li>
           <li>Foto ricordo della stanza</li>
         </ul>
         <a href="#prenota" class="btn btn-ghost" data-room-preset="festa">Prenota questa</a>
@@ -504,7 +529,7 @@
     <div class="section-head">
       <div class="tag">Calendario</div>
       <h2 class="display">Prenota online</h2>
-      <p>Scegli la stanza, il giorno e l'orario, poi versa l'acconto di 5 € a persona per bloccare la fascia. Sessioni da 15 minuti, dal mercoledì alla domenica.</p>
+      <p>Scegli la stanza, il giorno e l'orario, poi riserva la tua room con 5 € a persona per bloccare la fascia. Sessioni da 20 minuti, dal mercoledì alla domenica.</p>
     </div>
 
     <noscript>
@@ -513,24 +538,30 @@
 
     <div class="bk-notice" id="bkNotice" hidden></div>
 
-    <div class="booking" id="bkFlow">
+    <div class="bk-closed" id="bkClosed">
+      <strong>Prenotazioni online presto aperte!</strong>
+      Apriranno a breve — iscriviti alla lista d'attesa qui sotto per essere avvisato appena si aprono e non perderti il video GoPro omaggio per i primi 50.
+      <a href="#lista-attesa" class="btn btn-primary" style="margin-top:14px;display:inline-block;">Iscrivimi alla lista d'attesa ↓</a>
+    </div>
+
+    <div class="booking" id="bkFlow" hidden>
       <div>
         <div class="bk-label"><span class="bk-n">01</span> Scegli la stanza</div>
         <div class="room-grid" id="bkRooms">
           <button type="button" class="room-opt" data-room="singola" data-min="1" data-max="1" aria-pressed="false">
             <div class="rm-name">Stanza Singola</div>
-            <div class="rm-meta">1 persona · 15 min</div>
-            <div class="rm-price">€30</div>
+            <div class="rm-meta">1 persona · 20 min</div>
+            <div class="rm-price">€33</div>
           </button>
           <button type="button" class="room-opt" data-room="doppia" data-min="1" data-max="2" aria-pressed="false">
             <div class="rm-name">Stanza Doppia</div>
-            <div class="rm-meta">Fino a 2 persone · 15 min</div>
-            <div class="rm-price">€45</div>
+            <div class="rm-meta">Fino a 2 persone · 20 min</div>
+            <div class="rm-price">€55</div>
           </button>
           <button type="button" class="room-opt" data-room="festa" data-min="3" data-max="5" aria-pressed="false">
             <div class="rm-name">Sala Festa</div>
-            <div class="rm-meta">Da 3 a 5 persone · 15 min</div>
-            <div class="rm-price">€95</div>
+            <div class="rm-meta">Da 3 a 5 persone · 20 min</div>
+            <div class="rm-price">€28<span style="font-size:.55em">/pers.</span></div>
           </button>
         </div>
       </div>
@@ -575,6 +606,13 @@
             <label for="bkPeople">Quante persone</label>
             <select id="bkPeople"></select>
           </div>
+          <div class="field full" id="bkPayTypeField">
+            <label>Come vuoi pagare online?</label>
+            <div class="paytype-options" id="bkPayType">
+              <label class="paytype-opt"><input type="radio" name="bkPayType" value="deposit" checked> Solo riserva <small>(5 € a persona)</small></label>
+              <label class="paytype-opt"><input type="radio" name="bkPayType" value="full"> Tutto ora <small id="bkFullPriceHint"></small></label>
+            </div>
+          </div>
           <div class="field full">
             <label for="bkNotes">Note (facoltative)</label>
             <textarea id="bkNotes" maxlength="500" placeholder="Compleanno, oggetti tuoi da rompere, richieste particolari…"></textarea>
@@ -583,12 +621,12 @@
           <div class="full bk-deposit" id="bkDeposit">
             <span aria-hidden="true">💳</span>
             <span>
-              Acconto online <strong id="bkDepositAmount">€5,00</strong> — 5 € a persona, scalati dal totale.
-              <small>Pagamento sicuro con carta. Il saldo della sessione si versa in sede.</small>
+              <span id="bkDepositLabel">Riserva online</span> <strong id="bkDepositAmount">€5,00</strong><span id="bkDepositTail"> — 5 € a persona, scalati dal totale.</span>
+              <small id="bkDepositNote">Pagamento sicuro con carta. Il saldo della sessione si versa in sede.</small>
             </span>
           </div>
           <div class="full">
-            <button type="submit" class="btn btn-primary bk-submit" id="bkSubmit">Prenota e paga l'acconto</button>
+            <button type="submit" class="btn btn-primary bk-submit" id="bkSubmit">Riserva la tua room</button>
           </div>
         </form>
       </div>
@@ -697,6 +735,25 @@
   var phoneEl = document.getElementById('bkPhone');
   var emailEl = document.getElementById('bkEmail');
   var notesEl = document.getElementById('bkNotes');
+  var payTypeEl = document.getElementById('bkPayType');
+  var payTypeFieldEl = document.getElementById('bkPayTypeField');
+  var fullPriceHintEl = document.getElementById('bkFullPriceHint');
+  var depositLabelEl = document.getElementById('bkDepositLabel');
+  var depositTailEl = document.getElementById('bkDepositTail');
+  var depositNoteEl = document.getElementById('bkDepositNote');
+
+  /* Interruttore prenotazioni: deve restare allineato a BOOKING_LIVE in lib/booking.ts.
+     Quando si è pronti ad aprire davvero, mettere true qui e lato server. */
+  var BOOKING_LIVE = false;
+  var bkClosedEl = document.getElementById('bkClosed');
+  var bkFlowEl = document.getElementById('bkFlow');
+  if (!BOOKING_LIVE) {
+    bkClosedEl.hidden = false;
+    bkFlowEl.hidden = true;
+  } else {
+    bkClosedEl.hidden = true;
+    bkFlowEl.hidden = false;
+  }
 
   var state = {
     room: null, roomName: '', roomMin: 1, roomMax: 1,
@@ -704,8 +761,18 @@
     slots: [], first: null, last: null, cursor: null, loading: false,
     /* Giorni di apertura con la numerazione di Date.getUTCDay(): 0 = domenica. */
     openWeekdays: [3, 4, 5, 6, 0],
-    depositPerPerson: 500
+    depositPerPerson: 500,
+    paymentType: 'deposit'
   };
+
+  /* Prezzo pieno per stanza, in centesimi: Singola e Doppia fisse, Festa a persona. */
+  var ROOM_PRICE_CENTS = { singola: 3300, doppia: 5500, festa: 2800 };
+  function fullPriceCents() {
+    if (!state.room) return 0;
+    var base = ROOM_PRICE_CENTS[state.room] || 0;
+    return state.room === 'festa' ? base * peopleCount() : base;
+  }
+  function amountCents() { return state.paymentType === 'full' ? fullPriceCents() : depositCents(); }
 
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
   function iso(y, m, d) { return y + '-' + pad(m + 1) + '-' + pad(d); }
@@ -892,10 +959,23 @@
     updateDeposit();
   }
 
-  /* L'acconto è di 5 € a persona: si aggiorna quando cambia stanza o numero di persone. */
+  /* L'acconto è di 5 € a persona; se il cliente sceglie di pagare tutto mostriamo il prezzo pieno. */
   function updateDeposit() {
     var people = state.room ? peopleCount() : 0;
-    depositAmountEl.textContent = state.room ? euro(depositCents()) : euro(state.depositPerPerson);
+    var full = state.room ? fullPriceCents() : 0;
+    if (fullPriceHintEl) fullPriceHintEl.textContent = state.room ? '(' + euro(full) + ')' : '';
+
+    if (state.paymentType === 'full' && state.room) {
+      depositAmountEl.textContent = euro(full);
+      depositLabelEl.textContent = 'Pagamento completo online';
+      depositTailEl.textContent = ' — sessione saldata per intero.';
+      depositNoteEl.textContent = 'Pagamento sicuro con carta. Non c\'è nulla da pagare in sede.';
+    } else {
+      depositAmountEl.textContent = state.room ? euro(depositCents()) : euro(state.depositPerPerson);
+      depositLabelEl.textContent = 'Riserva online';
+      depositTailEl.textContent = ' — 5 € a persona, scalati dal totale.';
+      depositNoteEl.textContent = 'Pagamento sicuro con carta. Il saldo della sessione si versa in sede.';
+    }
     depositAmountEl.title = people ? people + ' × ' + euro(state.depositPerPerson) : '';
   }
 
@@ -925,7 +1005,9 @@
       state.date ? (state.dateLabel || state.date) : 'giorno da scegliere',
       chosen ? chosen.time + '–' + chosen.end : 'orario da scegliere'
     ];
-    if (state.room) parts.push('acconto ' + euro(depositCents()));
+    if (state.room) {
+      parts.push((state.paymentType === 'full' ? 'pagamento intero ' : 'riserva ') + euro(amountCents()));
+    }
     var ready = state.room && state.date && state.time;
     recapEl.textContent = (ready ? '✓ ' : '') + parts.join('  ·  ');
   }
@@ -938,6 +1020,13 @@
     }
     errEl.textContent = message;
     errEl.hidden = false;
+  }
+
+  function submitLabel() {
+    return state.paymentType === 'full' ? 'Prenota e paga tutto' : 'Riserva la tua room';
+  }
+  function updateSubmitLabel() {
+    if (!submitEl.disabled) submitEl.textContent = submitLabel();
   }
 
   /* ---------- Eventi ---------- */
@@ -975,6 +1064,14 @@
     updateRecap();
   });
 
+  payTypeEl.addEventListener('change', function (ev) {
+    if (ev.target.name !== 'bkPayType') return;
+    state.paymentType = ev.target.value;
+    updateDeposit();
+    updateRecap();
+    updateSubmitLabel();
+  });
+
   // I pulsanti dei prezzi preselezionano la stanza corrispondente.
   var presets = document.querySelectorAll('[data-room-preset]');
   for (var p = 0; p < presets.length; p++) {
@@ -1004,7 +1101,8 @@
       name: nameEl.value.trim(),
       phone: phoneEl.value.trim(),
       email: emailEl.value.trim(),
-      notes: notesEl.value.trim()
+      notes: notesEl.value.trim(),
+      paymentType: state.paymentType
     };
 
     submitEl.disabled = true;
@@ -1021,14 +1119,14 @@
       .then(function (result) {
         if (!result.ok) {
           submitEl.disabled = false;
-          submitEl.textContent = 'Prenota e paga l\'acconto';
+          submitEl.textContent = submitLabel();
           showError((result.data && result.data.error) || 'Prenotazione non riuscita. ' + FALLBACK);
           if (result.status === 409) loadSlots();
           return;
         }
 
         // Con il gateway attivo si prosegue sulla pagina di pagamento sicura:
-        // la prenotazione si conferma solo a acconto incassato.
+        // la prenotazione si conferma solo a riserva incassata.
         if (result.data.payment && result.data.payment.url) {
           submitEl.textContent = 'Apro il pagamento…';
           window.location.assign(result.data.payment.url);
@@ -1036,12 +1134,12 @@
         }
 
         submitEl.disabled = false;
-        submitEl.textContent = 'Prenota e paga l\'acconto';
+        submitEl.textContent = submitLabel();
         showConfirmed(result.data.booking, result.data.whatsappUrl);
       })
       .catch(function () {
         submitEl.disabled = false;
-        submitEl.textContent = 'Prenota e paga l\'acconto';
+        submitEl.textContent = submitLabel();
         showError('Connessione non disponibile. ' + FALLBACK);
       });
   });
@@ -1051,8 +1149,13 @@
   function showConfirmed(booking, whatsappUrl) {
     doneMetaEl.textContent = booking.roomName + '  ·  ' + booking.dateLabel + '  ·  ' + booking.time + '–' + booking.end;
     doneNoteEl.textContent = booking.paid
-      ? 'Acconto di ' + euro(booking.depositCents) + ' ricevuto — codice #' + booking.id + '. Ti abbiamo mandato l\'email di conferma. Il saldo si paga in sede.'
+      ? (booking.isFullPayment
+          ? 'Pagamento di ' + euro(booking.depositCents) + ' ricevuto per intero — codice #' + booking.id + '. Ti abbiamo mandato l\'email di conferma. Non c\'è nulla da pagare in sede.'
+          : 'Riserva di ' + euro(booking.depositCents) + ' ricevuta — codice #' + booking.id + '. Ti abbiamo mandato l\'email di conferma. Il saldo si paga in sede.')
       : 'Codice #' + booking.id + '. Ti abbiamo mandato l\'email di conferma. Per spostare o annullare scrivici su WhatsApp o a rageroomcuneo@gmail.com.';
+    if (booking.gopromo) {
+      doneNoteEl.textContent += ' 🎥 Sei tra i primi 50: il video POV con la GoPro della tua sessione è in omaggio!';
+    }
     if (whatsappUrl) doneWaEl.href = whatsappUrl;
     showNotice('');
     flow.hidden = true;
@@ -1069,7 +1172,7 @@
     emailEl.value = '';
     notesEl.value = '';
     submitEl.disabled = false;
-    submitEl.textContent = 'Prenota e paga l\'acconto';
+    submitEl.textContent = submitLabel();
     showError('');
     showNotice('');
     updateRecap();
@@ -1079,7 +1182,7 @@
 
   /* ---------- Avvio ---------- */
 
-  /* Ritorno dalla pagina di pagamento: mostriamo l'esito reale dell'acconto. */
+  /* Ritorno dalla pagina di pagamento: mostriamo l'esito reale della riserva. */
   function handleReturnFromPayment() {
     var params = new URLSearchParams(window.location.search);
     var outcome = params.get('prenotazione');
@@ -1110,29 +1213,31 @@
   }
 
   renderPeople();
-  showSkeleton();
-  handleReturnFromPayment();
+  if (BOOKING_LIVE) {
+    showSkeleton();
+    handleReturnFromPayment();
 
-  fetch(API_SLOTS, { headers: { Accept: 'application/json' } })
-    .then(function (res) { return res.json(); })
-    .then(function (cfg) {
-      state.first = cfg.firstBookableDate;
-      state.last = cfg.lastBookableDate;
-      if (cfg.openWeekdays && cfg.openWeekdays.length) state.openWeekdays = cfg.openWeekdays;
-      if (cfg.depositCentsPerPerson) state.depositPerPerson = cfg.depositCentsPerPerson;
-      // Il calendario si apre sul primo giorno in cui siamo davvero aperti.
-      state.date = cfg.firstOpenDate || state.first;
-      var start = parseIso(state.date);
-      state.cursor = { y: start.y, m: start.m };
-      updateDeposit();
-      renderCalendar();
-      updateRecap();
-      loadSlots();
-    })
-    .catch(function () {
-      monthEl.textContent = 'Calendario non disponibile';
-      showMessage('Non riesco a contattare il sistema di prenotazioni. ' + FALLBACK);
-    });
+    fetch(API_SLOTS, { headers: { Accept: 'application/json' } })
+      .then(function (res) { return res.json(); })
+      .then(function (cfg) {
+        state.first = cfg.firstBookableDate;
+        state.last = cfg.lastBookableDate;
+        if (cfg.openWeekdays && cfg.openWeekdays.length) state.openWeekdays = cfg.openWeekdays;
+        if (cfg.depositCentsPerPerson) state.depositPerPerson = cfg.depositCentsPerPerson;
+        // Il calendario si apre sul primo giorno in cui siamo davvero aperti.
+        state.date = cfg.firstOpenDate || state.first;
+        var start = parseIso(state.date);
+        state.cursor = { y: start.y, m: start.m };
+        updateDeposit();
+        renderCalendar();
+        updateRecap();
+        loadSlots();
+      })
+      .catch(function () {
+        monthEl.textContent = 'Calendario non disponibile';
+        showMessage('Non riesco a contattare il sistema di prenotazioni. ' + FALLBACK);
+      });
+  }
 })();
 
 /* --- Lista d'attesa: invio senza ricaricare la pagina --- */

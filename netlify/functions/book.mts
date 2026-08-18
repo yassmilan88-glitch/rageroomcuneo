@@ -1,12 +1,14 @@
 import type { Config } from "@netlify/functions";
 import { randomUUID } from "node:crypto";
 import {
+  BOOKING_LIVE,
   HOLD_MINUTES,
   dateRejectionReason,
   depositCentsFor,
   formatDateIt,
   getRoom,
   isSlotInPast,
+  priceCentsFor,
   slotEndTime,
   slotTimesFor,
 } from "../../lib/booking.js";
@@ -15,6 +17,7 @@ import {
   claimSlot,
   confirmAndNotify,
   publicView,
+  publicViewWithPromo,
   releaseBooking,
 } from "../../lib/bookings-store.js";
 import { OWNER_WHATSAPP } from "../../lib/notify.js";
@@ -25,6 +28,13 @@ function badRequest(message: string, status = 400) {
 }
 
 export default async (req: Request) => {
+  if (!BOOKING_LIVE) {
+    return badRequest(
+      "Prenotazioni in arrivo! Iscriviti alla lista d'attesa per essere avvisato appena aprono.",
+      403,
+    );
+  }
+
   let payload: Record<string, unknown>;
   try {
     payload = await req.json();
@@ -67,8 +77,12 @@ export default async (req: Request) => {
       409,
     );
 
-  const deposit = depositCentsFor(people);
   const withDeposit = isPaymentEnabled();
+  const paymentTypeRaw = asText(payload.paymentType);
+  // La scelta "paga tutto ora" ha senso solo se il gateway è attivo: senza
+  // Stripe la prenotazione si conferma comunque e il saldo si versa in sede.
+  const isFullPayment = withDeposit && paymentTypeRaw === "full";
+  const amount = isFullPayment ? priceCentsFor(room.id, people) : depositCentsFor(people);
 
   let saved;
   try {
@@ -84,7 +98,7 @@ export default async (req: Request) => {
       // Con l'acconto attivo la fascia resta bloccata solo finché il cliente
       // completa il pagamento su Stripe.
       status: withDeposit ? "pending" : "confirmed",
-      depositCents: deposit,
+      depositCents: amount,
       publicToken: randomUUID(),
       holdExpiresAt: withDeposit ? new Date(Date.now() + HOLD_MINUTES * 60_000) : null,
     });
@@ -109,7 +123,7 @@ export default async (req: Request) => {
     return Response.json(
       {
         ok: true,
-        booking: publicView(confirmed),
+        booking: await publicViewWithPromo(confirmed),
         whatsappUrl: `https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(summary)}`,
       },
       { status: 201 },
@@ -127,7 +141,8 @@ export default async (req: Request) => {
       time,
       end,
       people,
-      depositCents: deposit,
+      depositCents: amount,
+      isFullPayment,
       // L'origine della richiesta è già quella su cui sta navigando il cliente:
       // così il ritorno da Stripe resta sul dominio giusto anche nelle preview.
       origin: new URL(req.url).origin || process.env.URL || "",
@@ -138,7 +153,7 @@ export default async (req: Request) => {
       {
         ok: true,
         booking: publicView(saved),
-        payment: { url: checkout.url, amountCents: deposit, holdMinutes: HOLD_MINUTES },
+        payment: { url: checkout.url, amountCents: amount, holdMinutes: HOLD_MINUTES },
       },
       { status: 201 },
     );

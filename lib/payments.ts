@@ -36,6 +36,8 @@ export interface CheckoutRequest {
   end: string;
   people: number;
   depositCents: number;
+  /** true se il cliente ha scelto di pagare l'intero importo online. */
+  isFullPayment: boolean;
   /** Origine del sito, per costruire gli URL di ritorno. */
   origin: string;
 }
@@ -46,6 +48,10 @@ export async function createDepositCheckout(
 ): Promise<{ id: string; url: string }> {
   const stripe = getStripe();
   const perPerson = Math.round(request.depositCents / request.people);
+  const label = request.isFullPayment ? "Pagamento completo" : "Acconto";
+  const detail = request.isFullPayment
+    ? "Pagamento a persona, sessione saldata per intero."
+    : "Acconto a persona, saldo in sede.";
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
@@ -61,8 +67,8 @@ export async function createDepositCheckout(
           currency: DEPOSIT_CURRENCY,
           unit_amount: perPerson,
           product_data: {
-            name: `Acconto ${request.roomName} — Rage Room Cuneo`,
-            description: `${request.dateLabel}, ${request.time}–${request.end}. Acconto a persona, saldo in sede.`,
+            name: `${label} ${request.roomName} — Rage Room Cuneo`,
+            description: `${request.dateLabel}, ${request.time}–${request.end}. ${detail}`,
           },
         },
       },
@@ -73,6 +79,7 @@ export async function createDepositCheckout(
       slot: `${request.dateLabel} ${request.time}`,
       people: String(request.people),
       name: request.name,
+      paymentType: request.isFullPayment ? "full" : "deposit",
     },
     success_url: `${request.origin}/?prenotazione=ok&id=${request.bookingId}&token=${request.publicToken}#prenota`,
     cancel_url: `${request.origin}/?prenotazione=annullata#prenota`,

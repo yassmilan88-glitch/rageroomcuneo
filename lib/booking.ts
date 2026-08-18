@@ -4,10 +4,10 @@
  * validazioni: usata sia dall'API disponibilità che dall'API di prenotazione.
  */
 
-/** Sessione di 15 minuti, 10 minuti di pausa per pulizia e ricarica stanza. */
-export const SESSION_MINUTES = 15;
-export const TURNAROUND_MINUTES = 10;
-/** Una sessione parte ogni 25 minuti. */
+/** Sessione di 20 minuti, 20 minuti di pausa per pulizia e ricarica stanza. */
+export const SESSION_MINUTES = 20;
+export const TURNAROUND_MINUTES = 20;
+/** Una sessione parte ogni 40 minuti. */
 export const SLOT_STEP_MINUTES = SESSION_MINUTES + TURNAROUND_MINUTES;
 
 /** Apertura alle 14:00 in tutti i giorni lavorativi. */
@@ -27,6 +27,14 @@ export const LATE_WEEKDAYS = [6, 0];
 
 /** Le prenotazioni partono da sabato 3 ottobre 2026. */
 export const BOOKING_OPEN_DATE = "2026-10-03";
+
+/**
+ * Interruttore generale del sistema di prenotazione online.
+ * Finché resta `false` il sito mostra solo la lista d'attesa e l'endpoint
+ * di prenotazione rifiuta ogni richiesta. Passare a `true` quando si è
+ * pronti ad aprire davvero le prenotazioni.
+ */
+export const BOOKING_LIVE = false;
 /** Finestra di prenotazione: 90 giorni in avanti. */
 export const BOOKING_WINDOW_DAYS = 90;
 
@@ -49,9 +57,9 @@ export interface Room {
 }
 
 export const ROOMS: Room[] = [
-  { id: "singola", name: "Stanza Singola", minPeople: 1, maxPeople: 1, price: "€30" },
-  { id: "doppia", name: "Stanza Doppia", minPeople: 1, maxPeople: 2, price: "€45" },
-  { id: "festa", name: "Sala Festa", minPeople: 3, maxPeople: 5, price: "€95" },
+  { id: "singola", name: "Stanza Singola", minPeople: 1, maxPeople: 1, price: "€33" },
+  { id: "doppia", name: "Stanza Doppia", minPeople: 1, maxPeople: 2, price: "€55" },
+  { id: "festa", name: "Sala Festa", minPeople: 3, maxPeople: 5, price: "€28" },
 ];
 
 export const ROOM_IDS = ROOMS.map((room) => room.id);
@@ -63,6 +71,23 @@ export function getRoom(roomId: string): Room | undefined {
 /** Acconto totale, in centesimi, per una prenotazione da `people` persone. */
 export function depositCentsFor(people: number): number {
   return people * DEPOSIT_CENTS_PER_PERSON;
+}
+
+/**
+ * Prezzo pieno della sessione, in centesimi.
+ * Singola e Doppia hanno un prezzo fisso; la Sala Festa è a persona.
+ */
+export function priceCentsFor(roomId: string, people: number): number {
+  switch (roomId) {
+    case "singola":
+      return 3300;
+    case "doppia":
+      return 5500;
+    case "festa":
+      return 2800 * people;
+    default:
+      return 0;
+  }
 }
 
 export function formatEuro(cents: number): string {
@@ -101,7 +126,8 @@ export function closingTimeFor(date: string): string {
 
 /**
  * Tutti gli orari di inizio possibili nella giornata indicata.
- * Mer–Ven: 14:00 … 21:30. Sab–Dom: 14:00 … 23:35. Lun e Mar: nessuno.
+ * Sessione di 20 minuti ogni 40 minuti (20 min sessione + 20 min pausa).
+ * Mer–Ven: 14:00 … 21:40. Sab–Dom: 14:00 … 23:40. Lun e Mar: nessuno.
  */
 export function slotTimesFor(date: string): string[] {
   if (!isOpenDay(date)) return [];
