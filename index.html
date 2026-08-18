@@ -186,6 +186,11 @@
     transform:translateY(-2px); box-shadow:0 12px 28px -12px rgba(255,46,110,0.75);
   }
   form[name="lista-attesa"] button[type="submit"]:disabled{ opacity:0.6; cursor:progress; }
+  form[name="lista-attesa"] input[type="tel"]{ width:100%; background:var(--panel-2); border:1px solid var(--line); border-radius:999px; padding:15px 20px; color:var(--text); font-family:'Inter',sans-serif; font-size:16px; transition:border-color .16s ease, box-shadow .16s ease; }
+  .wl-consent{ display:flex; align-items:flex-start; gap:10px; text-align:left; padding:2px 6px; cursor:pointer; font-family:'Inter',sans-serif; font-size:12.5px; line-height:1.45; color:var(--dim); }
+  .wl-consent input[type="checkbox"]{ flex:0 0 auto; margin-top:2px; width:16px; height:16px; accent-color:var(--pink); cursor:pointer; }
+  .wl-wa{ display:inline-flex; align-items:center; justify-content:center; gap:8px; margin:14px auto 0; padding:13px 22px; border-radius:999px; border:1px solid var(--line); background:var(--panel-2); color:var(--text); font-family:'Inter',sans-serif; font-weight:700; font-size:13px; text-decoration:none; }
+  .wl-wa:hover{ border-color:#25D366; transform:translateY(-2px); }
   .wl-note{ font-family:'Space Mono'; font-size:11.5px; color:var(--dim); margin-top:18px; letter-spacing:0.02em; }
   .wl-msg{
     background:rgba(255,46,110,0.09); border:1px solid rgba(255,46,110,0.45); color:#ffb3c8;
@@ -432,17 +437,17 @@
     <div class="waitlist-card">
       <div class="tag">Lista d'attesa</div>
       <h2 class="display">Non perderti <span class="l2">l'apertura</span></h2>
-      <p class="wl-sub">Iscriviti e sarai il primo a sapere quando apriamo le prenotazioni</p>
+      <p class="wl-sub">Lasciaci la tua email, il tuo numero, o entrambi. Ti avvisiamo appena apriamo le prenotazioni.</p>
 
       <form name="lista-attesa" method="POST" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="lista-attesa" />
         <p hidden><input name="bot-field" /></p>
         <input type="text" name="nome" placeholder="Il tuo nome" required />
-        <input type="email" name="email" placeholder="La tua email" required />
+        <input type="email" name="email" placeholder="La tua email (facoltativa)" /><input type="tel" name="telefono" placeholder="Il tuo numero (facoltativo)" inputmode="tel" autocomplete="tel" /><label class="wl-consent"><input type="checkbox" name="consenso-whatsapp" value="si" /><span>Acconsento a essere contattato su WhatsApp o SMS per l'apertura.</span></label>
         <button type="submit">Voglio essere il primo a sapere quando apriamo 🔔</button>
       </form>
 
-      <p class="wl-msg" id="wlMsg" hidden></p>
+      <a class="wl-wa" href="https://wa.me/393509736066?text=Ciao%21%20Voglio%20essere%20avvisato%20quando%20aprite%20le%20prenotazioni%20%F0%9F%94%94" target="_blank" rel="noopener">💬 Oppure avvisami su WhatsApp</a><p class="wl-msg" id="wlMsg" hidden></p>
 
       <div class="wl-done" id="wlDone" hidden>
         <div class="wl-check">🔔</div>
@@ -1260,7 +1265,13 @@
   var doneEl = document.getElementById('wlDone');
   var btnLabel = btn.innerHTML;
 
+  var emailEl = form.querySelector('input[name="email"]'), telEl = form.querySelector('input[name="telefono"]');
+  function mostraErrore(t){ msgEl.textContent = t; msgEl.hidden = false; }
+
   form.addEventListener('submit', function (ev) {
+    var _e = (emailEl.value||'').trim(), _t = (telEl.value||'').trim();
+    if (!_e && !_t) { ev.preventDefault(); mostraErrore('Lasciaci almeno un recapito: email o numero di telefono.'); emailEl.focus(); return; }
+    if (_t && _t.replace(/[^0-9]/g,'').length < 9) { ev.preventDefault(); mostraErrore('Il numero di telefono sembra incompleto. Controllalo, oppure lascia solo l\u2019email.'); telEl.focus(); return; }
     // Senza fetch il browser fa il POST normale: Netlify raccoglie comunque l'iscrizione.
     if (!window.fetch || !window.URLSearchParams || !window.FormData) return;
     ev.preventDefault();
