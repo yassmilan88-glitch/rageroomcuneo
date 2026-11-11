@@ -57,9 +57,9 @@ export interface Room {
 }
 
 export const ROOMS: Room[] = [
-  { id: "singola", name: "Stanza Singola", minPeople: 1, maxPeople: 1, price: "€33" },
-  { id: "doppia", name: "Stanza Doppia", minPeople: 1, maxPeople: 2, price: "€55" },
-  { id: "festa", name: "Sala Festa", minPeople: 3, maxPeople: 5, price: "€28" },
+  { id: "singola", name: "Stanza Singola", minPeople: 1, maxPeople: 1, price: "€37" },
+  { id: "doppia", name: "Stanza Doppia", minPeople: 1, maxPeople: 2, price: "€62" },
+  { id: "festa", name: "Sala Festa", minPeople: 3, maxPeople: 5, price: "€30" },
 ];
 
 export const ROOM_IDS = ROOMS.map((room) => room.id);
@@ -80,11 +80,11 @@ export function depositCentsFor(people: number): number {
 export function priceCentsFor(roomId: string, people: number): number {
   switch (roomId) {
     case "singola":
-      return 3300;
+      return 3700;
     case "doppia":
-      return 5500;
+      return 6200;
     case "festa":
-      return 2800 * people;
+      return 3000 * people;
     default:
       return 0;
   }
