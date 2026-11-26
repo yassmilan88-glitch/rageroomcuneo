@@ -423,14 +423,23 @@
   .bk-round:hover:not(:disabled){ border-color:var(--pink); color:var(--pink); }
   .bk-round:disabled{ opacity:0.3; cursor:not-allowed; }
 
-  .bk-days{ display:grid; grid-template-columns:repeat(auto-fill,minmax(66px,1fr)); gap:8px; }
-  .bk-day{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; min-height:76px; padding:8px 2px; font-size:22px; font-weight:900; line-height:1; }
-  .bk-day small{ font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--dim); }
+  .bk-days{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; max-width:560px; }
+  .bk-dow{ text-align:center; font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--dim); padding-bottom:2px; }
+  .bk-day{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; min-height:56px; padding:6px 0; font-size:18px; font-weight:900; line-height:1; border-radius:10px; }
+  .bk-day small{ font-size:9px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--dim); min-height:9px; }
   .bk-day[aria-pressed="true"] small{ color:rgba(255,255,255,0.85); }
-  .bk-day:disabled{ text-decoration:line-through; }
-  .bk-day .x2{ position:absolute; top:4px; right:5px; font-size:9px; font-weight:800; color:var(--yellow); letter-spacing:0; }
+  .bk-day.closed{ opacity:1; background:transparent; border:1px dashed #2f2e33; color:#4a494e; }
+  .bk-day.closed small{ color:#5a5960; text-transform:lowercase; letter-spacing:0; }
+  .bk-day.out{ opacity:1; background:transparent; border-color:transparent; color:#2f2e33; }
+  .bk-day.full{ opacity:1; background:transparent; color:#5a5960; }
+  .bk-day.full small{ color:var(--pink); text-transform:lowercase; letter-spacing:0; }
+  .bk-day .x2{ position:absolute; top:3px; right:4px; font-size:8px; font-weight:800; color:var(--yellow); letter-spacing:0; }
   .bk-day[aria-pressed="true"] .x2{ color:#fff; }
-  .bk-day-skel{ min-height:76px; border-radius:12px; background:var(--panel); animation:bkPulse 1.2s ease-in-out infinite; }
+  .bk-day .busy, .busy-key{ display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--pink); }
+  .bk-day .busy{ position:absolute; top:5px; left:5px; }
+  .bk-day[aria-pressed="true"] .busy{ background:#fff; }
+  .busy-key{ margin-right:6px; vertical-align:1px; }
+  .bk-day-skel{ min-height:56px; border-radius:12px; background:var(--panel); animation:bkPulse 1.2s ease-in-out infinite; }
   .bk-link{ display:inline-block; background:none; border:none; padding:0; margin-top:14px; color:var(--yellow); font:inherit; font-weight:800; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; }
   .bk-hint{ color:var(--dim); font-size:13px; margin-top:12px; }
   .bk-hint .x2t{ color:var(--yellow); font-weight:700; }
@@ -759,8 +768,8 @@
       <div class="bk-block" id="bkDayBlock">
         <div class="bk-label"><span class="bk-n">3</span>Giorno</div>
         <div class="bk-days" id="bkDays" aria-live="polite"></div>
-        <button type="button" class="bk-link" id="bkMoreDays" hidden>Mostra altre date</button>
-        <p class="bk-hint" id="bkDayHint">Mer–ven 14:00–22:00 · sab e dom 14:00–00:00</p>
+        <button type="button" class="bk-link" id="bkMoreDays" hidden>Altre settimane</button>
+        <p class="bk-hint" id="bkDayHint">Aperti mer–dom dalle 14:00 (sab e dom fino a mezzanotte), lun e mar chiuso</p>
       </div>
 
       <!-- 4. Orario: compare dopo aver scelto il giorno -->
@@ -937,7 +946,6 @@
   var MONTHS = ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic'];
   var DOW = ['dom', 'lun', 'mar', 'mer', 'gio', 'ven', 'sab'];
   var FALLBACK = 'Se il problema continua scrivici su WhatsApp al 350 973 6066.';
-  var DAYS_SHOWN = 8;
 
   var flow = document.getElementById('bkFlow');
   if (!flow) return;
@@ -955,7 +963,7 @@
   var state = {
     people: 1, pkg: 'base', big: 0, minutes: 0, gift: false,
     date: null, dateLabel: '', time: null, slots: [], loading: false, busy: false,
-    first: null, firstOpen: null, last: null, days: {}, daysReady: false, showAll: false,
+    first: null, firstOpen: null, last: null, days: {}, daysReady: false, weeks: 3,
     openWeekdays: [3, 4, 5, 6, 0],
     closedDates: [],
     multipliers: { '2026-12-24': 2, '2026-12-25': 2, '2026-12-31': 2, '2027-01-01': 2 },
@@ -1100,46 +1108,50 @@
     if (!info) return '';
     var free = 0, c = candidates();
     for (var i = 0; i < c.length; i++) free = Math.max(free, info.free[c[i]] || 0);
-    return free ? 'ok' : 'full';
+    if (!free) return 'full';
+    return free < info.slots ? 'busy' : 'ok';
   }
-  function openDates() {
-    var list = [];
-    if (!state.firstOpen || !state.last) return list;
-    for (var v = state.firstOpen; v <= state.last; v = addDays(v, 1)) {
-      // Se la disponibilità è arrivata, i giorni assenti (passati o chiusi) non si mostrano.
-      if (isOpenDate(v) && (!state.daysReady || state.days[v])) list.push(v);
-    }
-    return list;
-  }
+  // Calendario a settimane (lun → dom): i giorni chiusi restano al loro posto, grigi.
+  function mondayOf(v) { return addDays(v, -((weekday(v) + 6) % 7)); }
+  function weeksBetween(a, b) { var pa = parseIso(a), pb = parseIso(b); return Math.round((Date.UTC(pb.y, pb.m, pb.d) - Date.UTC(pa.y, pa.m, pa.d)) / 604800000); }
   function renderDays() {
     daysEl.textContent = '';
+    var head = ['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom'];
+    head.forEach(function (h) { var d = document.createElement('div'); d.className = 'bk-dow'; d.textContent = h; daysEl.appendChild(d); });
     if (!state.firstOpen) {
-      for (var s = 0; s < DAYS_SHOWN; s++) { var sk = document.createElement('div'); sk.className = 'bk-day-skel'; daysEl.appendChild(sk); }
+      for (var s = 0; s < 14; s++) { var sk = document.createElement('div'); sk.className = 'bk-day-skel'; daysEl.appendChild(sk); }
       moreDaysEl.hidden = true;
       return;
     }
-    var all = openDates();
-    if (!all.length) {
-      var box = document.createElement('div'); box.className = 'bk-empty'; box.style.gridColumn = '1/-1';
-      box.textContent = 'Al momento non ci sono date prenotabili. ' + FALLBACK;
-      daysEl.appendChild(box); moreDaysEl.hidden = true; return;
-    }
-    if (state.date && all.indexOf(state.date) >= DAYS_SHOWN) state.showAll = true;
-    var list = state.showAll ? all : all.slice(0, DAYS_SHOWN), anyX2 = false;
-    list.forEach(function (v) {
-      var p = parseIso(v), st = dayStatus(v), x2 = state.multipliers[v] > 1;
+    var start = mondayOf(state.firstOpen);
+    var totalWeeks = weeksBetween(start, mondayOf(state.last)) + 1;
+    if (state.date) state.weeks = Math.max(state.weeks, weeksBetween(start, mondayOf(state.date)) + 1);
+    var weeks = Math.min(state.weeks, totalWeeks), anyX2 = false, anyBusy = false;
+    for (var i = 0; i < weeks * 7; i++) {
+      var v = addDays(start, i), p = parseIso(v);
       var btn = document.createElement('button');
       btn.type = 'button'; btn.className = 'bk-chip bk-day';
       btn.setAttribute('data-date', v);
+      var inRange = v >= state.firstOpen && v <= state.last;
+      var open = inRange && isOpenDate(v) && (!state.daysReady || !!state.days[v]);
+      var st = open ? dayStatus(v) : '', x2 = open && state.multipliers[v] > 1;
+      var label = MONTHS[p.m];
+      if (!inRange) { btn.className += ' out'; btn.disabled = true; label = ''; }
+      else if (!open) { btn.className += ' closed'; btn.disabled = true; label = 'chiuso'; }
+      else if (st === 'full') { btn.className += ' full'; btn.disabled = true; label = 'pieno'; }
       btn.setAttribute('aria-pressed', v === state.date ? 'true' : 'false');
-      btn.disabled = st === 'full';
-      btn.innerHTML = '<small>' + DOW[weekday(v)] + '</small>' + p.d + '<small>' + MONTHS[p.m] + '</small>' + (x2 ? '<span class="x2">x' + state.multipliers[v] + '</span>' : '');
-      btn.setAttribute('aria-label', dayLabel(v) + (st === 'full' ? ', pieno' : '') + (x2 ? ', prezzo festivo' : ''));
+      btn.innerHTML = p.d + '<small>' + label + '</small>' +
+        (x2 ? '<span class="x2">x' + state.multipliers[v] + '</span>' : '') +
+        (st === 'busy' ? '<i class="busy" aria-hidden="true"></i>' : '');
+      btn.setAttribute('aria-label', dayLabel(v) + (label === 'chiuso' ? ', chiuso' : st === 'full' ? ', pieno' : st === 'busy' ? ', alcuni orari già prenotati' : '') + (x2 ? ', prezzo festivo' : ''));
       if (x2) anyX2 = true;
+      if (st === 'busy') anyBusy = true;
       daysEl.appendChild(btn);
-    });
-    moreDaysEl.hidden = state.showAll || all.length <= DAYS_SHOWN;
-    $('bkDayHint').innerHTML = 'Mer–ven 14:00–22:00 · sab e dom 14:00–00:00' + (anyX2 ? ' · <span class="x2t">x2</span> = festivo, prezzo doppio' : '');
+    }
+    moreDaysEl.hidden = weeks >= totalWeeks;
+    $('bkDayHint').innerHTML = 'Aperti mer–dom dalle 14:00 (sab e dom fino a mezzanotte), lun e mar chiuso' +
+      (anyBusy ? '<br><i class="busy-key"></i>già qualche prenotazione' : '') +
+      (anyX2 ? (anyBusy ? ' · ' : '<br>') + '<span class="x2t">x2</span> festivo, prezzo doppio' : '');
   }
   function loadDays() {
     if (!state.firstOpen || !state.last) return;
@@ -1162,7 +1174,7 @@
       renderDays();
     });
   }
-  moreDaysEl.addEventListener('click', function () { state.showAll = true; renderDays(); });
+  moreDaysEl.addEventListener('click', function () { state.weeks += 3; renderDays(); });
   daysEl.addEventListener('click', function (ev) {
     var btn = ev.target.closest('.bk-day'); if (!btn || btn.disabled) return;
     state.date = btn.getAttribute('data-date'); state.dateLabel = '';
