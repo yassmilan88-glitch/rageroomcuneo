@@ -112,6 +112,16 @@ export async function findById(bookingId: number): Promise<BookingRow | undefine
   return row;
 }
 
+/** Prenotazioni ancora valide (confermate o in pagamento) che riportano questo testo nelle note. */
+export async function countHeldBookingsWithNote(marker: string): Promise<number> {
+  const pattern = `%${marker.replace(/[\\%_]/g, (c) => `\\${c}`)}%`;
+  const [row] = await db
+    .select({ n: count() })
+    .from(bookings)
+    .where(and(isSlotHeld, sql`${bookings.notes} LIKE ${pattern}`));
+  return row?.n ?? 0;
+}
+
 /** Promo di lancio: le prime 50 prenotazioni confermate ricevono il video POV con GoPro in omaggio. */
 export const GOPRO_PROMO_LIMIT = 50;
 

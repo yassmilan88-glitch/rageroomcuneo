@@ -7,7 +7,10 @@ import {
   SESSION_MINUTES,
   candidateRoomsFor,
   dateRejectionReason,
+  discountNoteMarker,
+  discountedCents,
   extrasLabel,
+  findDiscountCode,
   formatDateIt,
   getPackage,
   getRoom,
@@ -22,6 +25,7 @@ import {
   attachCheckoutSession,
   claimSlot,
   confirmAndNotify,
+  countHeldBookingsWithNote,
   publicView,
   publicViewWithPromo,
   releaseBooking,
@@ -84,10 +88,26 @@ export default async (req: Request) => {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return badRequest("Inserisci un indirizzo email valido.");
   if (payload.rulesAccepted !== true) return badRequest("Per prenotare devi accettare le regole della sessione.");
 
-  const total = totalCentsFor(pkg.id, people, extras, date);
+  // Codice sconto (stesso campo del buono regalo): riduce il totale in percentuale.
+  const codeInput = asText(payload.voucherCode);
+  const discount = codeInput ? findDiscountCode(codeInput) : null;
+  let total = totalCentsFor(pkg.id, people, extras, date);
+  if (discount) {
+    if (discount.people && people !== discount.people) {
+      return badRequest(`Il codice ${discount.code} vale solo per ${discount.people} persone.`);
+    }
+    try {
+      const used = await countHeldBookingsWithNote(discountNoteMarker(discount.code));
+      if (used >= discount.maxUses) return badRequest(`Il codice ${discount.code} è già stato usato.`);
+    } catch (error) {
+      console.error("Errore verifica codice sconto", error);
+      return badRequest("Non riesco a verificare il codice adesso. Riprova tra poco o scrivici su WhatsApp.", 503);
+    }
+    total = discountedCents(total, discount.percent);
+  }
 
   // Buono regalo: scala il totale.
-  const voucherInput = asText(payload.voucherCode);
+  const voucherInput = discount ? "" : codeInput;
   let voucher: Voucher | null = null;
   if (voucherInput) {
     const code = normalizeVoucherCode(voucherInput);
@@ -110,7 +130,14 @@ export default async (req: Request) => {
   const voucherCents = voucher ? Math.min(voucher.valueCents, total) : 0;
   const onlineCents = total - voucherCents;
 
-  const notes = [voucher ? `🎁 Buono ${voucher.code}` : "", userNotes].filter(Boolean).join(" · ").slice(0, 500);
+  const notes = [
+    voucher ? `🎁 Buono ${voucher.code}` : "",
+    discount ? `${discountNoteMarker(discount.code)} −${discount.percent}%` : "",
+    userNotes,
+  ]
+    .filter(Boolean)
+    .join(" · ")
+    .slice(0, 500);
   const withPayment = isPaymentEnabled() && onlineCents > 0;
 
   // La stanza si assegna da sola in base a quanti siete: la prima libera tra quelle adatte.
@@ -147,7 +174,9 @@ export default async (req: Request) => {
 
   const room = getRoom(saved.room);
   const extrasText = extrasLabel(extras);
-  const fullName = `${room?.name ?? saved.room} · Pacchetto ${pkg.name}${extrasText ? ` · ${extrasText}` : ""}`;
+  const fullName =
+    `${room?.name ?? saved.room} · Pacchetto ${pkg.name}${extrasText ? ` · ${extrasText}` : ""}` +
+    (discount ? ` · Sconto ${discount.percent}%` : "");
   const dateLabel = formatDateIt(date);
   const end = slotEndTime(time, SESSION_MINUTES + extras.minutes);
 
