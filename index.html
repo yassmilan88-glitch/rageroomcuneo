@@ -417,7 +417,12 @@
   .bk-pane{ display:grid; gap:30px; }
   @media(min-width:520px){ .bk-pane{ gap:36px; } }
   .bk-people{ display:grid; grid-template-columns:repeat(5,1fr); gap:8px; max-width:520px; }
-  .bk-people .slot{ font-size:18px; }
+  .bk-people .slot{ font-size:18px; position:relative; padding-top:14px; }
+  .bk-people .slot span{ font-size:11px; }
+  .bk-people .pop{ position:absolute; top:-9px; left:50%; transform:translateX(-50%); background:var(--yellow); color:#111; font-style:normal; font-size:9px; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; padding:2px 6px; border-radius:4px; white-space:nowrap; line-height:1.3; }
+  .bk-pkg-head .rm-per{ display:block; font-size:11px; font-weight:600; color:var(--dim); text-align:right; margin-top:2px; }
+  .price-card .per-group{ font-size:13px; color:#d8d5cc; margin:0 0 14px; }
+  .price-card .per-group b{ color:var(--yellow); font-weight:800; }
   .bk-hint{ color:var(--dim); font-size:13px; margin-top:10px; }
   .bk-pkgs{ display:grid; gap:12px; max-width:720px; }
   .bk-pkg-head{ position:relative; width:100%; display:grid; grid-template-columns:1fr auto; gap:0 16px; align-items:center; }
@@ -605,13 +610,14 @@
     </div>
     <div class="price-note">
       Ogni sessione dura <strong>15 minuti</strong> con qualsiasi pacchetto: cambia solo quanta roba rompi. Prezzi <strong>a persona</strong>, kit protezione incluso.<br>
-      <strong>In due: 10 € di sconto</strong> sul totale (Base 70 € invece di 80 €). <strong>Extra</strong> da scegliere in prenotazione: +5 minuti 10 €, oggetti grandi 25 € l'uno.<br>
+      <strong>Più siete, meno paga ognuno</strong>: il prezzo a testa scende con il numero di persone. <strong>Extra</strong> da scegliere in prenotazione: +5 minuti 10 €, oggetti grandi 25 € l'uno.<br>
       Si prenota e si <strong>paga tutto online</strong>: in sede non paghi nulla.
     </div>
     <div class="pricing-grid">
       <div class="price-card">
         <h3>Base</h3>
         <div class="price mono">€40<span>/ persona</span></div>
+        <div class="per-group">A testa: <b>in 2 €35</b> · in 3 €30 · in 4 €25 · in 5 €20</div>
         <div class="desc">Per la prima volta: entri, spacchi, esci leggero.</div>
         <ul>
           <li>15 minuti di sessione</li>
@@ -623,6 +629,7 @@
       <div class="price-card featured">
         <h3>Plus</h3>
         <div class="price mono">€60<span>/ persona</span></div>
+        <div class="per-group">A testa: <b>in 2 €55</b> · in 3 €50 · in 4 €45 · in 5 €40</div>
         <div class="desc">Il doppio della roba da rompere, stessi 15 minuti.</div>
         <ul>
           <li>15 minuti di sessione</li>
@@ -635,6 +642,7 @@
       <div class="price-card">
         <h3>Extreme</h3>
         <div class="price mono">€90<span>/ persona</span></div>
+        <div class="per-group">A testa: <b>in 2 €85</b> · in 3 €80 · in 4 €75 · in 5 €70</div>
         <div class="desc">Per chi ha accumulato parecchio. Ci sono anche gli oggetti grandi.</div>
         <ul>
           <li>15 minuti di sessione</li>
@@ -676,11 +684,11 @@
         <div>
           <div class="bk-label">Quanti siete?</div>
           <div class="bk-people" id="bwPeople">
-            <button type="button" class="slot" data-n="1" aria-pressed="true">1</button>
-            <button type="button" class="slot" data-n="2" aria-pressed="false">2</button>
-            <button type="button" class="slot" data-n="3" aria-pressed="false">3</button>
-            <button type="button" class="slot" data-n="4" aria-pressed="false">4</button>
-            <button type="button" class="slot" data-n="5" aria-pressed="false">5</button>
+            <button type="button" class="slot" data-n="1" aria-pressed="true">1<span data-per></span></button>
+            <button type="button" class="slot" data-n="2" aria-pressed="false"><i class="pop">Più scelto</i>2<span data-per></span></button>
+            <button type="button" class="slot" data-n="3" aria-pressed="false">3<span data-per></span></button>
+            <button type="button" class="slot" data-n="4" aria-pressed="false">4<span data-per></span></button>
+            <button type="button" class="slot" data-n="5" aria-pressed="false">5<span data-per></span></button>
           </div>
           <p class="bk-hint" id="bwPeopleHint">Da solo nella stanza singola.</p>
         </div>
@@ -874,7 +882,7 @@
             <label for="gfPeople">Per quante persone</label>
             <select id="gfPeople">
               <option value="1">1 persona</option>
-              <option value="2" selected>2 persone (10 € di sconto)</option>
+              <option value="2" selected>2 persone · il più scelto</option>
               <option value="3">3 persone</option>
               <option value="4">4 persone</option>
               <option value="5">5 persone</option>
@@ -1001,7 +1009,7 @@
   if (!flow) return;
   var $ = function (id) { return document.getElementById(id); };
 
-  /* Pacchetti: prezzo e oggetti a persona. In due 10 € di sconto sul totale. */
+  /* Pacchetti: prezzo e oggetti a persona. Il prezzo a testa scende di 5 € per ogni persona in più. */
   var PACKAGES = {
     base: { name: 'Base', price: 4000, small: 15, medium: 1, large: 0 },
     plus: { name: 'Plus', price: 6000, small: 30, medium: 2, large: 0 },
@@ -1034,7 +1042,9 @@
   }
 
   /* ---------- Prezzi ---------- */
-  function packagePrice(id, n) { return PACKAGES[id].price * n - (n === 2 ? 1000 : 0); }
+  var GROUP_STEP = 500;
+  function perPerson(id, n) { return PACKAGES[id].price - GROUP_STEP * (n - 1); }
+  function packagePrice(id, n) { return perPerson(id, n) * n; }
   function multiplier() { return (state.date && state.multipliers[state.date]) || 1; }
   function subtotal() { return packagePrice(state.pkg, state.people) + (state.minutes / 5) * EXTRA_5MIN + state.big * EXTRA_BIG; }
   function total() { return subtotal() * multiplier(); }
@@ -1051,11 +1061,15 @@
   }
 
   /* ---------- Passo 1: persone, pacchetto, extra ---------- */
-  var peopleHints = { 1: 'Da solo nella stanza singola.', 2: 'In due: €10 di sconto sul totale.', 3: 'Gruppo nella sala festa.', 4: 'Gruppo nella sala festa.', 5: 'Gruppo nella sala festa, massimo 5 persone.' };
+  var peopleHints = { 1: 'Da solo nella stanza singola.', 2: 'In due nella stanza doppia.', 3: 'Gruppo nella sala festa.', 4: 'Gruppo nella sala festa.', 5: 'Gruppo nella sala festa, massimo 5 persone.' };
   function renderStep1() {
     var pb = $('bwPeople').querySelectorAll('button');
-    for (var i = 0; i < pb.length; i++) pb[i].setAttribute('aria-pressed', +pb[i].getAttribute('data-n') === state.people ? 'true' : 'false');
-    $('bwPeopleHint').textContent = peopleHints[state.people];
+    for (var i = 0; i < pb.length; i++) {
+      var pn = +pb[i].getAttribute('data-n');
+      pb[i].setAttribute('aria-pressed', pn === state.people ? 'true' : 'false');
+      pb[i].querySelector('[data-per]').textContent = euro(perPerson(state.pkg, pn)) + '/pers.';
+    }
+    $('bwPeopleHint').textContent = peopleHints[state.people] + ' Prezzi a testa con il pacchetto ' + PACKAGES[state.pkg].name + ': più siete, meno paga ognuno.';
     var cards = $('bwPkgs').querySelectorAll('.bk-pkg');
     for (var j = 0; j < cards.length; j++) {
       var id = cards[j].getAttribute('data-pkg'), on = id === state.pkg;
@@ -1064,7 +1078,8 @@
       head.setAttribute('aria-expanded', on ? 'true' : 'false');
       head.setAttribute('aria-pressed', on ? 'true' : 'false');
       cards[j].querySelector('[data-objects]').textContent = objectsText(id, state.people);
-      cards[j].querySelector('[data-price]').textContent = euro(packagePrice(id, state.people));
+      cards[j].querySelector('[data-price]').innerHTML = euro(packagePrice(id, state.people)) +
+        (state.people > 1 ? '<span class="rm-per">' + euro(perPerson(id, state.people)) + ' a testa</span>' : '');
     }
     // Gli extra si aprono sotto il pacchetto scelto.
     var extras = $('bwExtras'), sel = $('bwPkgs').querySelector('.bk-pkg.on');
@@ -1415,7 +1430,7 @@
   function total() {
     if (!room) return 0;
     var n = parseInt(peopleEl.value, 10) || 1;
-    return PRICES[room] * n - (n === 2 ? 1000 : 0);
+    return (PRICES[room] - 500 * (n - 1)) * n;
   }
   function refresh() {
     totalEl.textContent = room ? euro(total()) : '€—';

@@ -133,8 +133,8 @@ export function candidateRoomsFor(people: number): RoomId[] {
 }
 
 export const DEFAULT_PACKAGE: PackageId = "base";
-/** In due si scalano 10 € dal totale (es. Base: 70 € invece di 80 €). */
-export const COUPLE_DISCOUNT_CENTS = 1000;
+/** Il prezzo a testa scende di 5 € per ogni persona in più (Base: 40, 35, 30, 25, 20 € a testa). */
+export const GROUP_STEP_CENTS = 500;
 /** Extra a tendina in prenotazione: minuti in più e oggetti grandi in più. */
 export const EXTRA_MINUTES_OPTIONS = [0, 5, 10];
 export const EXTRA_CENTS_PER_5_MINUTES = 1000;
@@ -182,14 +182,16 @@ export function depositCentsFor(people: number): number {
   return people * DEPOSIT_CENTS_PER_PERSON;
 }
 
-/**
- * Prezzo pieno della sessione, in centesimi: prezzo del pacchetto a persona,
- * con 10 € di sconto sul totale quando si è in due.
- */
-export function priceCentsFor(packageId: string, people: number): number {
+/** Prezzo a testa, in centesimi, per un gruppo di `people` persone. */
+export function perPersonCentsFor(packageId: string, people: number): number {
   const pkg = getPackage(packageId);
   if (!pkg || !Number.isInteger(people) || people < 1) return 0;
-  return pkg.priceCents * people - (people === 2 ? COUPLE_DISCOUNT_CENTS : 0);
+  return pkg.priceCents - GROUP_STEP_CENTS * (people - 1);
+}
+
+/** Prezzo della sessione, in centesimi: prezzo a testa per il numero di persone. */
+export function priceCentsFor(packageId: string, people: number): number {
+  return perPersonCentsFor(packageId, people) * people;
 }
 
 /** Totale della prenotazione: pacchetto per le persone, più gli extra, per il moltiplicatore del giorno. */
