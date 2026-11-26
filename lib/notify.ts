@@ -244,7 +244,7 @@ function customerEmailHtml(booking: BookingNotification): string {
 
     <tr><td style="padding:0 28px 24px;font-family:${FONT};font-size:12px;line-height:1.6;color:${C.dim};">
       <strong style="color:#d8d5cc;">Regole della sessione</strong><br>
-      Se non ti presenti, l'importo pagato non viene rimborsato.
+      Puoi annullare fino a 24 ore prima e ti rimborsiamo tutto; dopo, o se non ti presenti, non c'è rimborso.
       Se arrivi in ritardo hai a disposizione solo i minuti che restano della tua sessione.
       Gli oggetti portati da te vanno approvati prima con una foto.
       Prima di entrare firmi una liberatoria.
@@ -271,7 +271,7 @@ function customerEmailText(booking: BookingNotification): string {
     `${peopleLabel(booking.people)} · ${booking.dateLabel}, ${booking.time}–${booking.end}`,
     `Dove: ${VENUE_AREA}. ${VENUE_ADDRESS_NOTE}`,
     `Arriva 10 minuti prima. Prima di entrare firmi una liberatoria.`,
-    `Se non ti presenti l'importo non viene rimborsato; se arrivi in ritardo hai i minuti che restano della sessione.`,
+    `Puoi annullare fino a 24 ore prima e ti rimborsiamo tutto; dopo, o se non ti presenti, non c'è rimborso. Se arrivi in ritardo hai i minuti che restano della sessione.`,
     `WhatsApp: https://wa.me/${OWNER_WHATSAPP}`,
   ].join("\n");
 }
