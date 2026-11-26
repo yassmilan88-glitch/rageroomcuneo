@@ -444,6 +444,12 @@
   .bk-cart .ln.tot span:first-child{ color:var(--text); font-weight:900; text-transform:uppercase; letter-spacing:0.04em; }
   .bk-cart .ln.tot span:last-child{ color:var(--yellow); font-size:22px; font-weight:900; }
   .bk-submit{ width:100%; justify-content:center; }
+  .bk-rules{ font-size:12px; line-height:1.55; color:var(--dim); border-top:1px solid var(--line); padding-top:14px; }
+  .bk-rules strong{ display:block; color:#d8d5cc; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
+  .bk-rules ul{ margin:0; padding-left:16px; }
+  .bk-rules li{ margin:2px 0; }
+  .bk-accept{ display:flex; align-items:center; gap:10px; margin-top:12px; font-size:13px; color:var(--text); cursor:pointer; }
+  .bk-accept input{ width:18px; height:18px; accent-color:var(--pink); flex-shrink:0; }
   .cal-day{ position:relative; }
   .cal-day .dot{ position:absolute; bottom:5px; left:50%; transform:translateX(-50%); }
   .dot{ display:inline-block; width:6px; height:6px; border-radius:50%; }
@@ -577,7 +583,7 @@
       </div>
       <div class="step">
         <div class="num">02</div>
-        <div><h3>Ti equipaggiamo noi</h3><p>Casco, tuta protettiva e guanti inclusi. In stanza trovi oggetti da rompere, attrezzi e casse bluetooth per la tua playlist.</p></div>
+        <div><h3>Ti equipaggiamo noi</h3><p>Firmi la liberatoria e ti diamo casco, tuta protettiva e guanti. In stanza trovi oggetti da rompere, attrezzi e casse bluetooth per la tua playlist.</p></div>
       </div>
       <div class="step">
         <div class="num">03</div>
@@ -789,7 +795,18 @@
             </div>
             <div class="field full">
               <label for="bkNotes">Note (facoltative)</label>
-              <textarea id="bkNotes" maxlength="400" placeholder="Compleanno, oggetti tuoi da rompere, richieste particolari…"></textarea>
+              <textarea id="bkNotes" maxlength="400" placeholder="Compleanno, addio al nubilato, richieste particolari…"></textarea>
+            </div>
+            <div class="full bk-rules">
+              <strong>Regole della sessione</strong>
+              <ul>
+                <li>Arriva 10 minuti prima. Se non ti presenti, l'importo pagato non viene rimborsato.</li>
+                <li>Se arrivi in ritardo hai a disposizione solo i minuti che restano della tua sessione.</li>
+                <li>Vuoi rompere un oggetto tuo? Mandaci prima una foto su WhatsApp e ti diciamo se si può.</li>
+                <li>Prima di entrare firmi una liberatoria.</li>
+                <li>Se non segui le indicazioni dello staff, la sessione viene interrotta.</li>
+              </ul>
+              <label class="bk-accept"><input type="checkbox" id="bkRules"> Ho letto e accetto le regole</label>
             </div>
             <div class="full bk-error" id="bkError" hidden></div>
             <div class="full">
@@ -1275,12 +1292,13 @@
     if (nameEl.value.trim().length < 2) return showError('Inserisci il tuo nome e cognome.');
     if (phoneEl.value.replace(/\D/g, '').length < 8) return showError('Inserisci un numero di telefono valido.');
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailEl.value.trim())) return showError('Inserisci un indirizzo email valido.');
+    if (!$('bkRules').checked) return showError('Per continuare spunta «Ho letto e accetto le regole».');
 
     var payload = {
       people: state.people, package: state.pkg, extraMinutes: state.minutes, extraBig: state.big,
       date: state.date, time: state.time,
       name: nameEl.value.trim(), phone: phoneEl.value.trim(), email: emailEl.value.trim(),
-      notes: notesEl.value.trim(), voucherCode: voucherEl.value.trim()
+      notes: notesEl.value.trim(), voucherCode: voucherEl.value.trim(), rulesAccepted: true
     };
     var label = submitEl.textContent;
     submitEl.disabled = true; submitEl.textContent = 'Un attimo…';
@@ -1318,7 +1336,7 @@
   }
   $('bkAgain').addEventListener('click', function () {
     doneEl.hidden = true; flow.hidden = false;
-    state.time = null; nameEl.value = ''; phoneEl.value = ''; emailEl.value = ''; notesEl.value = ''; voucherEl.value = '';
+    state.time = null; nameEl.value = ''; phoneEl.value = ''; emailEl.value = ''; notesEl.value = ''; voucherEl.value = ''; $('bkRules').checked = false;
     submitEl.disabled = false;
     state.days = {}; state.daysLoaded = {};
     go(1);

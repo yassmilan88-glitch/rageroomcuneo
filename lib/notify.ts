@@ -146,6 +146,14 @@ function customerEmailHtml(booking: BookingNotification): string {
   <p style="margin:20px 0 0;font-size:14px;">📍 <strong>${escapeHtml(VENUE_ADDRESS)}</strong> — <a href="${VENUE_MAPS_URL}">apri la mappa</a></p>
   <p style="margin:12px 0 0;font-size:14px;">Arriva 10 minuti prima: ti diamo casco, tuta e guanti.<br>
   ${balanceText}</p>
+  <div style="margin:16px 0 0;font-size:12px;color:#55555c;line-height:1.55;">
+    <strong>Regole della sessione</strong><br>
+    Se non ti presenti, l'importo pagato non viene rimborsato.<br>
+    Se arrivi in ritardo hai a disposizione solo i minuti che restano della tua sessione.<br>
+    Vuoi rompere un oggetto tuo? Mandaci prima una foto su WhatsApp e ti diciamo se si può.<br>
+    Prima di entrare firmi una liberatoria.<br>
+    Se non segui le indicazioni dello staff, la sessione viene interrotta.
+  </div>
   ${booking.gopromo ? `<p style="margin:16px 0 0;font-size:14px;background:#fff6d8;border-radius:8px;padding:10px 14px;">🎥 Sei tra i primi 50 prenotati: il video POV con la GoPro della tua sessione è in omaggio!</p>` : ""}
   <p style="margin:16px 0 0;font-size:13px;color:#8a8a92;">
     Per spostare o annullare scrivici su <a href="https://wa.me/${OWNER_WHATSAPP}">WhatsApp</a>

@@ -82,6 +82,7 @@ export default async (req: Request) => {
   if (name.length < 2 || name.length > 80) return badRequest("Inserisci il tuo nome e cognome.");
   if (phone.replace(/\D/g, "").length < 8) return badRequest("Inserisci un numero di telefono valido.");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return badRequest("Inserisci un indirizzo email valido.");
+  if (payload.rulesAccepted !== true) return badRequest("Per prenotare devi accettare le regole della sessione.");
 
   const total = totalCentsFor(pkg.id, people, extras);
 
