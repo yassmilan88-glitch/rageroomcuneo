@@ -10,6 +10,11 @@ export const bookings = pgTable(
     slotTime: text("slot_time").notNull(),
     // singola | doppia | festa
     room: text().notNull(),
+    // Pacchetto scelto: base | plus | extreme
+    package: text().notNull().default("base"),
+    // Extra scelti a tendina: minuti in più (0, 5, 10) e oggetti grandi in più
+    extraMinutes: integer("extra_minutes").notNull().default(0),
+    extraBig: integer("extra_big").notNull().default(0),
     people: integer().notNull().default(1),
     name: text().notNull(),
     phone: text().notNull(),
