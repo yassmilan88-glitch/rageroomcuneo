@@ -186,8 +186,9 @@ export function totalCentsFor(packageId: string, people: number, extras: Extras)
   return base ? base + extrasCents(extras) : 0;
 }
 
+/** Importo come nel sito: €40, €145, oppure €12,50 se ci sono centesimi. */
 export function formatEuro(cents: number): string {
-  return `€${(cents / 100).toFixed(2).replace(".", ",")}`;
+  return cents % 100 ? `€${(cents / 100).toFixed(2).replace(".", ",")}` : `€${cents / 100}`;
 }
 
 function toTime(minutes: number): string {
