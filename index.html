@@ -235,34 +235,6 @@
   }
   @media(min-width:640px){ .step{ grid-template-columns: 110px 1fr; } }
 
-  /* -------- Prezzi -------- */
-  .price-note{
-    background: var(--panel); border:1px solid var(--line); border-left:3px solid var(--yellow);
-    padding:14px 16px; font-size:13px; color:var(--dim); border-radius:0 8px 8px 0; margin-bottom:36px;
-  }
-  .price-note strong{ color:var(--yellow); }
-  .pricing-grid{ display:grid; grid-template-columns:1fr; gap:18px; }
-  @media(min-width:760px){ .pricing-grid{ grid-template-columns: repeat(3,1fr); } }
-  .price-card{
-    background: var(--panel); border:1px solid var(--line); border-radius:16px; padding:24px 20px;
-    display:flex; flex-direction:column; position:relative; overflow:hidden;
-  }
-  @media(min-width:520px){ .price-card{ padding:28px 24px; } }
-  .price-card.featured{ border-color: var(--pink); background: linear-gradient(160deg, #1c1219, var(--panel) 55%); }
-  .price-card.featured::before{
-    content:'CONSIGLIATO'; position:absolute; top:14px; right:-32px; background:var(--pink); color:#fff;
-    font-family:'Inter', sans-serif; font-weight:600; font-size:10px; font-weight:700; padding:4px 36px; transform:rotate(35deg);
-    letter-spacing:0.05em;
-  }
-  .price-card h3{ font-family:'Inter', sans-serif; font-weight:900; font-size:22px; text-transform:uppercase; letter-spacing:0.02em; }
-  .price-card .price{ font-family:'Inter', sans-serif; font-weight:600; font-size:38px; font-weight:700; margin:14px 0 4px; }
-  .price-card .price span{ font-size:14px; color:var(--dim); font-weight:400; }
-  .price-card .desc{ color:var(--dim); font-size:14px; margin-bottom:18px; }
-  .price-card ul{ list-style:none; margin-bottom:24px; flex:1; }
-  .price-card li{ font-size:14px; padding:7px 0; border-top:1px solid var(--line); color:#d8d5cc; }
-  .price-card li:first-child{ border-top:none; }
-  .price-card li::before{ content:'✕ '; color:var(--pink); font-weight:800; margin-right:4px; }
-  .price-card .btn{ justify-content:center; width:100%; }
 
   /* -------- Prenota -------- */
   .bk-label{ display:flex; align-items:center; gap:12px; font-family:'Inter', sans-serif; font-weight:900; text-transform:uppercase; font-size:16px; letter-spacing:0.04em; margin-bottom:16px; }
@@ -372,8 +344,6 @@
   .map-wrap{ border-radius:16px; overflow:hidden; border:1px solid var(--line); min-height:280px; }
   .map-wrap iframe{ width:100%; height:100%; min-height:280px; border:0; filter: grayscale(0.3) invert(0.92) contrast(0.9); }
 
-  .price-card .per-group{ font-size:13px; color:#d8d5cc; margin:0 0 14px; }
-  .price-card .per-group b{ color:var(--yellow); font-weight:800; }
 
   /* -------- Prenotazione: tutto in una pagina, dall'alto in basso -------- */
   .bk{ display:grid; gap:34px; max-width:720px; }
@@ -522,7 +492,6 @@
     <div class="logo">RAGE<span>ROOM</span> CUNEO</div>
     <div class="nav-links">
       <a href="#come-funziona">Come funziona</a>
-      <a href="#prezzi">Prezzi</a>
       <a href="#prenota">Prenota</a>
       <a href="#feste">Feste</a>
       <a href="#contatti">Contatti</a>
@@ -611,66 +580,12 @@
 
 <div class="hazard thin"></div>
 
-<section id="prezzi">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="tag">Pacchetti</div>
-      <h2 class="display">Prezzi</h2>
-    </div>
-    <div class="price-note">
-      Ogni sessione dura <strong>15 minuti</strong>, kit protezione incluso: il pacchetto cambia solo quanta roba rompi. Prezzi <strong>a persona</strong>: più siete, meno paga ognuno. Ogni persona in più aggiunge 5 oggetti piccoli. Si paga tutto online.
-    </div>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <h3>Base</h3>
-        <div class="price mono">€40<span>/ persona</span></div>
-        <div class="per-group">A testa: <b>in 2 €35</b> · in 3 €30 · in 4 €25 · in 5 €20</div>
-        <div class="desc">Per provare la prima volta.</div>
-        <ul>
-          <li>15 minuti di sessione</li>
-          <li>15 oggetti piccoli + 1 medio</li>
-          <li>Kit protezione incluso</li>
-        </ul>
-        <a href="#prenota" class="btn btn-ghost" data-package-preset="base">Prenota Base</a>
-      </div>
-      <div class="price-card featured">
-        <h3>Plus</h3>
-        <div class="price mono">€60<span>/ persona</span></div>
-        <div class="per-group">A testa: <b>in 2 €55</b> · in 3 €50 · in 4 €45 · in 5 €40</div>
-        <div class="desc">Il doppio della roba da rompere, stessi 15 minuti.</div>
-        <ul>
-          <li>15 minuti di sessione</li>
-          <li>30 oggetti piccoli + 2 medi</li>
-          <li>Kit protezione incluso</li>
-          <li>Musica a scelta durante la sessione</li>
-        </ul>
-        <a href="#prenota" class="btn btn-primary" data-package-preset="plus">Prenota Plus</a>
-      </div>
-      <div class="price-card">
-        <h3>Extreme</h3>
-        <div class="price mono">€90<span>/ persona</span></div>
-        <div class="per-group">A testa: <b>in 2 €85</b> · in 3 €80 · in 4 €75 · in 5 €70</div>
-        <div class="desc">Il pacchetto più ricco, con anche gli oggetti grandi.</div>
-        <ul>
-          <li>15 minuti di sessione</li>
-          <li>40 oggetti piccoli + 3 medi + 2 grandi</li>
-          <li>Kit protezione incluso</li>
-          <li>Musica a scelta durante la sessione</li>
-        </ul>
-        <a href="#prenota" class="btn btn-ghost" data-package-preset="extreme">Prenota Extreme</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="hazard thin"></div>
-
 <section id="prenota">
   <div class="wrap">
     <div class="section-head">
       <div class="tag">Prenotazioni</div>
       <h2 class="display">Prenota online</h2>
-      <p>Scegli, paga online e ricevi subito la conferma via email. Si parte sabato 19 dicembre.</p>
+      <p>Sessioni da 15 minuti, kit protezione incluso: più siete, meno paga ognuno. Paghi online e ricevi subito la conferma via email.</p>
     </div>
 
     <noscript>
@@ -923,7 +838,6 @@
 <footer>
   <div class="fnav">
     <a href="#come-funziona">Come funziona</a>
-    <a href="#prezzi">Prezzi</a>
     <a href="#prenota">Prenota</a>
     <a href="#feste">Feste</a>
     <a href="#contatti">Contatti</a>
@@ -956,8 +870,8 @@
   /* Pacchetti: prezzo e oggetti a persona. Il prezzo a testa scende di 5 € per ogni persona in più. */
   var PACKAGES = {
     base: { name: 'Base', price: 4000, small: 15, medium: 1, large: 0 },
-    plus: { name: 'Plus', price: 6000, small: 30, medium: 2, large: 0 },
-    extreme: { name: 'Extreme', price: 9000, small: 40, medium: 3, large: 2 }
+    plus: { name: 'Plus', price: 6000, small: 30, medium: 2, large: 0, music: true },
+    extreme: { name: 'Extreme', price: 9000, small: 40, medium: 3, large: 2, music: true }
   };
   var EXTRA_5MIN = 1000, EXTRA_BIG = 2500, BIG_MAX = 3, GROUP_STEP = 500;
 
@@ -1010,7 +924,7 @@
     var p = PACKAGES[id], parts = [p.small + SMALL_PER_EXTRA_PERSON * (n - 1) + ' oggetti piccoli'];
     if (p.medium) parts.push(p.medium + (p.medium === 1 ? ' medio' : ' medi'));
     if (p.large) parts.push(p.large + (p.large === 1 ? ' grande' : ' grandi'));
-    return parts.join(' + ');
+    return parts.join(' + ') + (p.music ? ' · musica a scelta' : '');
   }
   function extrasText() {
     var parts = [];
