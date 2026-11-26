@@ -3,7 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Rage Room Cuneo — Spacca. Sfogati. Riparti.</title>
+<title>Rage Room Cuneo — Spacca. Sfogati. Riparti. | Apertura 19 dicembre</title>
+<meta name="description" content="La prima rage room di Cuneo apre sabato 19 dicembre in Via Valle Po 92, Madonna dell'Olmo. Sessioni da 15 minuti da 40 € a persona: prenota online o regala una sessione.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Rage Room Cuneo">
+<meta property="og:url" content="https://rageroomcuneo.it/">
+<meta property="og:title" content="Rage Room Cuneo — apriamo il 19 dicembre">
+<meta property="og:description" content="Spacca. Sfogati. Riparti. Prenotazioni aperte: sessioni da 15 minuti a Madonna dell'Olmo (Cuneo), da 40 € a persona.">
+<meta property="og:image" content="https://rageroomcuneo.it/og-rageroom.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"EntertainmentBusiness","name":"Rage Room Cuneo","url":"https://rageroomcuneo.it/","telephone":"+39 350 973 6066","email":"rageroomcuneo@gmail.com","image":"https://rageroomcuneo.it/og-rageroom.jpg","address":{"@type":"PostalAddress","streetAddress":"Via Valle Po 92","addressLocality":"Cuneo","postalCode":"12100","addressRegion":"CN","addressCountry":"IT"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Wednesday","Thursday","Friday"],"opens":"14:00","closes":"22:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday","Sunday"],"opens":"14:00","closes":"23:59"}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -103,6 +115,12 @@
   .hero h1 .l2{ color: var(--pink); -webkit-text-stroke: 1px rgba(255,255,255,0.15); }
   .hero p{ margin-top:20px; font-size: clamp(16px,3vw,19px); color:#d8d5cc; max-width:480px; }
   .hero-ctas{ display:flex; flex-wrap:wrap; gap:12px; margin-top:32px; }
+  .countdown{ display:flex; align-items:flex-end; gap:10px; margin-top:24px; flex-wrap:wrap; }
+  .cd-cell{ display:flex; flex-direction:column; align-items:center; min-width:66px; padding:10px 8px;
+    background:rgba(19,18,21,0.85); border:1px solid rgba(139,92,246,0.45); border-radius:12px; }
+  .cd-n{ font-family:'Anton', sans-serif; font-size:34px; line-height:1; color:var(--yellow); }
+  .cd-l{ font-family:'Space Mono', monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--dim); margin-top:4px; }
+  .cd-txt{ font-family:'Space Mono', monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#d8d5cc; padding-bottom:8px; }
   .promo-banner{
     margin-top:20px; display:inline-block; background:rgba(255,214,0,0.1); border:1px solid rgba(255,214,0,0.4);
     color:#ffe9a8; border-radius:14px; padding:18px 24px; font-size:18px; line-height:1.4; font-weight:700; max-width:560px;
@@ -232,7 +250,7 @@
   @media(min-width:520px){ .price-card{ padding:28px 24px; } }
   .price-card.featured{ border-color: var(--pink); background: linear-gradient(160deg, #1c1219, var(--panel) 55%); }
   .price-card.featured::before{
-    content:'PIÙ SCELTO'; position:absolute; top:14px; right:-32px; background:var(--pink); color:#fff;
+    content:'CONSIGLIATO'; position:absolute; top:14px; right:-32px; background:var(--pink); color:#fff;
     font-family:'Space Mono'; font-size:10px; font-weight:700; padding:4px 36px; transform:rotate(35deg);
     letter-spacing:0.05em;
   }
@@ -388,6 +406,38 @@
   .map-wrap{ border-radius:16px; overflow:hidden; border:1px solid var(--line); min-height:280px; }
   .map-wrap iframe{ width:100%; height:100%; min-height:280px; border:0; filter: grayscale(0.3) invert(0.92) contrast(0.9); }
 
+  .cal-holiday{ color:#ffe9a8; }
+
+  /* -------- Buono regalo -------- */
+  .gift{ background: radial-gradient(110% 80% at 50% 0%, #1a1020 0%, var(--bg) 62%); }
+  .gift .tag{ color: var(--violet); }
+  .gift-flow{ display:grid; gap:30px; max-width:760px; }
+  .gift-perks{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+  .gift-perks span{ font-family:'Space Mono'; font-size:11px; letter-spacing:0.06em; text-transform:uppercase;
+    border:1px solid var(--line); background:var(--panel); border-radius:999px; padding:7px 12px; color:#d8d5cc; }
+  .bk-voucher-note{ font-size:13px; color:#ffe9a8; margin-top:6px; }
+  .gv-card{
+    position:relative; overflow:hidden; max-width:560px; border-radius:22px; padding:30px 26px;
+    background: linear-gradient(160deg, #1c1220, #0d0c0f 60%); border:2px solid var(--violet);
+    box-shadow: 0 0 0 1px rgba(255,46,110,0.25), 0 26px 60px -30px rgba(139,92,246,0.8);
+  }
+  .gv-card::before{ content:''; position:absolute; left:0; right:0; top:0; height:10px;
+    background: repeating-linear-gradient(-45deg, var(--yellow) 0 14px, #111 14px 28px); }
+  .gv-eyebrow{ font-family:'Space Mono'; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--yellow); margin-top:6px; }
+  .gv-title{ font-family:'Anton'; text-transform:uppercase; font-size:clamp(30px,7vw,44px); line-height:0.98; margin-top:12px; }
+  .gv-title span{ color:var(--pink); }
+  .gv-line{ margin-top:14px; font-size:16px; color:#d8d5cc; }
+  .gv-msg{ margin-top:14px; font-style:italic; font-size:17px; color:var(--text); }
+  .gv-code{ margin-top:20px; background:var(--yellow); color:#111; border-radius:12px; padding:14px; text-align:center; }
+  .gv-code small{ display:block; font-family:'Space Mono'; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; font-weight:700; }
+  .gv-code strong{ display:block; font-family:'Space Mono'; font-size:clamp(22px,6vw,30px); letter-spacing:0.12em; }
+  .gv-foot{ margin-top:14px; font-size:13px; color:var(--dim); }
+  .gift-done-ctas{ display:flex; flex-wrap:wrap; gap:12px; margin-top:22px; }
+  @media print{
+    body *{ visibility:hidden !important; }
+    #gvCard, #gvCard *{ visibility:visible !important; }
+    #gvCard{ position:absolute; left:0; top:0; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
   footer{
     border-top:1px solid var(--line); padding:36px 0; text-align:center; color:var(--dim); font-size:13px;
   }
@@ -407,10 +457,11 @@
       <a href="#come-funziona">Come funziona</a>
       <a href="#prezzi">Prezzi</a>
       <a href="#prenota">Prenota</a>
+      <a href="#regala">Regala</a>
       <a href="#contatti">Contatti</a>
     </div>
     <div class="nav-actions">
-      <a href="#lista-attesa" class="nav-cta">Avvisami</a>
+      <a href="#prenota" class="nav-cta">Prenota</a>
       <a href="https://wa.me/393509736066" class="nav-wa" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.86 9.86 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.06c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.89-1.25-4.78-4.15-4.93-4.34-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.26-.28.57-.36.76-.36h.55c.18 0 .42-.07.65.5.24.58.81 2 .88 2.15.07.15.11.32.02.51-.09.19-.14.31-.28.47-.14.16-.29.36-.42.48-.14.14-.28.29-.13.56.16.28.7 1.16 1.51 1.88 1.04.93 1.92 1.22 2.19 1.36.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.28.37-.23.62-.14.26.09 1.63.77 1.91.91.28.14.47.21.53.33.07.12.07.68-.17 1.36z"/></svg>
         <span class="wa-label">Scrivici</span>
@@ -421,18 +472,24 @@
 
 <section class="hero">
   <div class="hero-inner">
-    <div class="eyebrow">Coming soon · Cuneo</div>
+    <div class="eyebrow">Apertura sabato 19 dicembre · Madonna dell'Olmo</div>
     <h1 class="display">Spacca.<br>Sfogati.<br><span class="l2">Riparti.</span></h1>
-    <p>La prima rage room di Cuneo. Un posto dove lasciare andare tutto — senza filtri, senza giudizi. Sessioni da 20 minuti, dal mercoledì alla domenica dalle 14:00 (sabato e domenica fino a mezzanotte). Prenotazioni online presto disponibili.</p>
+    <p>La prima rage room di Cuneo. Un posto dove lasciare andare tutto — senza filtri, senza giudizi. Sessioni da 15 minuti in Via Valle Po 92, dal mercoledì alla domenica dalle 14:00 (sabato e domenica fino a mezzanotte). <strong>Le prenotazioni sono aperte.</strong></p>
+    <div class="countdown" id="countdown" hidden>
+      <div class="cd-cell"><span class="cd-n" id="cdDays">--</span><span class="cd-l">giorni</span></div>
+      <div class="cd-cell"><span class="cd-n" id="cdHours">--</span><span class="cd-l">ore</span></div>
+      <div class="cd-cell"><span class="cd-n" id="cdMins">--</span><span class="cd-l">minuti</span></div>
+      <div class="cd-txt">all'apertura</div>
+    </div>
     <div class="hero-ctas">
-      <a href="#lista-attesa" class="btn btn-primary">🔔 Avvisami dell'apertura</a>
-      <a href="#come-funziona" class="btn btn-ghost">Come funziona ↓</a>
+      <a href="#prenota" class="btn btn-primary">💥 Prenota la tua sessione</a>
+      <a href="#regala" class="btn btn-ghost">🎁 Regala una sessione</a>
     </div>
     <div class="promo-banner">🎥 I primi 50 prenotati ricevono il video POV con la GoPro della propria sessione in omaggio!</div>
   </div>
 </section>
 
-<section class="waitlist" id="lista-attesa">
+<section class="waitlist" id="lista-attesa" hidden>
   <div class="wrap">
     <div class="waitlist-card">
       <div class="tag">Lista d'attesa</div>
@@ -472,7 +529,7 @@
     <div class="steps">
       <div class="step">
         <div class="num">01</div>
-        <div><h3>Prenoti online</h3><p>Scegli la stanza, il giorno e l'orario dal calendario qui sotto. Blocchi la fascia con una riserva di 5 € a persona, il resto lo paghi in sede.</p></div>
+        <div><h3>Prenoti online</h3><p>Scegli il pacchetto, la stanza, il giorno e l'orario dal calendario qui sotto. Blocchi la fascia con una riserva di 5 € a persona, il resto lo paghi in sede.</p></div>
       </div>
       <div class="step">
         <div class="num">02</div>
@@ -480,7 +537,7 @@
       </div>
       <div class="step">
         <div class="num">03</div>
-        <div><h3>Spacchi tutto</h3><p>20 minuti in cui la stanza è solo tua. Scarichi la tensione, respiri, esci diverso da come sei entrato.</p></div>
+        <div><h3>Spacchi tutto</h3><p>15 minuti in cui la stanza è solo tua. Scarichi la tensione, respiri, esci diverso da come sei entrato.</p></div>
       </div>
     </div>
   </div>
@@ -495,44 +552,45 @@
       <h2 class="display">Prezzi</h2>
     </div>
     <div class="price-note">
-      Ogni sessione dura <strong>20 minuti</strong>. Tra una sessione e l'altra lasciamo <strong>20 minuti</strong> per pulire la stanza e ricaricarla di oggetti: per questo gli orari prenotabili partono ogni 40 minuti.<br>
-      Per prenotare online basta una <strong>riserva di 5 € a persona</strong>, scalata dal totale: il saldo si paga in sede. Se preferisci, puoi anche <strong>saldare l'intera sessione online</strong> al momento della prenotazione.
+      Ogni sessione dura <strong>15 minuti</strong> con qualsiasi pacchetto: cambia solo quanta roba rompi. Prezzi <strong>a persona</strong>, kit protezione incluso.<br>
+      <strong>In due: 10 € di sconto</strong> sul totale (Base 70 € invece di 80 €). <strong>Extra in sede:</strong> +5 minuti 10 €, oggetti grandi da 25 €.<br>
+      Per prenotare online basta una <strong>riserva di 5 € a persona</strong>, scalata dal totale: il saldo si paga in sede. Se preferisci, puoi anche <strong>saldare tutto online</strong>.
     </div>
     <div class="pricing-grid">
       <div class="price-card">
-        <h3>Stanza Singola</h3>
-        <div class="price mono">€37<span>/ persona</span></div>
-        <div class="desc">Per chi vuole sfogarsi da solo, senza distrazioni.</div>
+        <h3>Base</h3>
+        <div class="price mono">€40<span>/ persona</span></div>
+        <div class="desc">Per la prima volta: entri, spacchi, esci leggero.</div>
         <ul>
-          <li>20 minuti di sessione</li>
+          <li>15 minuti di sessione</li>
+          <li>15 oggetti piccoli + 1 medio</li>
           <li>Kit protezione incluso</li>
-          <li>10 oggetti da rompere</li>
         </ul>
-        <a href="#prenota" class="btn btn-ghost" data-room-preset="singola">Prenota questa</a>
+        <a href="#prenota" class="btn btn-ghost" data-package-preset="base">Prenota Base</a>
       </div>
       <div class="price-card featured">
-        <h3>Stanza Doppia</h3>
-        <div class="price mono">€62<span>/ 2 persone</span></div>
-        <div class="desc">Il più richiesto. Perfetto per sfogarsi in due.</div>
+        <h3>Plus</h3>
+        <div class="price mono">€60<span>/ persona</span></div>
+        <div class="desc">Il doppio della roba da rompere, stessi 15 minuti.</div>
         <ul>
-          <li>20 minuti di sessione</li>
+          <li>15 minuti di sessione</li>
+          <li>30 oggetti piccoli + 2 medi</li>
           <li>Kit protezione incluso</li>
-          <li>20 oggetti da rompere</li>
           <li>Musica a scelta durante la sessione</li>
         </ul>
-        <a href="#prenota" class="btn btn-primary" data-room-preset="doppia">Prenota questa</a>
+        <a href="#prenota" class="btn btn-primary" data-package-preset="plus">Prenota Plus</a>
       </div>
       <div class="price-card">
-        <h3>Sala Festa</h3>
-        <div class="price mono">€30<span>/ persona</span></div>
-        <div class="desc">Addii al nubilato, compleanni, team building.</div>
+        <h3>Extreme</h3>
+        <div class="price mono">€90<span>/ persona</span></div>
+        <div class="desc">Per chi ha accumulato parecchio. Ci sono anche gli oggetti grandi.</div>
         <ul>
-          <li>20 minuti di sessione</li>
+          <li>15 minuti di sessione</li>
+          <li>40 oggetti piccoli + 3 medi + 2 grandi</li>
           <li>Kit protezione incluso</li>
-          <li>10 oggetti a testa</li>
-          <li>Foto ricordo della stanza</li>
+          <li>Musica a scelta durante la sessione</li>
         </ul>
-        <a href="#prenota" class="btn btn-ghost" data-room-preset="festa">Prenota questa</a>
+        <a href="#prenota" class="btn btn-ghost" data-package-preset="extreme">Prenota Extreme</a>
       </div>
     </div>
   </div>
@@ -545,16 +603,16 @@
     <div class="section-head">
       <div class="tag">Calendario</div>
       <h2 class="display">Prenota online</h2>
-      <p>Scegli la stanza, il giorno e l'orario, poi riserva la tua room con 5 € a persona per bloccare la fascia. Sessioni da 20 minuti, dal mercoledì alla domenica.</p>
+      <p>Scegli pacchetto, stanza, giorno e orario, poi riserva la tua room con 5 € a persona per bloccare la fascia. Si parte sabato 19 dicembre: sessioni da 15 minuti, dal mercoledì alla domenica.</p>
     </div>
 
     <noscript>
-      <div class="bk-empty">Per prenotare online serve JavaScript attivo. Puoi prenotare anche su WhatsApp al 350 973 6066 o scrivendo a rageroomcuneo@gmail.com. Siamo aperti dal mercoledì alla domenica dalle 14:00, sabato e domenica fino a mezzanotte.</div>
+      <div class="bk-empty">Per prenotare online serve JavaScript attivo. Puoi prenotare anche su WhatsApp al 350 973 6066 o scrivendo a rageroomcuneo@gmail.com. Apriamo sabato 19 dicembre in Via Valle Po 92, Madonna dell'Olmo (Cuneo): dal mercoledì alla domenica dalle 14:00, sabato e domenica fino a mezzanotte.</div>
     </noscript>
 
     <div class="bk-notice" id="bkNotice" hidden></div>
 
-    <div class="bk-closed" id="bkClosed">
+    <div class="bk-closed" id="bkClosed" hidden>
       <strong>Prenotazioni online presto aperte!</strong>
       Apriranno a breve — iscriviti alla lista d'attesa qui sotto per essere avvisato appena si aprono e non perderti il video GoPro omaggio per i primi 50.
       <a href="#lista-attesa" class="btn btn-primary" style="margin-top:14px;display:inline-block;">Iscrivimi alla lista d'attesa ↓</a>
@@ -562,29 +620,47 @@
 
     <div class="booking" id="bkFlow" hidden>
       <div>
-        <div class="bk-label"><span class="bk-n">01</span> Scegli la stanza</div>
+        <div class="bk-label"><span class="bk-n">01</span> Scegli il pacchetto</div>
+        <div class="room-grid" id="bkPackages">
+          <button type="button" class="room-opt" data-package="base" aria-pressed="true">
+            <div class="rm-name">Base</div>
+            <div class="rm-meta">15 min · 15 oggetti piccoli + 1 medio</div>
+            <div class="rm-price">€40<span style="font-size:.55em">/pers.</span></div>
+          </button>
+          <button type="button" class="room-opt" data-package="plus" aria-pressed="false">
+            <div class="rm-name">Plus</div>
+            <div class="rm-meta">15 min · 30 oggetti piccoli + 2 medi</div>
+            <div class="rm-price">€60<span style="font-size:.55em">/pers.</span></div>
+          </button>
+          <button type="button" class="room-opt" data-package="extreme" aria-pressed="false">
+            <div class="rm-name">Extreme</div>
+            <div class="rm-meta">15 min · 40 piccoli + 3 medi + 2 grandi</div>
+            <div class="rm-price">€90<span style="font-size:.55em">/pers.</span></div>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <div class="bk-label"><span class="bk-n">02</span> Chi entra</div>
         <div class="room-grid" id="bkRooms">
           <button type="button" class="room-opt" data-room="singola" data-min="1" data-max="1" aria-pressed="false">
             <div class="rm-name">Stanza Singola</div>
-            <div class="rm-meta">1 persona · 20 min</div>
-            <div class="rm-price">€37</div>
+            <div class="rm-meta">Da solo · 1 persona</div>
           </button>
           <button type="button" class="room-opt" data-room="doppia" data-min="1" data-max="2" aria-pressed="false">
             <div class="rm-name">Stanza Doppia</div>
-            <div class="rm-meta">Fino a 2 persone · 20 min</div>
-            <div class="rm-price">€62</div>
+            <div class="rm-meta">In due · 10 € di sconto</div>
           </button>
           <button type="button" class="room-opt" data-room="festa" data-min="3" data-max="5" aria-pressed="false">
             <div class="rm-name">Sala Festa</div>
-            <div class="rm-meta">Da 3 a 5 persone · 20 min</div>
-            <div class="rm-price">€30<span style="font-size:.55em">/pers.</span></div>
+            <div class="rm-meta">Gruppi da 3 a 5 persone</div>
           </button>
         </div>
       </div>
 
       <div class="bk-cols">
         <div>
-          <div class="bk-label"><span class="bk-n">02</span> Scegli il giorno</div>
+          <div class="bk-label"><span class="bk-n">03</span> Scegli il giorno</div>
           <div class="cal">
             <div class="cal-head">
               <button type="button" class="cal-nav" id="bkPrev" aria-label="Mese precedente">←</button>
@@ -593,19 +669,19 @@
             </div>
             <div class="cal-dow" aria-hidden="true"><div>Lun</div><div>Mar</div><div>Mer</div><div>Gio</div><div>Ven</div><div>Sab</div><div>Dom</div></div>
             <div class="cal-grid" id="bkDays"></div>
-            <div class="cal-legend">Mer–Ven 14:00 – 22:00 · Sab e Dom 14:00 – 00:00<br>Lunedì e martedì chiusi · Prenotazioni online presto disponibili.</div>
+            <div class="cal-legend">Mer–Ven 14:00 – 22:00 · Sab e Dom 14:00 – 00:00 · Lun e Mar chiusi<br><span class="cal-holiday">🎄 Feste: aperti anche lun 28 e mar 29 dicembre · 24 e 31 dicembre fino alle 19 · chiusi 25 dicembre e 1° gennaio</span></div>
           </div>
         </div>
         <div>
-          <div class="bk-label"><span class="bk-n">03</span> Scegli l'orario</div>
+          <div class="bk-label"><span class="bk-n">04</span> Scegli l'orario</div>
           <div id="bkSlots" aria-live="polite"></div>
         </div>
       </div>
 
       <div>
-        <div class="bk-label"><span class="bk-n">04</span> I tuoi dati</div>
+        <div class="bk-label"><span class="bk-n">05</span> I tuoi dati</div>
         <form class="bk-form" id="bkForm" novalidate>
-          <div class="full bk-recap" id="bkRecap">Scegli stanza, giorno e orario per continuare.</div>
+          <div class="full bk-recap" id="bkRecap">Scegli pacchetto, stanza, giorno e orario per continuare.</div>
           <div class="field">
             <label for="bkName">Nome e cognome</label>
             <input id="bkName" type="text" autocomplete="name" required>
@@ -628,6 +704,11 @@
               <label class="paytype-opt"><input type="radio" name="bkPayType" value="deposit" checked> Solo riserva <small>(5 € a persona)</small></label>
               <label class="paytype-opt"><input type="radio" name="bkPayType" value="full"> Tutto ora <small id="bkFullPriceHint"></small></label>
             </div>
+          </div>
+          <div class="field full">
+            <label for="bkVoucher">Hai un buono regalo? (facoltativo)</label>
+            <input id="bkVoucher" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="16" placeholder="RR-XXXX-XXXX">
+            <div class="bk-voucher-note" id="bkVoucherNote" hidden>🎁 Con il buono non paghi nulla online: la sessione è già pagata.</div>
           </div>
           <div class="field full">
             <label for="bkNotes">Note (facoltative)</label>
@@ -660,6 +741,104 @@
   </div>
 </section>
 
+<div class="hazard thin"></div>
+
+<section id="regala" class="gift">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="tag">Idea regalo · Natale</div>
+      <h2 class="display">Regala una <span style="color:var(--pink)">sessione</span></h2>
+      <p>Il regalo per chi ha bisogno di sfogarsi. Lo paghi online e ricevi subito il buono via email, da stampare o da mandare su WhatsApp. Chi lo riceve prenota quando vuole.</p>
+      <div class="gift-perks"><span>Valido 12 mesi</span><span>Arriva subito via email</span><span>Si usa dal calendario</span></div>
+    </div>
+
+    <div class="bk-notice" id="gfNotice" hidden></div>
+
+    <div class="gift-flow" id="gfFlow">
+      <div>
+        <div class="bk-label"><span class="bk-n">01</span> Che pacchetto regali</div>
+        <div class="room-grid" id="gfRooms">
+          <button type="button" class="room-opt" data-package="base" aria-pressed="false">
+            <div class="rm-name">Base</div>
+            <div class="rm-meta">15 min · 15 oggetti piccoli + 1 medio</div>
+            <div class="rm-price">€40<span style="font-size:.55em">/pers.</span></div>
+          </button>
+          <button type="button" class="room-opt" data-package="plus" aria-pressed="false">
+            <div class="rm-name">Plus</div>
+            <div class="rm-meta">15 min · 30 oggetti piccoli + 2 medi</div>
+            <div class="rm-price">€60<span style="font-size:.55em">/pers.</span></div>
+          </button>
+          <button type="button" class="room-opt" data-package="extreme" aria-pressed="false">
+            <div class="rm-name">Extreme</div>
+            <div class="rm-meta">15 min · 40 piccoli + 3 medi + 2 grandi</div>
+            <div class="rm-price">€90<span style="font-size:.55em">/pers.</span></div>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <div class="bk-label"><span class="bk-n">02</span> I dati del buono</div>
+        <form class="bk-form" id="gfForm" novalidate>
+          <div class="field full" id="gfPeopleField">
+            <label for="gfPeople">Per quante persone</label>
+            <select id="gfPeople">
+              <option value="1">1 persona</option>
+              <option value="2" selected>2 persone (10 € di sconto)</option>
+              <option value="3">3 persone</option>
+              <option value="4">4 persone</option>
+              <option value="5">5 persone</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="gfBuyer">Il tuo nome</label>
+            <input id="gfBuyer" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="gfEmail">La tua email (ti mandiamo qui il buono)</label>
+            <input id="gfEmail" type="email" autocomplete="email" placeholder="tuonome@email.it" required>
+          </div>
+          <div class="field full">
+            <label for="gfRecipient">Per chi è</label>
+            <input id="gfRecipient" type="text" autocomplete="off" placeholder="Nome di chi riceve il regalo" required>
+          </div>
+          <div class="field full">
+            <label for="gfMessage">Dedica (facoltativa)</label>
+            <textarea id="gfMessage" maxlength="300" placeholder="Es. Per quando il capo ti fa impazzire. Buon Natale!"></textarea>
+          </div>
+          <div class="full bk-error" id="gfError" hidden></div>
+          <div class="full bk-deposit">
+            <span aria-hidden="true">🎁</span>
+            <span>Totale buono <strong id="gfTotal">€—</strong>
+              <small>Pagamento sicuro con carta. Il buono arriva subito via email ed è valido 12 mesi.</small>
+            </span>
+          </div>
+          <div class="full">
+            <button type="submit" class="btn btn-primary bk-submit" id="gfSubmit">Compra il buono</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="gfDone" hidden>
+      <div class="gv-card" id="gvCard">
+        <div class="gv-eyebrow">Buono regalo · Rage Room Cuneo</div>
+        <div class="gv-title">Spacca. Sfogati. <span>Riparti.</span></div>
+        <div class="gv-line" id="gvFor"></div>
+        <div class="gv-msg" id="gvMsg" hidden></div>
+        <div class="gv-line" id="gvWhat"></div>
+        <div class="gv-code"><small>Codice</small><strong id="gvCode"></strong></div>
+        <div class="gv-foot" id="gvFoot"></div>
+        <div class="gv-foot">Si prenota su rageroomcuneo.it scrivendo il codice nel campo “Buono regalo”.<br>Via Valle Po 92, Madonna dell'Olmo (Cuneo)</div>
+      </div>
+      <p style="color:var(--dim);margin-top:16px;max-width:560px;">Ti abbiamo mandato il buono anche via email. Se non lo trovi, controlla nello spam.</p>
+      <div class="gift-done-ctas">
+        <button type="button" class="btn btn-primary" id="gvPrint">🖨️ Stampa il buono</button>
+        <a class="btn btn-ghost" id="gvShare" href="#" target="_blank" rel="noopener">💬 Mandalo su WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="hazard"></div>
 
 <section id="contatti">
@@ -672,7 +851,7 @@
       <div class="contact-info">
         <div class="contact-row">
           <div class="ic">📍</div>
-          <div><h4>Indirizzo</h4><div class="val">Cuneo · indirizzo in arrivo</div></div>
+          <div><h4>Indirizzo</h4><a class="val" href="https://maps.google.com/?q=Via+Valle+Po+92,+12100+Cuneo+CN" target="_blank" rel="noopener">Via Valle Po 92<br>Madonna dell'Olmo · 12100 Cuneo</a></div>
         </div>
         <div class="contact-row">
           <div class="ic">📞</div>
@@ -688,15 +867,15 @@
         </div>
         <div class="contact-row">
           <div class="ic">🕒</div>
-          <div><h4>Orari</h4><div class="val" style="font-weight:600; font-size:15px; color:var(--dim);">Mer, Gio, Ven: 14:00 – 22:00<br>Sab e Dom: 14:00 – 00:00<br>Lunedì e martedì chiusi</div></div>
+          <div><h4>Orari</h4><div class="val" style="font-weight:600; font-size:15px; color:var(--dim);">Mer, Gio, Ven: 14:00 – 22:00<br>Sab e Dom: 14:00 – 00:00<br>Lunedì e martedì chiusi<br>Feste: aperti anche 28 e 29 dicembre, 24 e 31 dicembre fino alle 19, chiusi 25 dicembre e 1° gennaio</div></div>
         </div>
         <div class="contact-row">
           <div class="ic">📅</div>
-          <div><h4>Prenotazioni</h4><div class="val" style="font-weight:600; font-size:15px; color:var(--dim);">Online dal calendario, presto disponibili</div></div>
+          <div><h4>Prenotazioni</h4><div class="val" style="font-weight:600; font-size:15px; color:var(--dim);">Online dal calendario, a qualsiasi ora</div></div>
         </div>
       </div>
       <div class="map-wrap">
-        <iframe src="https://www.google.com/maps?q=Cuneo&output=embed" loading="lazy" allowfullscreen></iframe>
+        <iframe src="https://www.google.com/maps?q=Via+Valle+Po+92,+12100+Cuneo+CN&output=embed" title="Mappa: Via Valle Po 92, Cuneo" loading="lazy" allowfullscreen></iframe>
       </div>
     </div>
   </div>
@@ -707,9 +886,10 @@
     <a href="#come-funziona">Come funziona</a>
     <a href="#prezzi">Prezzi</a>
     <a href="#prenota">Prenota</a>
+    <a href="#regala">Regala</a>
     <a href="#contatti">Contatti</a>
   </div>
-  <div>Rage Room Cuneo — Cuneo</div>
+  <div>Rage Room Cuneo — Via Valle Po 92, Madonna dell'Olmo (Cuneo)</div>
   <div class="fcontact">
     <a href="tel:+393509736066">+39 350 973 6066</a>
     <a href="https://wa.me/393509736066" target="_blank" rel="noopener">WhatsApp</a>
@@ -757,10 +937,14 @@
   var depositLabelEl = document.getElementById('bkDepositLabel');
   var depositTailEl = document.getElementById('bkDepositTail');
   var depositNoteEl = document.getElementById('bkDepositNote');
+  var voucherEl = document.getElementById('bkVoucher');
+  var voucherNoteEl = document.getElementById('bkVoucherNote');
+  var depositBoxEl = document.getElementById('bkDeposit');
+  var packagesEl = document.getElementById('bkPackages');
 
   /* Interruttore prenotazioni: deve restare allineato a BOOKING_LIVE in lib/booking.ts.
      Quando si è pronti ad aprire davvero, mettere true qui e lato server. */
-  var BOOKING_LIVE = false;
+  var BOOKING_LIVE = true;
   var bkClosedEl = document.getElementById('bkClosed');
   var bkFlowEl = document.getElementById('bkFlow');
   if (!BOOKING_LIVE) {
@@ -777,16 +961,22 @@
     slots: [], first: null, last: null, cursor: null, loading: false,
     /* Giorni di apertura con la numerazione di Date.getUTCDay(): 0 = domenica. */
     openWeekdays: [3, 4, 5, 6, 0],
+    /* Feste: chiusure straordinarie e aperture extra (le manda anche l'API). */
+    closedDates: ['2026-12-25', '2027-01-01'],
+    extraOpenDates: ['2026-12-28', '2026-12-29'],
     depositPerPerson: 500,
-    paymentType: 'deposit'
+    paymentType: 'deposit',
+    pkg: 'base'
   };
 
   /* Prezzo pieno per stanza, in centesimi: Singola e Doppia fisse, Festa a persona. */
-  var ROOM_PRICE_CENTS = { singola: 3700, doppia: 6200, festa: 3000 };
+  /* Prezzo a persona per pacchetto, in centesimi; in due 10 € di sconto sul totale. */
+  var PACKAGE_PRICE_CENTS = { base: 4000, plus: 6000, extreme: 9000 };
+  var PACKAGE_NAMES = { base: 'Base', plus: 'Plus', extreme: 'Extreme' };
   function fullPriceCents() {
     if (!state.room) return 0;
-    var base = ROOM_PRICE_CENTS[state.room] || 0;
-    return state.room === 'festa' ? base * peopleCount() : base;
+    var n = peopleCount();
+    return (PACKAGE_PRICE_CENTS[state.pkg] || 0) * n - (n === 2 ? 1000 : 0);
   }
   function amountCents() { return state.paymentType === 'full' ? fullPriceCents() : depositCents(); }
 
@@ -794,7 +984,10 @@
   function iso(y, m, d) { return y + '-' + pad(m + 1) + '-' + pad(d); }
   function parseIso(value) { var p = value.split('-'); return { y: +p[0], m: +p[1] - 1, d: +p[2] }; }
   function monthIndex(value) { var p = parseIso(value); return p.y * 12 + p.m; }
+  function isHolidayClosed(value) { return state.closedDates.indexOf(value) !== -1; }
   function isOpenDate(value) {
+    if (isHolidayClosed(value)) return false;
+    if (state.extraOpenDates.indexOf(value) !== -1) return true;
     var p = parseIso(value);
     return state.openWeekdays.indexOf(new Date(Date.UTC(p.y, p.m, p.d)).getUTCDay()) !== -1;
   }
@@ -841,7 +1034,7 @@
       btn.className = 'cal-day' + (value === state.date ? ' sel' : '');
       btn.textContent = d;
       btn.disabled = value < state.first || value > state.last || !open;
-      if (!open) btn.title = 'Chiuso: siamo aperti dal mercoledì alla domenica';
+      if (!open) btn.title = isHolidayClosed(value) ? 'Chiuso per le feste' : 'Chiuso: siamo aperti dal mercoledì alla domenica';
       btn.setAttribute('data-date', value);
       if (value === state.date) btn.setAttribute('aria-current', 'date');
       daysEl.appendChild(btn);
@@ -879,6 +1072,7 @@
   function renderSlots() {
     if (state.loading) return showSkeleton();
     if (!state.date) return showMessage('Scegli un giorno dal calendario per vedere gli orari liberi.');
+    if (isHolidayClosed(state.date)) return showMessage('In questo giorno siamo chiusi per le feste. Scegli un\'altra data.');
     if (!isOpenDate(state.date)) return showMessage('Il lunedì e il martedì siamo chiusi. Scegli un giorno da mercoledì a domenica.');
     if (!state.slots.length) return showMessage('Nessun orario disponibile per questo giorno.');
 
@@ -1017,6 +1211,7 @@
   function updateRecap() {
     var chosen = state.time ? slotAt(state.time) : null;
     var parts = [
+      'Pacchetto ' + PACKAGE_NAMES[state.pkg],
       state.room ? state.roomName : 'Stanza da scegliere',
       state.date ? (state.dateLabel || state.date) : 'giorno da scegliere',
       chosen ? chosen.time + '–' + chosen.end : 'orario da scegliere'
@@ -1038,8 +1233,18 @@
     errEl.hidden = false;
   }
 
+  function hasVoucher() { return !!(voucherEl && voucherEl.value.trim()); }
   function submitLabel() {
+    if (hasVoucher()) return 'Prenota con il buono';
     return state.paymentType === 'full' ? 'Prenota e paga tutto' : 'Riserva la tua room';
+  }
+  /* Con il buono regalo spariscono riserva e pagamento: la sessione è già pagata. */
+  function updateVoucherUi() {
+    var on = hasVoucher();
+    voucherNoteEl.hidden = !on;
+    payTypeFieldEl.hidden = on;
+    depositBoxEl.hidden = on;
+    updateSubmitLabel();
   }
   function updateSubmitLabel() {
     if (!submitEl.disabled) submitEl.textContent = submitLabel();
@@ -1050,6 +1255,19 @@
   roomsEl.addEventListener('click', function (ev) {
     var btn = ev.target.closest('.room-opt');
     if (btn) selectRoom(btn);
+  });
+
+  function selectPackage(id) {
+    if (!PACKAGE_PRICE_CENTS[id]) return;
+    state.pkg = id;
+    var all = packagesEl.querySelectorAll('.room-opt');
+    for (var i = 0; i < all.length; i++) all[i].setAttribute('aria-pressed', all[i].getAttribute('data-package') === id ? 'true' : 'false');
+    updateDeposit();
+    updateRecap();
+  }
+  packagesEl.addEventListener('click', function (ev) {
+    var btn = ev.target.closest('.room-opt');
+    if (btn) selectPackage(btn.getAttribute('data-package'));
   });
 
   daysEl.addEventListener('click', function (ev) {
@@ -1080,6 +1298,8 @@
     updateRecap();
   });
 
+  voucherEl.addEventListener('input', updateVoucherUi);
+
   payTypeEl.addEventListener('change', function (ev) {
     if (ev.target.name !== 'bkPayType') return;
     state.paymentType = ev.target.value;
@@ -1088,13 +1308,11 @@
     updateSubmitLabel();
   });
 
-  // I pulsanti dei prezzi preselezionano la stanza corrispondente.
-  var presets = document.querySelectorAll('[data-room-preset]');
+  // I pulsanti dei prezzi preselezionano il pacchetto corrispondente.
+  var presets = document.querySelectorAll('[data-package-preset]');
   for (var p = 0; p < presets.length; p++) {
     presets[p].addEventListener('click', function (ev) {
-      var wanted = ev.currentTarget.getAttribute('data-room-preset');
-      var target = roomsEl.querySelector('.room-opt[data-room="' + wanted + '"]');
-      if (target) selectRoom(target);
+      selectPackage(ev.currentTarget.getAttribute('data-package-preset'));
     });
   }
 
@@ -1102,15 +1320,16 @@
     ev.preventDefault();
     showError('');
 
-    if (!state.room) return showError('Scegli la stanza (punto 01).');
-    if (!state.date) return showError('Scegli il giorno (punto 02).');
-    if (!state.time) return showError('Scegli l\'orario (punto 03).');
+    if (!state.room) return showError('Scegli chi entra: la stanza (punto 02).');
+    if (!state.date) return showError('Scegli il giorno (punto 03).');
+    if (!state.time) return showError('Scegli l\'orario (punto 04).');
     if (nameEl.value.trim().length < 2) return showError('Inserisci il tuo nome e cognome.');
     if (phoneEl.value.replace(/\D/g, '').length < 8) return showError('Inserisci un numero di telefono valido.');
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailEl.value.trim())) return showError('Inserisci un indirizzo email valido.');
 
     var payload = {
       room: state.room,
+      package: state.pkg,
       date: state.date,
       time: state.time,
       people: peopleCount(),
@@ -1118,7 +1337,8 @@
       phone: phoneEl.value.trim(),
       email: emailEl.value.trim(),
       notes: notesEl.value.trim(),
-      paymentType: state.paymentType
+      paymentType: state.paymentType,
+      voucherCode: voucherEl.value.trim()
     };
 
     submitEl.disabled = true;
@@ -1151,7 +1371,7 @@
 
         submitEl.disabled = false;
         submitEl.textContent = submitLabel();
-        showConfirmed(result.data.booking, result.data.whatsappUrl);
+        showConfirmed(result.data.booking, result.data.whatsappUrl, result.data.voucher);
       })
       .catch(function () {
         submitEl.disabled = false;
@@ -1162,9 +1382,12 @@
 
   /* ---------- Conferma ---------- */
 
-  function showConfirmed(booking, whatsappUrl) {
+  function showConfirmed(booking, whatsappUrl, voucher) {
     doneMetaEl.textContent = booking.roomName + '  ·  ' + booking.dateLabel + '  ·  ' + booking.time + '–' + booking.end;
-    doneNoteEl.textContent = booking.paid
+    doneNoteEl.textContent = voucher
+      ? 'Prenotata con il buono regalo ' + voucher.code + ' — codice #' + booking.id + '. Ti abbiamo mandato l\'email di conferma. ' +
+        (voucher.extraDueCents ? 'In sede saldi solo ' + euro(voucher.extraDueCents) + ' per le persone in più.' : 'Non c\'è nulla da pagare in sede.')
+      : booking.paid
       ? (booking.isFullPayment
           ? 'Pagamento di ' + euro(booking.depositCents) + ' ricevuto per intero — codice #' + booking.id + '. Ti abbiamo mandato l\'email di conferma. Non c\'è nulla da pagare in sede.'
           : 'Riserva di ' + euro(booking.depositCents) + ' ricevuta — codice #' + booking.id + '. Ti abbiamo mandato l\'email di conferma. Il saldo si paga in sede.')
@@ -1187,6 +1410,8 @@
     phoneEl.value = '';
     emailEl.value = '';
     notesEl.value = '';
+    voucherEl.value = '';
+    updateVoucherUi();
     submitEl.disabled = false;
     submitEl.textContent = submitLabel();
     showError('');
@@ -1239,6 +1464,8 @@
         state.first = cfg.firstBookableDate;
         state.last = cfg.lastBookableDate;
         if (cfg.openWeekdays && cfg.openWeekdays.length) state.openWeekdays = cfg.openWeekdays;
+        if (cfg.closedDates) state.closedDates = cfg.closedDates;
+        if (cfg.extraOpenDates) state.extraOpenDates = cfg.extraOpenDates;
         if (cfg.depositCentsPerPerson) state.depositPerPerson = cfg.depositCentsPerPerson;
         // Il calendario si apre sul primo giorno in cui siamo davvero aperti.
         state.date = cfg.firstOpenDate || state.first;
@@ -1254,6 +1481,147 @@
         showMessage('Non riesco a contattare il sistema di prenotazioni. ' + FALLBACK);
       });
   }
+})();
+
+/* --- Buono regalo: scelta, pagamento su Stripe e buono pronto da stampare --- */
+(function () {
+  var flow = document.getElementById('gfFlow');
+  if (!flow) return;
+  var PRICES = { base: 4000, plus: 6000, extreme: 9000 };
+  var roomsEl = document.getElementById('gfRooms');
+  var peopleField = document.getElementById('gfPeopleField');
+  var peopleEl = document.getElementById('gfPeople');
+  var totalEl = document.getElementById('gfTotal');
+  var formEl = document.getElementById('gfForm');
+  var errEl = document.getElementById('gfError');
+  var submitEl = document.getElementById('gfSubmit');
+  var noticeEl = document.getElementById('gfNotice');
+  var doneEl = document.getElementById('gfDone');
+  var room = null;
+
+  function euro(cents) { return '€' + (cents / 100).toFixed(2).replace('.', ','); }
+  function total() {
+    if (!room) return 0;
+    var n = parseInt(peopleEl.value, 10) || 1;
+    return PRICES[room] * n - (n === 2 ? 1000 : 0);
+  }
+  function refresh() {
+    totalEl.textContent = room ? euro(total()) : '€—';
+    submitEl.textContent = room ? 'Compra il buono — ' + euro(total()) : 'Compra il buono';
+  }
+  function showError(text) { errEl.textContent = text || ''; errEl.hidden = !text; }
+  function showNotice(text) { noticeEl.textContent = text || ''; noticeEl.hidden = !text; }
+
+  roomsEl.addEventListener('click', function (ev) {
+    var btn = ev.target.closest('.room-opt');
+    if (!btn) return;
+    room = btn.getAttribute('data-package');
+    var all = roomsEl.querySelectorAll('.room-opt');
+    for (var i = 0; i < all.length; i++) all[i].setAttribute('aria-pressed', all[i] === btn ? 'true' : 'false');
+    showError('');
+    refresh();
+  });
+  peopleEl.addEventListener('change', refresh);
+
+  formEl.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    showError('');
+    var buyer = document.getElementById('gfBuyer').value.trim();
+    var email = document.getElementById('gfEmail').value.trim();
+    var recipient = document.getElementById('gfRecipient').value.trim();
+    var message = document.getElementById('gfMessage').value.trim();
+    if (!room) return showError('Scegli il pacchetto da regalare (punto 01).');
+    if (buyer.length < 2) return showError('Scrivi il tuo nome.');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return showError('Scrivi un\'email valida: lì ti mandiamo il buono.');
+    if (!recipient) return showError('Scrivi il nome di chi riceve il regalo.');
+
+    submitEl.disabled = true;
+    submitEl.textContent = 'Apro il pagamento…';
+    fetch('/api/buono', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ package: room, people: parseInt(peopleEl.value, 10) || 1, buyerName: buyer, buyerEmail: email, recipientName: recipient, message: message })
+    })
+      .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+      .then(function (r) {
+        if (r.ok && r.data.payment && r.data.payment.url) return window.location.assign(r.data.payment.url);
+        submitEl.disabled = false;
+        refresh();
+        showError((r.data && r.data.error) || 'Pagamento non disponibile. Riprova o scrivici su WhatsApp al 350 973 6066.');
+      })
+      .catch(function () {
+        submitEl.disabled = false;
+        refresh();
+        showError('Connessione non disponibile. Riprova o scrivici su WhatsApp al 350 973 6066.');
+      });
+  });
+
+  function showVoucher(v) {
+    document.getElementById('gvFor').innerHTML = '';
+    var forEl = document.getElementById('gvFor');
+    forEl.appendChild(document.createTextNode('Per '));
+    var b = document.createElement('strong'); b.textContent = v.recipientName; forEl.appendChild(b);
+    if (v.buyerName) { forEl.appendChild(document.createTextNode(', da parte di ')); var b2 = document.createElement('strong'); b2.textContent = v.buyerName; forEl.appendChild(b2); }
+    var msgEl = document.getElementById('gvMsg');
+    msgEl.hidden = !v.message;
+    msgEl.textContent = v.message ? '“' + v.message + '”' : '';
+    document.getElementById('gvWhat').textContent = v.packageName + ' · ' + v.peopleLabel + ' · sessione da 15 minuti';
+    document.getElementById('gvCode').textContent = v.code;
+    document.getElementById('gvFoot').textContent = 'Valido fino al ' + v.expiresLabel + '.';
+    var text = '🎁 Ti ho regalato una sessione alla Rage Room Cuneo! ' + v.packageName + ' (' + v.peopleLabel + ').' +
+      (v.message ? ' "' + v.message + '"' : '') + ' Codice: ' + v.code +
+      '. Prenota su https://rageroomcuneo.it/#prenota scrivendo il codice nel campo "Buono regalo". Valido fino al ' + v.expiresLabel + '.';
+    document.getElementById('gvShare').href = 'https://wa.me/?text=' + encodeURIComponent(text);
+    flow.hidden = true;
+    doneEl.hidden = false;
+    showNotice('');
+    doneEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  document.getElementById('gvPrint').addEventListener('click', function () { window.print(); });
+
+  var params = new URLSearchParams(window.location.search);
+  var outcome = params.get('buono');
+  if (!outcome) return;
+  var sessionId = params.get('session');
+  if (window.history && window.history.replaceState) window.history.replaceState({}, '', window.location.pathname + '#regala');
+  if (outcome === 'annullato') return showNotice('Pagamento annullato: nessun addebito. Puoi riprovare quando vuoi.');
+  if (outcome !== 'ok' || !sessionId) return;
+
+  showNotice('Pagamento ricevuto, preparo il tuo buono…');
+  var tries = 0;
+  (function poll() {
+    fetch('/api/buono-stato?session=' + encodeURIComponent(sessionId), { headers: { Accept: 'application/json' } })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data.ok && data.voucher) return showVoucher(data.voucher);
+        if (++tries < 6) return setTimeout(poll, 2500);
+        showNotice('Il pagamento è in elaborazione: il buono ti arriva via email appena confermato. Per dubbi scrivici su WhatsApp.');
+      })
+      .catch(function () {
+        if (++tries < 6) return setTimeout(poll, 2500);
+        showNotice('Il buono ti arriva via email. Per dubbi scrivici su WhatsApp al 350 973 6066.');
+      });
+  })();
+})();
+
+/* --- Conto alla rovescia all'apertura: sabato 19 dicembre 2026, ore 14:00 --- */
+(function () {
+  var box = document.getElementById('countdown');
+  if (!box) return;
+  var OPENING = Date.parse('2026-12-19T14:00:00+01:00');
+  var d = document.getElementById('cdDays'), h = document.getElementById('cdHours'), m = document.getElementById('cdMins');
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function tick() {
+    var left = OPENING - Date.now();
+    if (left <= 0) { box.hidden = true; return false; }
+    var mins = Math.floor(left / 60000);
+    d.textContent = Math.floor(mins / 1440);
+    h.textContent = pad(Math.floor((mins % 1440) / 60));
+    m.textContent = pad(mins % 60);
+    box.hidden = false;
+    return true;
+  }
+  if (tick()) setInterval(tick, 30000);
 })();
 
 /* --- Lista d'attesa: invio senza ricaricare la pagina --- */

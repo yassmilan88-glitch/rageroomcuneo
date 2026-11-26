@@ -10,6 +10,8 @@ export const bookings = pgTable(
     slotTime: text("slot_time").notNull(),
     // singola | doppia | festa
     room: text().notNull(),
+    // Pacchetto scelto: base | plus | extreme
+    package: text().notNull().default("base"),
     people: integer().notNull().default(1),
     name: text().notNull(),
     phone: text().notNull(),

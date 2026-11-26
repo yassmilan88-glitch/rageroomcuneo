@@ -48,10 +48,11 @@ export async function createDepositCheckout(
 ): Promise<{ id: string; url: string }> {
   const stripe = getStripe();
   const perPerson = Math.round(request.depositCents / request.people);
-  const label = request.isFullPayment ? "Pagamento completo" : "Acconto";
+  // Verso il cliente si parla sempre di "riserva", mai di "acconto".
+  const label = request.isFullPayment ? "Pagamento completo" : "Riserva";
   const detail = request.isFullPayment
     ? "Pagamento a persona, sessione saldata per intero."
-    : "Acconto a persona, saldo in sede.";
+    : "Riserva a persona, saldo in sede.";
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",

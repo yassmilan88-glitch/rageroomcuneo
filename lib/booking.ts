@@ -4,9 +4,13 @@
  * validazioni: usata sia dall'API disponibilità che dall'API di prenotazione.
  */
 
-/** Sessione di 20 minuti, 20 minuti di pausa per pulizia e ricarica stanza. */
-export const SESSION_MINUTES = 20;
-export const TURNAROUND_MINUTES = 20;
+/**
+ * Ogni sessione dura 15 minuti, qualunque sia il pacchetto (i pacchetti
+ * cambiano solo gli oggetti). Tra una fascia e l'altra restano 25 minuti per
+ * vestizione, pulizia e ricarica della stanza, ed eventuali 5 minuti extra.
+ */
+export const SESSION_MINUTES = 15;
+export const TURNAROUND_MINUTES = 25;
 /** Una sessione parte ogni 40 minuti. */
 export const SLOT_STEP_MINUTES = SESSION_MINUTES + TURNAROUND_MINUTES;
 
@@ -25,8 +29,8 @@ export const OPEN_WEEKDAYS = [3, 4, 5, 6, 0];
 /** Giorni con chiusura posticipata a mezzanotte: sabato e domenica. */
 export const LATE_WEEKDAYS = [6, 0];
 
-/** Le prenotazioni partono da sabato 3 ottobre 2026. */
-export const BOOKING_OPEN_DATE = "2026-10-03";
+/** Apertura: sabato 19 dicembre 2026. Prima di questa data non si prenota. */
+export const BOOKING_OPEN_DATE = "2026-12-19";
 
 /**
  * Interruttore generale del sistema di prenotazione online.
@@ -34,11 +38,30 @@ export const BOOKING_OPEN_DATE = "2026-10-03";
  * di prenotazione rifiuta ogni richiesta. Passare a `true` quando si è
  * pronti ad aprire davvero le prenotazioni.
  */
-export const BOOKING_LIVE = false;
+export const BOOKING_LIVE = true;
 /** Finestra di prenotazione: 90 giorni in avanti. */
 export const BOOKING_WINDOW_DAYS = 90;
 
 export const TIMEZONE = "Europe/Rome";
+
+/** Indirizzo del locale, usato nel sito e nelle email di conferma. */
+export const VENUE_ADDRESS = "Via Valle Po 92, Madonna dell'Olmo, 12100 Cuneo (CN)";
+export const VENUE_MAPS_URL = "https://maps.google.com/?q=Via+Valle+Po+92,+12100+Cuneo+CN";
+
+/**
+ * Calendario delle feste. Basta modificare queste tre liste per cambiare
+ * chiusure straordinarie, aperture extra e giornate con orario ridotto.
+ * (23 e 30 dicembre e 6 gennaio sono mercoledì: già aperti di regola.)
+ */
+/** Giorni di chiusura straordinaria. */
+export const CLOSED_DATES = ["2026-12-25", "2027-01-01"];
+/** Giorni di apertura extra, fuori dai giorni normali (lunedì e martedì delle feste). */
+export const EXTRA_OPEN_DATES = ["2026-12-28", "2026-12-29"];
+/** Giornate con chiusura anticipata: data → orario di chiusura in minuti. */
+export const EARLY_CLOSING: Record<string, number> = {
+  "2026-12-24": 19 * 60,
+  "2026-12-31": 19 * 60,
+};
 
 /** Acconto online obbligatorio: 5 € a persona, il resto si salda in sede. */
 export const DEPOSIT_CENTS_PER_PERSON = 500;
@@ -53,14 +76,43 @@ export interface Room {
   name: string;
   minPeople: number;
   maxPeople: number;
-  price: string;
 }
 
+/** Le tre stanze fisiche: ognuna si prenota una volta per fascia oraria. */
 export const ROOMS: Room[] = [
-  { id: "singola", name: "Stanza Singola", minPeople: 1, maxPeople: 1, price: "€37" },
-  { id: "doppia", name: "Stanza Doppia", minPeople: 1, maxPeople: 2, price: "€62" },
-  { id: "festa", name: "Sala Festa", minPeople: 3, maxPeople: 5, price: "€30" },
+  { id: "singola", name: "Stanza Singola", minPeople: 1, maxPeople: 1 },
+  { id: "doppia", name: "Stanza Doppia", minPeople: 1, maxPeople: 2 },
+  { id: "festa", name: "Sala Festa", minPeople: 3, maxPeople: 5 },
 ];
+
+export type PackageId = "base" | "plus" | "extreme";
+
+export interface Package {
+  id: PackageId;
+  name: string;
+  /** Durata della sessione in minuti (15 per tutti i pacchetti). */
+  minutes: number;
+  /** Prezzo a persona, in centesimi. */
+  priceCents: number;
+  contents: string;
+}
+
+/** Pacchetti, prezzo a persona: stessa durata, cambiano gli oggetti da rompere. */
+export const PACKAGES: Package[] = [
+  { id: "base", name: "Base", minutes: SESSION_MINUTES, priceCents: 4000, contents: "15 oggetti piccoli + 1 medio" },
+  { id: "plus", name: "Plus", minutes: SESSION_MINUTES, priceCents: 6000, contents: "30 oggetti piccoli + 2 medi" },
+  { id: "extreme", name: "Extreme", minutes: SESSION_MINUTES, priceCents: 9000, contents: "40 oggetti piccoli + 3 medi + 2 grandi" },
+];
+
+export const DEFAULT_PACKAGE: PackageId = "base";
+/** In due si scalano 10 € dal totale (es. Base: 70 € invece di 80 €). */
+export const COUPLE_DISCOUNT_CENTS = 1000;
+/** Extra che si aggiungono in sede. */
+export const EXTRAS_LABEL = "Extra in sede: +5 minuti 10 € · oggetti grandi da 25 €";
+
+export function getPackage(packageId: string): Package | undefined {
+  return PACKAGES.find((pkg) => pkg.id === packageId);
+}
 
 export const ROOM_IDS = ROOMS.map((room) => room.id);
 
@@ -74,20 +126,13 @@ export function depositCentsFor(people: number): number {
 }
 
 /**
- * Prezzo pieno della sessione, in centesimi.
- * Singola e Doppia hanno un prezzo fisso; la Sala Festa è a persona.
+ * Prezzo pieno della sessione, in centesimi: prezzo del pacchetto a persona,
+ * con 10 € di sconto sul totale quando si è in due.
  */
-export function priceCentsFor(roomId: string, people: number): number {
-  switch (roomId) {
-    case "singola":
-      return 3700;
-    case "doppia":
-      return 6200;
-    case "festa":
-      return 3000 * people;
-    default:
-      return 0;
-  }
+export function priceCentsFor(packageId: string, people: number): number {
+  const pkg = getPackage(packageId);
+  if (!pkg || !Number.isInteger(people) || people < 1) return 0;
+  return pkg.priceCents * people - (people === 2 ? COUPLE_DISCOUNT_CENTS : 0);
 }
 
 export function formatEuro(cents: number): string {
@@ -112,11 +157,17 @@ export function weekdayOf(date: string): number {
 }
 
 export function isOpenDay(date: string): boolean {
+  if (CLOSED_DATES.includes(date)) return false;
+  if (EXTRA_OPEN_DATES.includes(date)) return true;
   return OPEN_WEEKDAYS.includes(weekdayOf(date));
 }
 
-/** Orario di chiusura del giorno: mezzanotte nel weekend, 22:00 negli altri giorni. */
+/**
+ * Orario di chiusura del giorno: chiusura anticipata nelle vigilie,
+ * mezzanotte nel weekend, 22:00 negli altri giorni.
+ */
 export function closingMinutesFor(date: string): number {
+  if (EARLY_CLOSING[date]) return EARLY_CLOSING[date];
   return LATE_WEEKDAYS.includes(weekdayOf(date)) ? LATE_CLOSING_MINUTES : CLOSING_MINUTES;
 }
 
@@ -126,8 +177,8 @@ export function closingTimeFor(date: string): string {
 
 /**
  * Tutti gli orari di inizio possibili nella giornata indicata.
- * Sessione di 20 minuti ogni 40 minuti (20 min sessione + 20 min pausa).
- * Mer–Ven: 14:00 … 21:40. Sab–Dom: 14:00 … 23:40. Lun e Mar: nessuno.
+ * Una fascia ogni 40 minuti (15 min di sessione + 25 min di cambio stanza).
+ * Mer–Ven: 14:00 … 21:20. Sab–Dom: 14:00 … 23:20. Lun e Mar: nessuno.
  */
 export function slotTimesFor(date: string): string[] {
   if (!isOpenDay(date)) return [];
@@ -139,11 +190,11 @@ export function slotTimesFor(date: string): string[] {
   return slots;
 }
 
-/** Orario di fine della sessione che inizia a `time`. */
-export function slotEndTime(time: string): string {
+/** Orario di fine della sessione che inizia a `time` (durata del pacchetto, se indicata). */
+export function slotEndTime(time: string, minutes: number = SESSION_MINUTES): string {
   const start = minutesFromTime(time);
   if (start === null) return time;
-  return toTime(start + SESSION_MINUTES);
+  return toTime(start + minutes);
 }
 
 /** Data e ora correnti nel fuso orario del locale, come stringhe confrontabili. */
@@ -205,6 +256,9 @@ export function dateRejectionReason(date: string): string | null {
   if (date > lastBookableDate(today)) {
     return "Questa data è troppo lontana: puoi prenotare fino a 90 giorni in anticipo.";
   }
+  if (CLOSED_DATES.includes(date)) {
+    return "In questo giorno siamo chiusi per le feste. Scegli un'altra data.";
+  }
   if (!isOpenDay(date)) {
     return "Il lunedì e il martedì siamo chiusi. Siamo aperti dal mercoledì alla domenica.";
   }
@@ -253,3 +307,7 @@ export function formatDateIt(date: string): string {
 /** Riepilogo degli orari mostrato nel sito e nelle email. */
 export const OPENING_HOURS_LABEL =
   "Mercoledì–venerdì 14:00–22:00 · Sabato e domenica 14:00–00:00 · Lunedì e martedì chiusi";
+
+/** Avviso sulle feste mostrato nel sito e nelle email. */
+export const HOLIDAY_HOURS_LABEL =
+  "Feste: aperti anche lunedì 28 e martedì 29 dicembre · 24 e 31 dicembre fino alle 19:00 · chiusi 25 dicembre e 1° gennaio";

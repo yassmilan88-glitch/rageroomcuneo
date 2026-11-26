@@ -3,7 +3,11 @@ import { and, eq, inArray } from "drizzle-orm";
 import { db } from "../../db/index.js";
 import { bookings } from "../../db/schema.js";
 import {
+  CLOSED_DATES,
   DEPOSIT_CENTS_PER_PERSON,
+  EARLY_CLOSING,
+  EXTRA_OPEN_DATES,
+  HOLIDAY_HOURS_LABEL,
   LATE_WEEKDAYS,
   OPENING_HOURS_LABEL,
   OPEN_WEEKDAYS,
@@ -40,6 +44,11 @@ export default async (req: Request) => {
     // Numerazione JavaScript dei giorni: 0 = domenica … 6 = sabato
     openWeekdays: OPEN_WEEKDAYS,
     lateWeekdays: LATE_WEEKDAYS,
+    // Feste: chiusure straordinarie e aperture extra, per disegnare il calendario.
+    closedDates: CLOSED_DATES,
+    extraOpenDates: EXTRA_OPEN_DATES,
+    earlyClosingDates: Object.keys(EARLY_CLOSING),
+    holidayHoursLabel: HOLIDAY_HOURS_LABEL,
     openingTime: "14:00",
     closingTime: "22:00",
     lateClosingTime: "00:00",

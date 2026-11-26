@@ -6,7 +6,7 @@
 import { and, count, eq, lte, sql } from "drizzle-orm";
 import { db } from "../db/index.js";
 import { bookings } from "../db/schema.js";
-import { depositCentsFor, formatDateIt, getRoom, slotEndTime } from "./booking.js";
+import { DEFAULT_PACKAGE, depositCentsFor, formatDateIt, getPackage, getRoom, slotEndTime } from "./booking.js";
 import { notifyBooking } from "./notify.js";
 
 export type BookingRow = typeof bookings.$inferSelect;
@@ -32,6 +32,7 @@ export interface NewBooking {
   slotDate: string;
   slotTime: string;
   room: string;
+  package: string;
   people: number;
   name: string;
   phone: string;
@@ -56,6 +57,7 @@ export async function claimSlot(values: NewBooking): Promise<BookingRow | null> 
       target: [bookings.slotDate, bookings.slotTime, bookings.room],
       setWhere: isSlotReleased,
       set: {
+        package: values.package,
         people: values.people,
         name: values.name,
         phone: values.phone,
@@ -130,14 +132,18 @@ function isFullPayment(row: BookingRow): boolean {
 /** Vista pubblica di una prenotazione, quella che il sito mostra al cliente. */
 export function publicView(row: BookingRow) {
   const room = getRoom(row.room);
+  const pkg = getPackage(row.package) ?? getPackage(DEFAULT_PACKAGE);
   return {
     id: row.id,
     date: row.slotDate,
     dateLabel: formatDateIt(row.slotDate),
     time: row.slotTime,
-    end: slotEndTime(row.slotTime),
+    end: slotEndTime(row.slotTime, pkg?.minutes),
     room: row.room,
-    roomName: room?.name ?? row.room,
+    package: pkg?.id ?? row.package,
+    packageName: pkg?.name ?? row.package,
+    // Nome completo mostrato al cliente e nelle notifiche: stanza e pacchetto.
+    roomName: `${room?.name ?? row.room} · Pacchetto ${pkg?.name ?? row.package}`,
     people: row.people,
     status: row.status,
     depositCents: row.depositCents,
@@ -158,7 +164,7 @@ export async function publicViewWithPromo(row: BookingRow) {
  */
 export async function confirmAndNotify(
   row: BookingRow,
-  options: { paid: boolean } = { paid: true },
+  options: { paid: boolean; voucherCode?: string; extraDueCents?: number } = { paid: true },
 ): Promise<BookingRow> {
   const now = new Date();
 
@@ -194,6 +200,8 @@ export async function confirmAndNotify(
     isFullPayment: view.isFullPayment,
     gopromo,
     paid: options.paid,
+    voucherCode: options.voucherCode,
+    extraDueCents: options.extraDueCents,
   });
 
   return claimed;

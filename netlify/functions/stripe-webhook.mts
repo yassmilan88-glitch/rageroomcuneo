@@ -6,6 +6,7 @@ import {
   releaseBooking,
 } from "../../lib/bookings-store.js";
 import { getStripe, isPaymentEnabled } from "../../lib/payments.js";
+import { deliverVoucher } from "../../lib/vouchers.js";
 
 /**
  * Webhook di Stripe: è qui che una prenotazione diventa definitiva.
@@ -50,6 +51,12 @@ export default async (req: Request) => {
         // in sospeso: confermiamo solo quando l'incasso è effettivo.
         if (session.payment_status === "unpaid") break;
 
+        // Buono regalo: niente prenotazione da confermare, si consegna il buono.
+        if (session.metadata?.kind === "voucher") {
+          await deliverVoucher(session);
+          break;
+        }
+
         const booking = await findByCheckoutSession(session.id);
         if (!booking) {
           console.error("Nessuna prenotazione per la sessione Stripe", session.id);
@@ -61,6 +68,7 @@ export default async (req: Request) => {
 
       case "checkout.session.expired":
       case "checkout.session.async_payment_failed": {
+        if (session.metadata?.kind === "voucher") break;
         const booking = await findByCheckoutSession(session.id);
         if (booking) await releaseBooking(booking.id);
         break;

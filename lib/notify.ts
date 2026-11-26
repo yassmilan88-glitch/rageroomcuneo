@@ -8,7 +8,13 @@
  * notifica che fallisce non deve mai far fallire una prenotazione già pagata.
  */
 
-import { OPENING_HOURS_LABEL, formatEuro } from "./booking.js";
+import {
+  HOLIDAY_HOURS_LABEL,
+  OPENING_HOURS_LABEL,
+  VENUE_ADDRESS,
+  VENUE_MAPS_URL,
+  formatEuro,
+} from "./booking.js";
 
 /** Casella dell'azienda su cui arrivano tutte le prenotazioni. */
 export const COMPANY_EMAIL = process.env.BOOKING_NOTIFY_EMAIL || "rageroomcuneo@gmail.com";
@@ -32,11 +38,15 @@ export interface BookingNotification {
   isFullPayment: boolean;
   gopromo: boolean;
   paid: boolean;
+  /** Codice del buono regalo usato per pagare la sessione, se c'è. */
+  voucherCode?: string;
+  /** Quanto resta da saldare in sede oltre al buono (es. persone in più). */
+  extraDueCents?: number;
 }
 
 const peopleLabel = (people: number) => `${people} ${people === 1 ? "persona" : "persone"}`;
 
-function escapeHtml(value: string): string {
+export function escapeHtml(value: string): string {
   return value
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -47,6 +57,12 @@ function escapeHtml(value: string): string {
 /** Riepilogo compatto usato per WhatsApp e come corpo testuale delle email. */
 export function bookingSummaryText(booking: BookingNotification): string {
   const paymentLabel = booking.isFullPayment ? "Pagato per intero" : "Riserva";
+  const paymentLine = booking.voucherCode
+    ? `Pagato con buono regalo ${booking.voucherCode} (${formatEuro(booking.depositCents)})` +
+      (booking.extraDueCents ? ` + ${formatEuro(booking.extraDueCents)} da incassare in sede` : "")
+    : booking.paid
+      ? `${paymentLabel} incassato: ${formatEuro(booking.depositCents)}`
+      : `Riserva da incassare: ${formatEuro(booking.depositCents)}`;
   const lines = [
     `Nuova prenotazione #${booking.id}`,
     `${booking.roomName} — ${booking.dateLabel}`,
@@ -54,9 +70,7 @@ export function bookingSummaryText(booking: BookingNotification): string {
     `Cliente: ${booking.name}`,
     `Telefono: ${booking.phone}`,
     `Email: ${booking.email}`,
-    booking.paid
-      ? `${paymentLabel} incassato: ${formatEuro(booking.depositCents)}`
-      : `Riserva da incassare: ${formatEuro(booking.depositCents)}`,
+    paymentLine,
   ];
   if (booking.notes) lines.push(`Note: ${booking.notes}`);
   if (booking.gopromo) lines.push(`🎥 Rientra nei primi 50: video POV GoPro omaggio da dare.`);
@@ -72,12 +86,18 @@ function ownerEmailHtml(booking: BookingNotification): string {
     ["Nome", booking.name],
     ["Telefono", booking.phone],
     ["Email", booking.email],
-    [
-      booking.isFullPayment ? "Pagamento" : "Riserva",
-      booking.paid
-        ? `${formatEuro(booking.depositCents)} — pagato online${booking.isFullPayment ? " (per intero)" : ""}`
-        : `${formatEuro(booking.depositCents)} — da incassare`,
-    ],
+    booking.voucherCode
+      ? [
+          "Buono regalo",
+          `${booking.voucherCode} — ${formatEuro(booking.depositCents)}` +
+            (booking.extraDueCents ? ` (+ ${formatEuro(booking.extraDueCents)} da incassare in sede)` : ""),
+        ]
+      : [
+          booking.isFullPayment ? "Pagamento" : "Riserva",
+          booking.paid
+            ? `${formatEuro(booking.depositCents)} — pagato online${booking.isFullPayment ? " (per intero)" : ""}`
+            : `${formatEuro(booking.depositCents)} — da incassare`,
+        ],
   ];
   if (booking.notes) rows.push(["Note", booking.notes]);
   if (booking.gopromo) rows.push(["🎥 Promo", "Nei primi 50 — video POV GoPro omaggio"]);
@@ -102,6 +122,16 @@ function ownerEmailHtml(booking: BookingNotification): string {
 }
 
 function customerEmailHtml(booking: BookingNotification): string {
+  const paymentRow = booking.voucherCode
+    ? `<tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">Buono regalo</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(booking.voucherCode)}</td></tr>`
+    : `<tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">${booking.isFullPayment ? "Pagamento" : "Riserva"}</td><td style="padding:6px 0;font-weight:600;">${formatEuro(booking.depositCents)} ${booking.paid ? (booking.isFullPayment ? "pagato per intero online" : "pagato online") : "da saldare"}</td></tr>`;
+  const balanceText = booking.voucherCode
+    ? booking.extraDueCents
+      ? `Il buono copre ${formatEuro(booking.depositCents)}: in sede saldi solo ${formatEuro(booking.extraDueCents)}.`
+      : "La sessione è pagata con il buono regalo: non c'è nulla da pagare in sede."
+    : booking.isFullPayment
+      ? "Hai già saldato tutto: non c'è nulla da pagare in sede."
+      : "Il saldo della sessione si paga in sede.";
   return `<div style="font-family:Helvetica,Arial,sans-serif;color:#111;">
   <h2 style="margin:0 0 4px;">Prenotazione confermata 🎉</h2>
   <p style="margin:0 0 16px;font-size:15px;">Ciao ${escapeHtml(booking.name)}, ti aspettiamo da Rage Room Cuneo.</p>
@@ -111,14 +141,15 @@ function customerEmailHtml(booking: BookingNotification): string {
     <tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">Giorno</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(booking.dateLabel)}</td></tr>
     <tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">Orario</td><td style="padding:6px 0;font-weight:600;">${booking.time}–${booking.end}</td></tr>
     <tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">Persone</td><td style="padding:6px 0;font-weight:600;">${peopleLabel(booking.people)}</td></tr>
-    <tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">${booking.isFullPayment ? "Pagamento" : "Riserva"}</td><td style="padding:6px 0;font-weight:600;">${formatEuro(booking.depositCents)} ${booking.paid ? (booking.isFullPayment ? "pagato per intero online" : "pagato online") : "da saldare"}</td></tr>
+    ${paymentRow}
   </table>
-  <p style="margin:20px 0 0;font-size:14px;">Arriva 10 minuti prima: ti diamo casco, tuta e guanti.<br>
-  ${booking.isFullPayment ? "Hai già saldato tutto: non c'è nulla da pagare in sede." : "Il saldo della sessione si paga in sede."}</p>
+  <p style="margin:20px 0 0;font-size:14px;">📍 <strong>${escapeHtml(VENUE_ADDRESS)}</strong> — <a href="${VENUE_MAPS_URL}">apri la mappa</a></p>
+  <p style="margin:12px 0 0;font-size:14px;">Arriva 10 minuti prima: ti diamo casco, tuta e guanti.<br>
+  ${balanceText}</p>
   ${booking.gopromo ? `<p style="margin:16px 0 0;font-size:14px;background:#fff6d8;border-radius:8px;padding:10px 14px;">🎥 Sei tra i primi 50 prenotati: il video POV con la GoPro della tua sessione è in omaggio!</p>` : ""}
   <p style="margin:16px 0 0;font-size:13px;color:#8a8a92;">
     Per spostare o annullare scrivici su <a href="https://wa.me/${OWNER_WHATSAPP}">WhatsApp</a>
-    o a <a href="mailto:${COMPANY_EMAIL}">${COMPANY_EMAIL}</a>.<br>${escapeHtml(OPENING_HOURS_LABEL)}
+    o a <a href="mailto:${COMPANY_EMAIL}">${COMPANY_EMAIL}</a>.<br>${escapeHtml(OPENING_HOURS_LABEL)}<br>${escapeHtml(HOLIDAY_HOURS_LABEL)}
   </p>
 </div>`;
 }
@@ -214,6 +245,16 @@ async function sendViaCallMeBot(text: string): Promise<boolean> {
   return true;
 }
 
+/** Messaggio WhatsApp al titolare sul primo canale configurato. */
+export async function sendOwnerWhatsApp(text: string): Promise<boolean> {
+  const sent =
+    (await sendViaMetaCloud(text)) || (await sendViaTwilio(text)) || (await sendViaCallMeBot(text));
+  if (!sent) {
+    console.warn("Nessun canale WhatsApp configurato: messaggio al titolare non inviato.");
+  }
+  return sent;
+}
+
 /**
  * Manda tutte le notifiche di una prenotazione confermata.
  * Non lancia mai: registra gli errori e restituisce l'esito canale per canale.
@@ -229,16 +270,7 @@ export async function notifyBooking(booking: BookingNotification): Promise<{
   const results = await Promise.allSettled([
     sendEmail(COMPANY_EMAIL, subject, ownerEmailHtml(booking), booking.email),
     sendEmail(booking.email, `Prenotazione confermata — ${booking.dateLabel} alle ${booking.time}`, customerEmailHtml(booking)),
-    (async () => {
-      const sent =
-        (await sendViaMetaCloud(summary)) ||
-        (await sendViaTwilio(summary)) ||
-        (await sendViaCallMeBot(summary));
-      if (!sent) {
-        console.warn("Nessun canale WhatsApp configurato: messaggio al titolare non inviato.");
-      }
-      return sent;
-    })(),
+    sendOwnerWhatsApp(summary),
   ]);
 
   const [ownerEmail, customerEmail, whatsapp] = results;
