@@ -44,9 +44,12 @@ export const BOOKING_WINDOW_DAYS = 90;
 
 export const TIMEZONE = "Europe/Rome";
 
-/** Indirizzo del locale, usato nel sito e nelle email di conferma. */
-export const VENUE_ADDRESS = "Via Valle Po 92, Madonna dell'Olmo, 12100 Cuneo (CN)";
-export const VENUE_MAPS_URL = "https://maps.google.com/?q=Via+Valle+Po+92,+12100+Cuneo+CN";
+/**
+ * Zona del locale mostrata nel sito e nelle email. L'indirizzo esatto non si
+ * pubblica: lo comunichiamo ai clienti prima dell'apertura.
+ */
+export const VENUE_AREA = "Madonna dell'Olmo, Cuneo";
+export const VENUE_ADDRESS_NOTE = "L'indirizzo esatto te lo comunichiamo prima dell'apertura.";
 
 /**
  * Calendario delle feste. Basta modificare queste tre liste per cambiare

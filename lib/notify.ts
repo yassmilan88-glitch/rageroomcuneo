@@ -11,8 +11,8 @@
 import {
   HOLIDAY_HOURS_LABEL,
   OPENING_HOURS_LABEL,
-  VENUE_ADDRESS,
-  VENUE_MAPS_URL,
+  VENUE_ADDRESS_NOTE,
+  VENUE_AREA,
   formatEuro,
 } from "./booking.js";
 
@@ -143,7 +143,7 @@ function customerEmailHtml(booking: BookingNotification): string {
     <tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">Persone</td><td style="padding:6px 0;font-weight:600;">${peopleLabel(booking.people)}</td></tr>
     ${paymentRow}
   </table>
-  <p style="margin:20px 0 0;font-size:14px;">📍 <strong>${escapeHtml(VENUE_ADDRESS)}</strong> — <a href="${VENUE_MAPS_URL}">apri la mappa</a></p>
+  <p style="margin:20px 0 0;font-size:14px;">📍 <strong>${escapeHtml(VENUE_AREA)}</strong> — ${escapeHtml(VENUE_ADDRESS_NOTE)}</p>
   <p style="margin:12px 0 0;font-size:14px;">Arriva 10 minuti prima: ti diamo casco, tuta e guanti.<br>
   ${balanceText}</p>
   <div style="margin:16px 0 0;font-size:12px;color:#55555c;line-height:1.55;">

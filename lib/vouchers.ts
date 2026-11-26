@@ -10,8 +10,7 @@
 import { randomInt } from "node:crypto";
 import type Stripe from "stripe";
 import {
-  VENUE_ADDRESS,
-  VENUE_MAPS_URL,
+  VENUE_AREA,
   formatDateIt,
   formatEuro,
   getPackage,
@@ -217,7 +216,7 @@ function voucherEmailHtml(voucher: Voucher): string {
     <p style="margin:16px 0 0;font-size:13px;color:#9a978f;">Valido fino al ${escapeHtml(view.expiresLabel)}.</p>
   </div>
   <p style="margin:20px 0 0;font-size:14px;"><strong>Come si usa:</strong> si prenota su <a href="https://rageroomcuneo.it/#prenota">rageroomcuneo.it</a>, si scelgono il pacchetto, la stanza, il giorno e l'orario, e si scrive il codice nel campo “Buono regalo”. Non si paga nulla online; se si sceglie un pacchetto più grande o si è in più persone, la differenza si salda in sede.</p>
-  <p style="margin:12px 0 0;font-size:14px;">📍 ${escapeHtml(VENUE_ADDRESS)} — <a href="${VENUE_MAPS_URL}">mappa</a></p>
+  <p style="margin:12px 0 0;font-size:14px;">📍 ${escapeHtml(VENUE_AREA)}</p>
   <p style="margin:16px 0 0;font-size:13px;color:#8a8a92;">Per qualsiasi cosa scrivici su <a href="https://wa.me/${OWNER_WHATSAPP}">WhatsApp</a> o a <a href="mailto:${COMPANY_EMAIL}">${COMPANY_EMAIL}</a>.</p>
 </div>`;
 }
