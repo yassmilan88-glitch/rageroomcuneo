@@ -589,7 +589,7 @@
       <h2 class="display">Prezzi</h2>
     </div>
     <div class="price-note">
-      Ogni sessione dura <strong>15 minuti</strong>, kit protezione incluso: il pacchetto cambia solo quanta roba rompi. Prezzi <strong>a persona</strong>: più siete, meno paga ognuno. Si paga tutto online.
+      Ogni sessione dura <strong>15 minuti</strong>, kit protezione incluso: il pacchetto cambia solo quanta roba rompi. Prezzi <strong>a persona</strong>: più siete, meno paga ognuno. Ogni persona in più aggiunge 5 oggetti piccoli. Si paga tutto online.
     </div>
     <div class="pricing-grid">
       <div class="price-card">
@@ -1001,10 +1001,12 @@
   function packagePrice(id, n) { return perPerson(id, n) * n; }
   function multiplier() { return (state.date && state.multipliers[state.date]) || 1; }
   function total() { return (packagePrice(state.pkg, state.people) + (state.minutes / 5) * EXTRA_5MIN + state.big * EXTRA_BIG) * multiplier(); }
+  /* Gli oggetti sono per sessione, non a persona: ogni persona in più aggiunge solo 5 oggetti piccoli. */
+  var SMALL_PER_EXTRA_PERSON = 5;
   function objectsText(id, n) {
-    var p = PACKAGES[id], parts = [p.small * n + ' oggetti piccoli'];
-    if (p.medium) parts.push(p.medium * n + (p.medium * n === 1 ? ' medio' : ' medi'));
-    if (p.large) parts.push(p.large * n + (p.large * n === 1 ? ' grande' : ' grandi'));
+    var p = PACKAGES[id], parts = [p.small + SMALL_PER_EXTRA_PERSON * (n - 1) + ' oggetti piccoli'];
+    if (p.medium) parts.push(p.medium + (p.medium === 1 ? ' medio' : ' medi'));
+    if (p.large) parts.push(p.large + (p.large === 1 ? ' grande' : ' grandi'));
     return parts.join(' + ');
   }
   function extrasText() {

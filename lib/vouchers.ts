@@ -14,6 +14,7 @@ import {
   formatDateIt,
   formatEuro,
   getPackage,
+  packageContentsFor,
   priceCentsFor,
   type Package,
 } from "./booking.js";
@@ -98,7 +99,7 @@ export function voucherFromPaymentIntent(pi: Stripe.PaymentIntent): Voucher | nu
     packageId: pkg?.id ?? meta.package ?? "",
     packageName: pkg ? `Pacchetto ${pkg.name}` : meta.package ?? "",
     minutes: pkg?.minutes ?? 15,
-    contents: pkg?.contents ?? "",
+    contents: pkg ? packageContentsFor(pkg, Number(meta.people) || 1) : "",
     people: Number(meta.people) || 1,
     valueCents: pi.amount_received || pi.amount,
     buyerName: meta.buyer_name || "",
@@ -184,7 +185,7 @@ export async function createVoucherCheckout(purchase: VoucherPurchase): Promise<
           unit_amount: amount,
           product_data: {
             name: `Buono regalo Pacchetto ${purchase.pkg.name} — Rage Room Cuneo`,
-            description: `${purchase.pkg.minutes} minuti, ${purchase.pkg.contents}, ${peopleText}. Per ${purchase.recipientName}. Valido ${VOUCHER_VALID_MONTHS} mesi.`,
+            description: `${purchase.pkg.minutes} minuti, ${packageContentsFor(purchase.pkg, purchase.people)}, ${peopleText}. Per ${purchase.recipientName}. Valido ${VOUCHER_VALID_MONTHS} mesi.`,
           },
         },
       },
@@ -237,7 +238,7 @@ export function voucherEmailHtml(voucher: Voucher): string {
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
             <tr><td style="font-family:${FONT};font-size:15px;line-height:1.5;color:#d8d5cc;">Per <strong style="color:${C.text};">${escapeHtml(voucher.recipientName)}</strong>${from}</td></tr>
             ${message}
-            <tr><td style="padding:14px 0 0;font-family:${FONT};font-size:15px;line-height:1.5;color:#d8d5cc;">${escapeHtml(view.packageName)} · ${escapeHtml(view.peopleLabel)} · sessione da ${view.minutes} minuti<br><span style="color:${C.dim};">${escapeHtml(view.contents)}${voucher.people > 1 ? " a persona" : ""}</span></td></tr>
+            <tr><td style="padding:14px 0 0;font-family:${FONT};font-size:15px;line-height:1.5;color:#d8d5cc;">${escapeHtml(view.packageName)} · ${escapeHtml(view.peopleLabel)} · sessione da ${view.minutes} minuti<br><span style="color:${C.dim};">${escapeHtml(view.contents)}</span></td></tr>
             <tr><td style="padding:18px 0 0;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="${C.yellow}" style="background:${C.yellow};border-radius:10px;">
                 <tr><td align="center" style="padding:14px 16px;font-family:${FONT};color:#111111;">
