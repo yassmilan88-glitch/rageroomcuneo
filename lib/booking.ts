@@ -57,9 +57,21 @@ export const VENUE_ADDRESS_NOTE = "L'indirizzo esatto te lo comunichiamo prima d
  * (23 e 30 dicembre e 6 gennaio sono mercoledì: già aperti di regola.)
  */
 /** Giorni di chiusura straordinaria. */
-export const CLOSED_DATES = ["2026-12-25", "2027-01-01"];
+export const CLOSED_DATES: string[] = [];
 /** Giorni di apertura extra, fuori dai giorni normali (lunedì e martedì delle feste). */
 export const EXTRA_OPEN_DATES = ["2026-12-28", "2026-12-29"];
+/** Giorni a prezzo maggiorato: data → moltiplicatore del totale (Natale e Capodanno a prezzo doppio). */
+export const PRICE_MULTIPLIERS: Record<string, number> = {
+  "2026-12-24": 2,
+  "2026-12-25": 2,
+  "2026-12-31": 2,
+  "2027-01-01": 2,
+};
+
+export function priceMultiplierFor(date: string): number {
+  return PRICE_MULTIPLIERS[date] ?? 1;
+}
+
 /** Giornate con chiusura anticipata: data → orario di chiusura in minuti. */
 export const EARLY_CLOSING: Record<string, number> = {
   "2026-12-24": 19 * 60,
@@ -180,10 +192,11 @@ export function priceCentsFor(packageId: string, people: number): number {
   return pkg.priceCents * people - (people === 2 ? COUPLE_DISCOUNT_CENTS : 0);
 }
 
-/** Totale della prenotazione: pacchetto per le persone, più gli extra. */
-export function totalCentsFor(packageId: string, people: number, extras: Extras): number {
+/** Totale della prenotazione: pacchetto per le persone, più gli extra, per il moltiplicatore del giorno. */
+export function totalCentsFor(packageId: string, people: number, extras: Extras, date?: string): number {
   const base = priceCentsFor(packageId, people);
-  return base ? base + extrasCents(extras) : 0;
+  if (!base) return 0;
+  return (base + extrasCents(extras)) * (date ? priceMultiplierFor(date) : 1);
 }
 
 /** Importo come nel sito: €40, €145, oppure €12,50 se ci sono centesimi. */
@@ -362,4 +375,4 @@ export const OPENING_HOURS_LABEL =
 
 /** Avviso sulle feste mostrato nel sito e nelle email. */
 export const HOLIDAY_HOURS_LABEL =
-  "Feste: aperti anche lunedì 28 e martedì 29 dicembre · 24 e 31 dicembre fino alle 19:00 · chiusi 25 dicembre e 1° gennaio";
+  "Feste: aperti anche lunedì 28 e martedì 29 dicembre · 24 e 31 dicembre fino alle 19:00 · 24, 25, 31 dicembre e 1° gennaio prezzo doppio";

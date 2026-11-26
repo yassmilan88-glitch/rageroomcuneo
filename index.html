@@ -455,6 +455,8 @@
   .dot{ display:inline-block; width:6px; height:6px; border-radius:50%; }
   .dot.ok{ background:var(--violet); } .dot.few{ background:var(--yellow); } .dot.full{ background:var(--pink); }
   .cal-day.sel .dot{ background:#fff; }
+  .cal-day.x2::after{ content:'x2'; position:absolute; top:2px; right:4px; font-size:8px; font-weight:800; color:var(--yellow); }
+  .cal-day.sel.x2::after{ color:#fff; }
   .cal-key{ display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--dim); margin-top:12px; }
   .cal-key .dot{ margin-right:6px; }
 
@@ -751,7 +753,7 @@
               <div class="cal-dow" aria-hidden="true"><div>Lun</div><div>Mar</div><div>Mer</div><div>Gio</div><div>Ven</div><div>Sab</div><div>Dom</div></div>
               <div class="cal-grid" id="bkDays"></div>
               <div class="cal-key"><span><i class="dot ok"></i>Libero</span><span><i class="dot few"></i>Pochi posti</span><span><i class="dot full"></i>Pieno</span></div>
-              <div class="cal-legend">Mer–Ven 14:00 – 22:00 · Sab e Dom 14:00 – 00:00 · Lun e Mar chiusi<br><span class="cal-holiday">Feste: aperti anche lun 28 e mar 29 dicembre · 24 e 31 dicembre fino alle 19 · chiusi 25 dicembre e 1° gennaio</span></div>
+              <div class="cal-legend">Mer–Ven 14:00 – 22:00 · Sab e Dom 14:00 – 00:00 · Lun e Mar chiusi<br><span class="cal-holiday">Feste: aperti anche lun 28 e mar 29 dicembre · 24 e 31 dicembre fino alle 19 · 24, 25, 31 dicembre e 1° gennaio prezzo doppio (x2)</span></div>
             </div>
           </div>
           <div>
@@ -956,7 +958,7 @@
         </div>
         <div class="contact-row">
           <div class="ic">🕒</div>
-          <div><h4>Orari</h4><div class="val" style="font-weight:600; font-size:15px; color:var(--dim);">Mer, Gio, Ven: 14:00 – 22:00<br>Sab e Dom: 14:00 – 00:00<br>Lunedì e martedì chiusi<br>Feste: aperti anche 28 e 29 dicembre, 24 e 31 dicembre fino alle 19, chiusi 25 dicembre e 1° gennaio</div></div>
+          <div><h4>Orari</h4><div class="val" style="font-weight:600; font-size:15px; color:var(--dim);">Mer, Gio, Ven: 14:00 – 22:00<br>Sab e Dom: 14:00 – 00:00<br>Lunedì e martedì chiusi<br>Feste: aperti anche 28 e 29 dicembre, 24 e 31 dicembre fino alle 19; 24, 25, 31 dicembre e 1° gennaio prezzo doppio</div></div>
         </div>
         <div class="contact-row">
           <div class="ic">📅</div>
@@ -1012,7 +1014,8 @@
     date: null, dateLabel: '', time: null, slots: [], loading: false,
     first: null, last: null, cursor: null, days: {}, daysLoaded: {},
     openWeekdays: [3, 4, 5, 6, 0],
-    closedDates: ['2026-12-25', '2027-01-01'],
+    closedDates: [],
+    multipliers: { '2026-12-24': 2, '2026-12-25': 2, '2026-12-31': 2, '2027-01-01': 2 },
     extraOpenDates: ['2026-12-28', '2026-12-29']
   };
 
@@ -1032,7 +1035,9 @@
 
   /* ---------- Prezzi ---------- */
   function packagePrice(id, n) { return PACKAGES[id].price * n - (n === 2 ? 1000 : 0); }
-  function total() { return packagePrice(state.pkg, state.people) + (state.minutes / 5) * EXTRA_5MIN + state.big * EXTRA_BIG; }
+  function multiplier() { return (state.date && state.multipliers[state.date]) || 1; }
+  function subtotal() { return packagePrice(state.pkg, state.people) + (state.minutes / 5) * EXTRA_5MIN + state.big * EXTRA_BIG; }
+  function total() { return subtotal() * multiplier(); }
   function objectsText(id, n) {
     var p = PACKAGES[id], parts = [p.small * n + ' oggetti piccoli'];
     if (p.medium) parts.push(p.medium * n + (p.medium * n === 1 ? ' medio' : ' medi'));
@@ -1076,7 +1081,7 @@
     $('bwTotal1').textContent = t; $('bwTotal2').textContent = t;
     $('bwSum1').textContent = s;
     var chosen = state.time ? slotAt(state.time) : null;
-    $('bwSum2').textContent = state.date && chosen ? (state.dateLabel || state.date) + ' · ' + chosen.time : s;
+    $('bwSum2').textContent = (state.date && chosen ? (state.dateLabel || state.date) + ' · ' + chosen.time : s) + (multiplier() > 1 ? ' · prezzo festivo x' + multiplier() : '');
     $('bwTo3').disabled = !(state.date && state.time);
     $('bkSubmit').textContent = 'Paga ' + t + ' e conferma';
   }
@@ -1153,6 +1158,7 @@
       btn.disabled = !inRange || !open || st === 'full';
       btn.setAttribute('data-date', v);
       if (!open) btn.title = isHolidayClosed(v) ? 'Chiuso per le feste' : 'Chiuso';
+      if (open && state.multipliers[v] > 1) { btn.className += ' x2'; btn.title = 'Prezzo festivo x' + state.multipliers[v]; }
       else if (st === 'full') btn.title = 'Pieno';
       if (open && inRange && st) {
         var dot = document.createElement('i'); dot.className = 'dot ' + st; dot.setAttribute('aria-hidden', 'true'); btn.appendChild(dot);
@@ -1261,6 +1267,7 @@
     ];
     if (state.big) lines.push([state.big + (state.big === 1 ? ' oggetto grande in più' : ' oggetti grandi in più'), euro(state.big * EXTRA_BIG)]);
     if (state.minutes) lines.push(['+' + state.minutes + ' minuti', euro((state.minutes / 5) * EXTRA_5MIN)]);
+    if (multiplier() > 1) lines.push(['Prezzo festivo (Natale e Capodanno)', 'x' + multiplier()]);
     lines.push(['Quando', (state.dateLabel || state.date) + (chosen ? ', ' + chosen.time + '–' + end : '')]);
     lines.push(['Dove', 'Madonna dell\'Olmo, Cuneo (indirizzo esatto via email prima dell\'apertura)']);
     lines.forEach(function (l) {
@@ -1378,6 +1385,7 @@
       state.first = cfg.firstBookableDate; state.last = cfg.lastBookableDate;
       if (cfg.openWeekdays && cfg.openWeekdays.length) state.openWeekdays = cfg.openWeekdays;
       if (cfg.closedDates) state.closedDates = cfg.closedDates;
+      if (cfg.priceMultipliers) state.multipliers = cfg.priceMultipliers;
       if (cfg.extraOpenDates) state.extraOpenDates = cfg.extraOpenDates;
       var start = parseIso(cfg.firstOpenDate || state.first);
       state.cursor = { y: start.y, m: start.m };
