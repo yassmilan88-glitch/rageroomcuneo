@@ -14,6 +14,7 @@ import {
   formatDateIt,
   getPackage,
   getRoom,
+  isReservedSlot,
   isSlotInPast,
   isValidExtras,
   slotEndTime,
@@ -76,6 +77,7 @@ export default async (req: Request) => {
   if (dateRejection) return badRequest(dateRejection);
   if (!slotTimesFor(date).includes(time)) return badRequest("Fascia oraria non valida.");
   if (isSlotInPast(date, time)) return badRequest("Questa fascia oraria è già passata.");
+  if (isReservedSlot(date, time)) return badRequest(`Alle ${time} è già occupato. Scegli un altro orario.`, 409);
 
   if (!Number.isInteger(people) || people < 1 || people > MAX_PEOPLE) {
     return badRequest(`Potete essere da 1 a ${MAX_PEOPLE} persone.`);

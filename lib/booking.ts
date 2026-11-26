@@ -68,6 +68,24 @@ export const PRICE_MULTIPLIERS: Record<string, number> = {
   "2027-01-01": 2,
 };
 
+/**
+ * Orari già occupati da prenotazioni prese fuori dal sito (telefono, WhatsApp,
+ * prevendita): data → orari di inizio. Il calendario li mostra come "occupato"
+ * per tutti e il sito non li vende. Per liberarne uno basta toglierlo da qui.
+ * (Domenica 20 la prenotazione delle 17:00 occupa le fasce 16:40 e 17:20.)
+ */
+export const RESERVED_SLOTS: Record<string, string[]> = {
+  "2026-12-19": ["15:20", "18:00", "20:40"],
+  "2026-12-20": ["15:20", "16:40", "17:20", "20:00"],
+  "2026-12-23": ["18:40"],
+  "2026-12-25": ["14:00"],
+  "2026-12-26": ["17:20"],
+};
+
+export function isReservedSlot(date: string, time: string): boolean {
+  return (RESERVED_SLOTS[date] ?? []).includes(time);
+}
+
 export function priceMultiplierFor(date: string): number {
   return PRICE_MULTIPLIERS[date] ?? 1;
 }

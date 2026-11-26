@@ -195,8 +195,8 @@ export async function createVoucherCheckout(purchase: VoucherPurchase): Promise<
       description: `Buono regalo ${code} — Pacchetto ${purchase.pkg.name}, ${peopleText}`,
       metadata,
     },
-    success_url: `${purchase.origin}/?buono=ok&session={CHECKOUT_SESSION_ID}#regala`,
-    cancel_url: `${purchase.origin}/?buono=annullato#regala`,
+    success_url: `${purchase.origin}/?buono=ok&session={CHECKOUT_SESSION_ID}#prenota`,
+    cancel_url: `${purchase.origin}/?buono=annullato#prenota`,
   });
 
   if (!session.url) throw new Error("Stripe non ha restituito un URL di pagamento.");
