@@ -407,64 +407,48 @@
   .map-wrap iframe{ width:100%; height:100%; min-height:280px; border:0; filter: grayscale(0.3) invert(0.92) contrast(0.9); }
 
   .cal-holiday{ color:#ffe9a8; }
-  /* -------- Prenotazione in 3 passi -------- */
-  .bw{ max-width:720px; margin:0 auto; background:linear-gradient(170deg,#191322,#111014 55%); border:1px solid #2f2838; border-radius:24px; padding:26px 18px 22px; }
-  @media(min-width:520px){ .bw{ padding:34px 30px 28px; } }
-  .bw-kicker{ font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#b9a3f7; }
-  .bw-title{ font-size:clamp(26px,6vw,36px); font-weight:900; text-transform:uppercase; letter-spacing:-0.01em; line-height:1.05; margin-top:6px; }
-  .bw-steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:20px 0 6px; }
-  .bw-step-tab{ background:none; border:none; color:var(--dim); font:inherit; font-size:13px; font-weight:600; text-align:center; cursor:pointer; padding:0 0 6px; }
-  .bw-step-tab span{ display:block; height:5px; border-radius:9px; background:#3a3344; margin-bottom:8px; }
-  .bw-step-tab.on{ color:var(--text); }
-  .bw-step-tab.on span{ background:var(--violet); }
-  .bw-step-tab:disabled{ cursor:default; }
-  .bw-h{ font-size:20px; font-weight:800; margin:22px 0 12px; }
-  .bw-hint{ font-size:13px; color:var(--dim); margin-top:8px; }
-  .bw-seg{ display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
-  .bw-seg button{ background:#2a2433; border:1px solid #3c3447; color:var(--text); border-radius:14px; min-height:56px; font:inherit; font-size:20px; font-weight:800; cursor:pointer; }
-  .bw-seg button[aria-pressed="true"]{ background:#7c3aed; border-color:#c4b5fd; }
-  .bw-seg-2{ grid-template-columns:repeat(2,1fr); margin-top:10px; }
-  .bw-seg-2 button{ font-size:16px; }
-  .bw-seg-2 small{ display:block; font-size:12px; font-weight:600; color:#cfc6dd; }
-  .bw-pkgs{ display:grid; gap:12px; }
-  .bw-pkg{ position:relative; }
-  .bw-badge{ position:absolute; right:12px; top:-11px; background:#7c3aed; color:#fff; font-size:11px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; padding:4px 10px; border-radius:8px; z-index:1; }
-  .bw-pkg-head{ width:100%; display:grid; grid-template-columns:1fr auto 20px; grid-template-areas:"name price chev" "meta meta meta"; align-items:center; gap:4px 12px; text-align:left;
-    background:#211c29; border:1.5px solid #3c3447; border-radius:16px; padding:16px 18px; color:var(--text); font:inherit; cursor:pointer; }
-  .bw-pkg-name{ grid-area:name; font-size:20px; font-weight:900; text-transform:uppercase; letter-spacing:0.01em; }
-  .bw-pkg-meta{ grid-area:meta; font-size:14px; color:#cfc6dd; }
-  .bw-pkg-price{ grid-area:price; font-size:20px; font-weight:800; }
-  .bw-chev{ grid-area:chev; width:10px; height:10px; border-right:2px solid #cfc6dd; border-bottom:2px solid #cfc6dd; transform:rotate(45deg); margin-top:-5px; }
-  .bw-pkg.on .bw-pkg-head{ background:#3b2763; border-color:#a78bfa; }
-  .bw-pkg.on .bw-chev{ transform:rotate(-135deg); margin-top:5px; }
-  .bw-extras{ margin-top:10px; border:1.5px solid #3c3447; border-radius:16px; padding:18px; background:#18141e; }
-  .bw-extras h4{ font-size:17px; font-weight:800; margin-bottom:14px; }
-  .bw-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; }
-  .bw-row-t{ font-size:16px; font-weight:700; }
-  .bw-row-s{ font-size:12.5px; color:var(--dim); margin-top:2px; }
-  .bw-stepper{ display:flex; align-items:center; gap:10px; flex-shrink:0; }
-  .bw-stepper button{ width:44px; height:44px; border-radius:50%; border:1px solid #4a4157; background:none; color:var(--text); font-size:22px; cursor:pointer; }
-  .bw-stepper button:disabled{ opacity:0.35; cursor:not-allowed; }
-  .bw-stepper output{ min-width:20px; text-align:center; font-size:18px; font-weight:800; }
-  .bw-total{ margin-top:22px; background:#2c2240; border-radius:18px; padding:18px; }
-  .bw-total-top{ display:flex; align-items:baseline; justify-content:space-between; font-size:18px; font-weight:700; }
-  .bw-total-top strong{ font-size:34px; font-weight:900; letter-spacing:-0.01em; }
-  .bw-total-sum{ font-size:14px; color:#d8d0e6; margin-top:4px; }
-  .bw-cta{ display:flex; width:100%; align-items:center; justify-content:center; margin-top:14px; min-height:54px; border:none; border-radius:999px; background:#f3efe6; color:#111; font:inherit; font-size:16px; font-weight:800; cursor:pointer; }
-  .bw-cta:disabled{ opacity:0.45; cursor:not-allowed; }
-  .bw-pay{ background:linear-gradient(90deg, var(--pink), var(--violet)); color:#fff; }
-  .bw-back{ background:none; border:none; color:#b9a3f7; font:inherit; font-size:14px; font-weight:700; cursor:pointer; padding:14px 0 10px; }
-  .bw-secure{ font-size:12.5px; color:var(--dim); text-align:center; margin-top:10px; }
-  .bw-cart{ background:#18141e; border:1.5px solid #3c3447; border-radius:16px; padding:16px 18px; margin-bottom:20px; }
-  .bw-cart .ln{ display:flex; justify-content:space-between; gap:12px; padding:7px 0; font-size:15px; border-bottom:1px solid #2a2433; }
-  .bw-cart .ln span:first-child{ color:#cfc6dd; }
-  .bw-cart .ln span:last-child{ font-weight:700; text-align:right; }
-  .bw-cart .ln.tot{ border-bottom:none; font-size:18px; padding-top:12px; }
-  .bw-cart .ln.tot span:last-child{ font-size:24px; font-weight:900; }
-  .cal-day .dot{ position:absolute; bottom:6px; left:50%; transform:translateX(-50%); }
+  /* -------- Prenotazione in 3 passi (stessi componenti del sito) -------- */
+  .bk-steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding-bottom:16px; border-bottom:1px solid var(--line); }
+  .bk-step{ display:flex; align-items:center; gap:10px; background:none; border:none; padding:0; color:var(--dim); font:inherit; font-weight:900; font-size:14px; text-transform:uppercase; letter-spacing:0.04em; cursor:pointer; text-align:left; }
+  .bk-step .bk-n{ font-size:11px; font-weight:700; color:var(--dim); background:var(--panel-2); border:1px solid var(--line); padding:3px 8px; border-radius:4px; }
+  .bk-step.on{ color:var(--text); }
+  .bk-step.on .bk-n{ color:#111; background:var(--yellow); border-color:var(--yellow); }
+  @media(max-width:440px){ .bk-step{ flex-direction:column; align-items:flex-start; gap:6px; font-size:12px; } }
+  .bk-pane{ display:grid; gap:30px; }
+  @media(min-width:520px){ .bk-pane{ gap:36px; } }
+  .bk-people{ display:grid; grid-template-columns:repeat(5,1fr); gap:8px; max-width:520px; }
+  .bk-people .slot{ font-size:18px; }
+  .bk-hint{ color:var(--dim); font-size:13px; margin-top:10px; }
+  .bk-pkgs{ display:grid; gap:12px; max-width:720px; }
+  .bk-pkg-head{ position:relative; width:100%; display:grid; grid-template-columns:1fr auto; gap:0 16px; align-items:center; }
+  .bk-pkg-head .rm-name, .bk-pkg-head .rm-meta{ grid-column:1; }
+  .bk-pkg-head .rm-price{ grid-column:2; grid-row:1 / span 2; margin-top:0; }
+  .bk-pkg.featured .bk-pkg-head::before{ content:'CONSIGLIATO'; position:absolute; top:-10px; right:16px; background:var(--pink); color:#fff; font-size:10px; font-weight:700; letter-spacing:0.08em; padding:3px 9px; border-radius:4px; }
+  .bk-extras{ max-width:720px; margin-top:12px; display:grid; gap:18px; background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--yellow); border-radius:0 12px 12px 0; padding:16px; }
+  .bk-extras strong{ display:block; font-weight:800; font-size:15px; }
+  .bk-extras small{ display:block; color:var(--dim); font-size:12.5px; margin-top:2px; }
+  .bk-extra-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; }
+  .bk-stepper{ display:flex; align-items:center; gap:10px; flex-shrink:0; }
+  .bk-stepper output{ min-width:22px; text-align:center; font-weight:900; font-size:18px; color:var(--yellow); }
+  .bk-minutes{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px; max-width:420px; }
+  #bkFlow .bk-deposit strong{ font-size:20px; font-weight:900; margin-left:4px; }
+  .bk-next{ justify-content:center; justify-self:start; }
+  .bk-next:disabled{ opacity:0.45; cursor:not-allowed; }
+  @media(max-width:519px){ .bk-next{ width:100%; justify-self:stretch; } }
+  .bk-back{ justify-self:start; background:none; border:none; padding:0; color:var(--yellow); font:inherit; font-weight:700; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; }
+  .bk-cart{ background:var(--panel-2); border:1px solid var(--line); border-left:3px solid var(--pink); border-radius:0 10px 10px 0; padding:6px 16px; max-width:720px; }
+  .bk-cart .ln{ display:flex; justify-content:space-between; gap:14px; padding:9px 0; font-size:14px; border-bottom:1px solid var(--line); }
+  .bk-cart .ln span:first-child{ color:var(--dim); }
+  .bk-cart .ln span:last-child{ font-weight:700; text-align:right; }
+  .bk-cart .ln.tot{ border-bottom:none; font-size:16px; }
+  .bk-cart .ln.tot span:first-child{ color:var(--text); font-weight:900; text-transform:uppercase; letter-spacing:0.04em; }
+  .bk-cart .ln.tot span:last-child{ color:var(--yellow); font-size:22px; font-weight:900; }
+  .bk-submit{ width:100%; justify-content:center; }
   .cal-day{ position:relative; }
+  .cal-day .dot{ position:absolute; bottom:5px; left:50%; transform:translateX(-50%); }
   .dot{ display:inline-block; width:6px; height:6px; border-radius:50%; }
-  .dot.ok{ background:#34d399; } .dot.few{ background:#fbbf24; } .dot.full{ background:#f87171; }
+  .dot.ok{ background:var(--violet); } .dot.few{ background:var(--yellow); } .dot.full{ background:var(--pink); }
+  .cal-day.sel .dot{ background:#fff; }
   .cal-key{ display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--dim); margin-top:12px; }
   .cal-key .dot{ margin-right:6px; }
 
@@ -660,142 +644,160 @@
 
 <section id="prenota">
   <div class="wrap">
+    <div class="section-head">
+      <div class="tag">Calendario</div>
+      <h2 class="display">Prenota online</h2>
+      <p>Tre passi: pacchetto ed extra, giorno e orario, pagamento online. Si parte sabato 19 dicembre.</p>
+    </div>
+
     <noscript>
       <div class="bk-empty">Per prenotare online serve JavaScript attivo. Puoi prenotare anche su WhatsApp al 350 973 6066 o scrivendo a rageroomcuneo@gmail.com. Apriamo sabato 19 dicembre in Via Valle Po 92, Madonna dell'Olmo (Cuneo): dal mercoledì alla domenica dalle 14:00, sabato e domenica fino a mezzanotte.</div>
     </noscript>
 
-    <div class="bw" id="bkFlow">
-      <div class="bw-kicker">Rage Room Cuneo</div>
-      <h2 class="bw-title">Prenota la tua rage</h2>
-      <div class="bw-steps" id="bwSteps">
-        <button type="button" class="bw-step-tab on" data-go="1"><span></span>Pacchetto</button>
-        <button type="button" class="bw-step-tab" data-go="2"><span></span>Calendario</button>
-        <button type="button" class="bw-step-tab" data-go="3"><span></span>Carrello</button>
+    <div class="bk-notice" id="bkNotice" hidden></div>
+
+    <div class="booking" id="bkFlow">
+      <div class="bk-steps" id="bwSteps">
+        <button type="button" class="bk-step on" data-go="1"><span class="bk-n">01</span>Pacchetto</button>
+        <button type="button" class="bk-step" data-go="2"><span class="bk-n">02</span>Calendario</button>
+        <button type="button" class="bk-step" data-go="3"><span class="bk-n">03</span>Carrello</button>
       </div>
 
-      <div class="bk-notice" id="bkNotice" hidden></div>
-
-      <!-- 1. Persone e pacchetto -->
-      <div class="bw-pane" id="bwPane1">
-        <h3 class="bw-h">Quanti siete?</h3>
-        <div class="bw-seg" id="bwPeople">
-          <button type="button" data-n="1" aria-pressed="true">1</button>
-          <button type="button" data-n="2" aria-pressed="false">2</button>
-          <button type="button" data-n="3" aria-pressed="false">3</button>
-          <button type="button" data-n="4" aria-pressed="false">4</button>
-          <button type="button" data-n="5" aria-pressed="false">5</button>
-        </div>
-        <p class="bw-hint" id="bwPeopleHint">Da soli nella stanza singola.</p>
-
-        <h3 class="bw-h">Scegli il tuo pacchetto</h3>
-        <div class="bw-pkgs" id="bwPkgs">
-          <div class="bw-pkg" data-pkg="base">
-            <button type="button" class="bw-pkg-head" aria-expanded="false">
-              <span class="bw-pkg-name">Base</span>
-              <span class="bw-pkg-meta"><span data-objects></span> · 15 minuti</span>
-              <span class="bw-pkg-price" data-price></span>
-              <span class="bw-chev" aria-hidden="true"></span>
-            </button>
+      <!-- 01 Pacchetto -->
+      <div class="bk-pane" id="bwPane1">
+        <div>
+          <div class="bk-label">Quanti siete?</div>
+          <div class="bk-people" id="bwPeople">
+            <button type="button" class="slot" data-n="1" aria-pressed="true">1</button>
+            <button type="button" class="slot" data-n="2" aria-pressed="false">2</button>
+            <button type="button" class="slot" data-n="3" aria-pressed="false">3</button>
+            <button type="button" class="slot" data-n="4" aria-pressed="false">4</button>
+            <button type="button" class="slot" data-n="5" aria-pressed="false">5</button>
           </div>
-          <div class="bw-pkg" data-pkg="plus">
-            <div class="bw-badge">Consigliato</div>
-            <button type="button" class="bw-pkg-head" aria-expanded="false">
-              <span class="bw-pkg-name">Plus</span>
-              <span class="bw-pkg-meta"><span data-objects></span> · 15 minuti</span>
-              <span class="bw-pkg-price" data-price></span>
-              <span class="bw-chev" aria-hidden="true"></span>
-            </button>
-          </div>
-          <div class="bw-pkg" data-pkg="extreme">
-            <button type="button" class="bw-pkg-head" aria-expanded="false">
-              <span class="bw-pkg-name">Extreme</span>
-              <span class="bw-pkg-meta"><span data-objects></span> · 15 minuti</span>
-              <span class="bw-pkg-price" data-price></span>
-              <span class="bw-chev" aria-hidden="true"></span>
-            </button>
-          </div>
+          <p class="bk-hint" id="bwPeopleHint">Da solo nella stanza singola.</p>
         </div>
 
-        <!-- Extra: si apre sotto il pacchetto scelto -->
-        <div class="bw-extras" id="bwExtras" hidden>
-          <h4>Personalizza la tua esperienza</h4>
-          <div class="bw-row">
-            <div><div class="bw-row-t">Oggetti grandi in più</div><div class="bw-row-s">25 € l'uno: stampanti, monitor, piccoli elettrodomestici</div></div>
-            <div class="bw-stepper">
-              <button type="button" id="bwBigMinus" aria-label="Togli un oggetto grande">−</button>
-              <output id="bwBig">0</output>
-              <button type="button" id="bwBigPlus" aria-label="Aggiungi un oggetto grande">+</button>
+        <div>
+          <div class="bk-label">Scegli il pacchetto</div>
+          <div class="bk-pkgs" id="bwPkgs">
+            <div class="bk-pkg" data-pkg="base">
+              <button type="button" class="room-opt bk-pkg-head" aria-pressed="false" aria-expanded="false">
+                <span class="rm-name">Base</span>
+                <span class="rm-meta"><span data-objects></span> · 15 minuti</span>
+                <span class="rm-price" data-price></span>
+              </button>
+            </div>
+            <div class="bk-pkg featured" data-pkg="plus">
+              <button type="button" class="room-opt bk-pkg-head" aria-pressed="false" aria-expanded="false">
+                <span class="rm-name">Plus</span>
+                <span class="rm-meta"><span data-objects></span> · 15 minuti</span>
+                <span class="rm-price" data-price></span>
+              </button>
+            </div>
+            <div class="bk-pkg" data-pkg="extreme">
+              <button type="button" class="room-opt bk-pkg-head" aria-pressed="false" aria-expanded="false">
+                <span class="rm-name">Extreme</span>
+                <span class="rm-meta"><span data-objects></span> · 15 minuti</span>
+                <span class="rm-price" data-price></span>
+              </button>
             </div>
           </div>
-          <div class="bw-row-t" style="margin-top:18px;">Vuoi qualche minuto in più?</div>
-          <div class="bw-seg bw-seg-2" id="bwMinutes">
-            <button type="button" data-m="5" aria-pressed="false">+5 minuti <small>+10 €</small></button>
-            <button type="button" data-m="10" aria-pressed="false">+10 minuti <small>+20 €</small></button>
+
+          <!-- Extra: si aprono sotto il pacchetto scelto -->
+          <div class="bk-extras" id="bwExtras" hidden>
+            <div class="bk-extra-row">
+              <div><strong>Oggetti grandi in più</strong><small>€25 l'uno: stampanti, monitor, piccoli elettrodomestici</small></div>
+              <div class="bk-stepper">
+                <button type="button" class="cal-nav" id="bwBigMinus" aria-label="Togli un oggetto grande">−</button>
+                <output id="bwBig">0</output>
+                <button type="button" class="cal-nav" id="bwBigPlus" aria-label="Aggiungi un oggetto grande">+</button>
+              </div>
+            </div>
+            <div>
+              <strong>Minuti in più</strong>
+              <div class="bk-minutes" id="bwMinutes">
+                <button type="button" class="slot" data-m="5" aria-pressed="false">+5 minuti<span>+€10</span></button>
+                <button type="button" class="slot" data-m="10" aria-pressed="false">+10 minuti<span>+€20</span></button>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="bw-total">
-          <div class="bw-total-top"><span>Totale</span><strong id="bwTotal1">40 €</strong></div>
-          <div class="bw-total-sum" id="bwSum1"></div>
-          <button type="button" class="bw-cta" id="bwTo2">Scegli data e orario →</button>
+        <div class="bk-deposit">
+          <span aria-hidden="true">💳</span>
+          <span>Totale <strong id="bwTotal1">€40</strong><small id="bwSum1"></small></span>
         </div>
+        <button type="button" class="btn btn-primary bk-next" id="bwTo2">Scegli giorno e orario →</button>
       </div>
 
-      <!-- 2. Calendario -->
-      <div class="bw-pane" id="bwPane2" hidden>
-        <button type="button" class="bw-back" data-go="1">← Pacchetto</button>
-        <div class="cal">
-          <div class="cal-head">
-            <button type="button" class="cal-nav" id="bkPrev" aria-label="Mese precedente">←</button>
-            <div class="cal-title" id="bkMonth">Caricamento…</div>
-            <button type="button" class="cal-nav" id="bkNext" aria-label="Mese successivo">→</button>
+      <!-- 02 Calendario -->
+      <div class="bk-pane" id="bwPane2" hidden>
+        <button type="button" class="bk-back" data-go="1">← Pacchetto</button>
+        <div class="bk-cols">
+          <div>
+            <div class="bk-label">Scegli il giorno</div>
+            <div class="cal">
+              <div class="cal-head">
+                <button type="button" class="cal-nav" id="bkPrev" aria-label="Mese precedente">←</button>
+                <div class="cal-title" id="bkMonth">Caricamento…</div>
+                <button type="button" class="cal-nav" id="bkNext" aria-label="Mese successivo">→</button>
+              </div>
+              <div class="cal-dow" aria-hidden="true"><div>Lun</div><div>Mar</div><div>Mer</div><div>Gio</div><div>Ven</div><div>Sab</div><div>Dom</div></div>
+              <div class="cal-grid" id="bkDays"></div>
+              <div class="cal-key"><span><i class="dot ok"></i>Libero</span><span><i class="dot few"></i>Pochi posti</span><span><i class="dot full"></i>Pieno</span></div>
+              <div class="cal-legend">Mer–Ven 14:00 – 22:00 · Sab e Dom 14:00 – 00:00 · Lun e Mar chiusi<br><span class="cal-holiday">Feste: aperti anche lun 28 e mar 29 dicembre · 24 e 31 dicembre fino alle 19 · chiusi 25 dicembre e 1° gennaio</span></div>
+            </div>
           </div>
-          <div class="cal-dow" aria-hidden="true"><div>Lun</div><div>Mar</div><div>Mer</div><div>Gio</div><div>Ven</div><div>Sab</div><div>Dom</div></div>
-          <div class="cal-grid" id="bkDays"></div>
-          <div class="cal-key"><span><i class="dot ok"></i>Libero</span><span><i class="dot few"></i>Pochi posti</span><span><i class="dot full"></i>Pieno</span></div>
-          <div class="cal-legend">Mer–Ven 14:00 – 22:00 · Sab e Dom 14:00 – 00:00 · Lun e Mar chiusi<br><span class="cal-holiday">Feste: aperti anche lun 28 e mar 29 dicembre · 24 e 31 dicembre fino alle 19 · chiusi 25 dicembre e 1° gennaio</span></div>
+          <div>
+            <div class="bk-label">Scegli l'orario</div>
+            <div id="bkSlots" aria-live="polite"></div>
+          </div>
         </div>
-        <h3 class="bw-h" id="bwSlotsTitle">Scegli l'orario</h3>
-        <div id="bkSlots" aria-live="polite"></div>
-        <div class="bw-total">
-          <div class="bw-total-top"><span>Totale</span><strong id="bwTotal2">40 €</strong></div>
-          <div class="bw-total-sum" id="bwSum2"></div>
-          <button type="button" class="bw-cta" id="bwTo3" disabled>Vai al carrello →</button>
+        <div class="bk-deposit">
+          <span aria-hidden="true">💳</span>
+          <span>Totale <strong id="bwTotal2">€40</strong><small id="bwSum2"></small></span>
         </div>
+        <button type="button" class="btn btn-primary bk-next" id="bwTo3" disabled>Vai al carrello →</button>
       </div>
 
-      <!-- 3. Carrello -->
-      <div class="bw-pane" id="bwPane3" hidden>
-        <button type="button" class="bw-back" data-go="2">← Calendario</button>
-        <div class="bw-cart" id="bwCart"></div>
-        <form class="bk-form" id="bkForm" novalidate>
-          <div class="field">
-            <label for="bkName">Nome e cognome</label>
-            <input id="bkName" type="text" autocomplete="name" required>
-          </div>
-          <div class="field">
-            <label for="bkPhone">Telefono</label>
-            <input id="bkPhone" type="tel" autocomplete="tel" placeholder="329 000 0000" required>
-          </div>
-          <div class="field full">
-            <label for="bkEmail">Email</label>
-            <input id="bkEmail" type="email" autocomplete="email" placeholder="tuonome@email.it" required>
-          </div>
-          <div class="field full">
-            <label for="bkVoucher">Hai un buono regalo? (facoltativo)</label>
-            <input id="bkVoucher" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="16" placeholder="RR-XXXX-XXXX">
-            <div class="bk-voucher-note" id="bkVoucherNote" hidden>Il buono viene scalato dal totale; se lo copre tutto non paghi nulla online.</div>
-          </div>
-          <div class="field full">
-            <label for="bkNotes">Note (facoltative)</label>
-            <textarea id="bkNotes" maxlength="400" placeholder="Compleanno, oggetti tuoi da rompere, richieste particolari…"></textarea>
-          </div>
-          <div class="full bk-error" id="bkError" hidden></div>
-          <div class="full">
-            <button type="submit" class="bw-cta bw-pay" id="bkSubmit">Paga e conferma</button>
-            <p class="bw-secure">Pagamento sicuro su Stripe. La conferma ti arriva subito via email.</p>
-          </div>
-        </form>
+      <!-- 03 Carrello -->
+      <div class="bk-pane" id="bwPane3" hidden>
+        <button type="button" class="bk-back" data-go="2">← Calendario</button>
+        <div>
+          <div class="bk-label">Riepilogo</div>
+          <div class="bk-cart" id="bwCart"></div>
+        </div>
+        <div>
+          <div class="bk-label">I tuoi dati</div>
+          <form class="bk-form" id="bkForm" novalidate>
+            <div class="field">
+              <label for="bkName">Nome e cognome</label>
+              <input id="bkName" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="bkPhone">Telefono</label>
+              <input id="bkPhone" type="tel" autocomplete="tel" placeholder="329 000 0000" required>
+            </div>
+            <div class="field full">
+              <label for="bkEmail">Email</label>
+              <input id="bkEmail" type="email" autocomplete="email" placeholder="tuonome@email.it" required>
+            </div>
+            <div class="field full">
+              <label for="bkVoucher">Hai un buono regalo? (facoltativo)</label>
+              <input id="bkVoucher" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="16" placeholder="RR-XXXX-XXXX">
+              <div class="bk-voucher-note" id="bkVoucherNote" hidden>Il buono viene scalato dal totale; se lo copre tutto non paghi nulla online.</div>
+            </div>
+            <div class="field full">
+              <label for="bkNotes">Note (facoltative)</label>
+              <textarea id="bkNotes" maxlength="400" placeholder="Compleanno, oggetti tuoi da rompere, richieste particolari…"></textarea>
+            </div>
+            <div class="full bk-error" id="bkError" hidden></div>
+            <div class="full">
+              <button type="submit" class="btn btn-primary bk-submit" id="bkSubmit">Paga e conferma</button>
+              <p class="bk-hint">Pagamento sicuro su Stripe. La conferma ti arriva subito via email.</p>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
 
@@ -997,7 +999,7 @@
     extraOpenDates: ['2026-12-28', '2026-12-29']
   };
 
-  function euro(cents) { var v = cents / 100; return (v % 1 ? v.toFixed(2).replace('.', ',') : String(v)) + ' €'; }
+  function euro(cents) { var v = cents / 100; return '€' + (v % 1 ? v.toFixed(2).replace('.', ',') : String(v)); }
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
   function iso(y, m, d) { return y + '-' + pad(m + 1) + '-' + pad(d); }
   function parseIso(v) { var p = v.split('-'); return { y: +p[0], m: +p[1] - 1, d: +p[2] }; }
@@ -1027,21 +1029,23 @@
   }
 
   /* ---------- Passo 1: persone, pacchetto, extra ---------- */
-  var peopleHints = { 1: 'Da soli nella stanza singola.', 2: 'In due: 10 € di sconto sul totale.', 3: 'Gruppo nella sala festa.', 4: 'Gruppo nella sala festa.', 5: 'Gruppo nella sala festa, massimo 5 persone.' };
+  var peopleHints = { 1: 'Da solo nella stanza singola.', 2: 'In due: €10 di sconto sul totale.', 3: 'Gruppo nella sala festa.', 4: 'Gruppo nella sala festa.', 5: 'Gruppo nella sala festa, massimo 5 persone.' };
   function renderStep1() {
     var pb = $('bwPeople').querySelectorAll('button');
     for (var i = 0; i < pb.length; i++) pb[i].setAttribute('aria-pressed', +pb[i].getAttribute('data-n') === state.people ? 'true' : 'false');
     $('bwPeopleHint').textContent = peopleHints[state.people];
-    var cards = $('bwPkgs').querySelectorAll('.bw-pkg');
+    var cards = $('bwPkgs').querySelectorAll('.bk-pkg');
     for (var j = 0; j < cards.length; j++) {
       var id = cards[j].getAttribute('data-pkg'), on = id === state.pkg;
       cards[j].classList.toggle('on', on);
-      cards[j].querySelector('.bw-pkg-head').setAttribute('aria-expanded', on ? 'true' : 'false');
+      var head = cards[j].querySelector('.bk-pkg-head');
+      head.setAttribute('aria-expanded', on ? 'true' : 'false');
+      head.setAttribute('aria-pressed', on ? 'true' : 'false');
       cards[j].querySelector('[data-objects]').textContent = objectsText(id, state.people);
       cards[j].querySelector('[data-price]').textContent = euro(packagePrice(id, state.people));
     }
     // Gli extra si aprono sotto il pacchetto scelto.
-    var extras = $('bwExtras'), sel = $('bwPkgs').querySelector('.bw-pkg.on');
+    var extras = $('bwExtras'), sel = $('bwPkgs').querySelector('.bk-pkg.on');
     if (sel) { sel.parentNode.insertBefore(extras, sel.nextSibling); extras.hidden = false; }
     $('bwBig').textContent = state.big;
     $('bwBigMinus').disabled = state.big <= 0;
@@ -1067,7 +1071,7 @@
     renderStep1(); renderCalendar(); renderSlots();
   });
   $('bwPkgs').addEventListener('click', function (ev) {
-    var head = ev.target.closest('.bw-pkg-head'); if (!head) return;
+    var head = ev.target.closest('.bk-pkg-head'); if (!head) return;
     state.pkg = head.parentNode.getAttribute('data-pkg');
     renderStep1();
   });
@@ -1085,7 +1089,7 @@
     if (step >= 3 && !(state.date && state.time)) step = 2;
     state.step = step;
     for (var i = 1; i <= 3; i++) $('bwPane' + i).hidden = i !== step;
-    var tabs = $('bwSteps').querySelectorAll('.bw-step-tab');
+    var tabs = $('bwSteps').querySelectorAll('.bk-step');
     for (var j = 0; j < tabs.length; j++) tabs[j].classList.toggle('on', j < step);
     if (step === 2) { loadMonth(); if (state.date) loadSlots(); }
     if (step === 3) renderCart();
