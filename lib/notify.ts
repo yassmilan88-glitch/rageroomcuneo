@@ -124,8 +124,26 @@ function ownerEmailHtml(booking: BookingNotification): string {
 }
 
 /* Colori del sito, ripetuti qui perché le email non leggono il CSS della pagina. */
-const C = { bg: "#0a0a0c", panel: "#131215", panel2: "#1a1a1e", line: "#2a292d", text: "#f3efe6", dim: "#9a978f", yellow: "#f4c400", pink: "#ff2e6e" };
-const FONT = "Helvetica,Arial,sans-serif";
+export const C = { bg: "#0a0a0c", panel: "#131215", panel2: "#1a1a1e", line: "#2a292d", text: "#f3efe6", dim: "#9a978f", yellow: "#f4c400", pink: "#ff2e6e" };
+export const FONT = "Helvetica,Arial,sans-serif";
+
+/**
+ * Apertura comune delle email ai clienti. Dichiarare lo schema scuro serve:
+ * senza, l'app Mail dell'iPhone in modalità scura ricolora l'email e il testo
+ * chiaro diventa quasi illeggibile; lo stile su x-apple-data-detectors evita
+ * che date e orari diventino link sottolineati.
+ */
+export function emailDocumentStart(title: string): string {
+  return `<!doctype html>
+<html lang="it" style="color-scheme:dark;supported-color-schemes:dark;"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="x-apple-disable-message-reformatting"><meta name="color-scheme" content="dark"><meta name="supported-color-schemes" content="dark"><title>${escapeHtml(title)}</title>
+<style>:root{color-scheme:dark;supported-color-schemes:dark;}body{margin:0;padding:0;background:${C.bg};}a[x-apple-data-detectors]{color:inherit!important;text-decoration:none!important;font-size:inherit!important;font-family:inherit!important;font-weight:inherit!important;line-height:inherit!important;}</style></head>
+<body bgcolor="${C.bg}" style="margin:0;padding:0;background:${C.bg};">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="${C.bg}" style="background:${C.bg};">
+<tr><td align="center" style="padding:24px 12px;">`;
+}
+export const EMAIL_DOCUMENT_END = `</td></tr>
+</table>
+</body></html>`;
 
 /** Prima parola del nome, con l'iniziale maiuscola. */
 function firstName(name: string): string {
@@ -165,12 +183,8 @@ function customerEmailHtml(booking: BookingNotification): string {
       </td></tr>`
     : "";
 
-  return `<!doctype html>
-<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>Prenotazione confermata</title></head>
-<body style="margin:0;padding:0;background:${C.bg};">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.bg};">
-<tr><td align="center" style="padding:24px 12px;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:${C.panel};border:1px solid ${C.line};border-radius:16px;overflow:hidden;">
+  return `${emailDocumentStart("Prenotazione confermata")}
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="${C.panel}" style="max-width:560px;background:${C.panel};border:1px solid ${C.line};border-radius:16px;overflow:hidden;">
     <tr><td style="height:8px;line-height:8px;font-size:0;background:${C.yellow};">&nbsp;</td></tr>
 
     <tr><td style="padding:26px 28px 0;font-family:${FONT};font-size:20px;font-weight:bold;letter-spacing:0.5px;color:${C.text};">
@@ -245,9 +259,7 @@ function customerEmailHtml(booking: BookingNotification): string {
       <a href="https://rageroomcuneo.it" style="color:${C.yellow};text-decoration:none;">rageroomcuneo.it</a> · <a href="tel:+393509736066" style="color:${C.dim};text-decoration:none;">350 973 6066</a> · <a href="mailto:${COMPANY_EMAIL}" style="color:${C.dim};text-decoration:none;">${COMPANY_EMAIL}</a>
     </td></tr>
   </table>
-</td></tr>
-</table>
-</body></html>`;
+${EMAIL_DOCUMENT_END}`;
 }
 
 /** Testo semplice della conferma, per i programmi di posta che non mostrano l'HTML. */

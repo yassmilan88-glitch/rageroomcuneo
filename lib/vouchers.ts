@@ -17,7 +17,17 @@ import {
   priceCentsFor,
   type Package,
 } from "./booking.js";
-import { COMPANY_EMAIL, OWNER_WHATSAPP, escapeHtml, sendEmail, sendOwnerWhatsApp } from "./notify.js";
+import {
+  C,
+  COMPANY_EMAIL,
+  EMAIL_DOCUMENT_END,
+  FONT,
+  OWNER_WHATSAPP,
+  emailDocumentStart,
+  escapeHtml,
+  sendEmail,
+  sendOwnerWhatsApp,
+} from "./notify.js";
 import { getStripe } from "./payments.js";
 
 /** Il buono vale 12 mesi dall'acquisto. */
@@ -196,29 +206,66 @@ export async function createVoucherCheckout(purchase: VoucherPurchase): Promise<
 /* Consegna del buono (email a chi lo compra + avviso al titolare)     */
 /* ------------------------------------------------------------------ */
 
-function voucherEmailHtml(voucher: Voucher): string {
+export function voucherEmailHtml(voucher: Voucher): string {
   const view = voucherPublicView(voucher);
   const message = voucher.message
-    ? `<p style="margin:18px 0 0;font-size:16px;font-style:italic;color:#f3efe6;">“${escapeHtml(voucher.message)}”</p>`
+    ? `<tr><td style="padding:14px 0 0;font-family:${FONT};font-size:16px;line-height:1.5;font-style:italic;color:${C.text};">“${escapeHtml(voucher.message)}”</td></tr>`
     : "";
-  return `<div style="font-family:Helvetica,Arial,sans-serif;color:#111;max-width:560px;">
-  <p style="margin:0 0 16px;font-size:15px;">Ciao ${escapeHtml(voucher.buyerName)}, grazie! Ecco il tuo buono regalo. Puoi stamparlo, inoltrare questa email o mandare il codice su WhatsApp.</p>
-  <div style="background:#0a0a0c;border-radius:18px;padding:28px 26px;color:#f3efe6;border:2px solid #8b5cf6;">
-    <div style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#f4c400;font-weight:700;">Buono regalo · Rage Room Cuneo</div>
-    <div style="font-size:30px;font-weight:900;text-transform:uppercase;margin-top:10px;line-height:1.05;">Spacca. Sfogati. <span style="color:#ff2e6e;">Riparti.</span></div>
-    <p style="margin:18px 0 0;font-size:15px;">Per <strong>${escapeHtml(voucher.recipientName)}</strong>${voucher.buyerName ? `, da parte di <strong>${escapeHtml(voucher.buyerName)}</strong>` : ""}</p>
-    ${message}
-    <p style="margin:18px 0 0;font-size:15px;">${escapeHtml(view.packageName)} · ${escapeHtml(view.peopleLabel)} · sessione da ${view.minutes} minuti<br><span style="color:#9a978f;">${escapeHtml(view.contents)}${voucher.people > 1 ? " a persona" : ""}</span></p>
-    <div style="margin-top:20px;background:#f4c400;color:#111;border-radius:10px;padding:14px 16px;text-align:center;">
-      <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;">Codice</div>
-      <div style="font-size:28px;font-weight:900;letter-spacing:3px;font-family:Courier New,monospace;">${escapeHtml(voucher.code)}</div>
-    </div>
-    <p style="margin:16px 0 0;font-size:13px;color:#9a978f;">Valido fino al ${escapeHtml(view.expiresLabel)}.</p>
-  </div>
-  <p style="margin:20px 0 0;font-size:14px;"><strong>Come si usa:</strong> si prenota su <a href="https://rageroomcuneo.it/#prenota">rageroomcuneo.it</a>, si scelgono il pacchetto, la stanza, il giorno e l'orario, e si scrive il codice nel campo “Buono regalo”. Non si paga nulla online; se si sceglie un pacchetto più grande o si è in più persone, la differenza si salda in sede.</p>
-  <p style="margin:12px 0 0;font-size:14px;">📍 ${escapeHtml(VENUE_AREA)}</p>
-  <p style="margin:16px 0 0;font-size:13px;color:#8a8a92;">Per qualsiasi cosa scrivici su <a href="https://wa.me/${OWNER_WHATSAPP}">WhatsApp</a> o a <a href="mailto:${COMPANY_EMAIL}">${COMPANY_EMAIL}</a>.</p>
-</div>`;
+  const from = voucher.buyerName ? `, da parte di <strong>${escapeHtml(voucher.buyerName)}</strong>` : "";
+  return `${emailDocumentStart("Il tuo buono regalo")}
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="${C.panel}" style="max-width:560px;background:${C.panel};border:1px solid ${C.line};border-radius:16px;overflow:hidden;">
+    <tr><td style="height:8px;line-height:8px;font-size:0;background:${C.yellow};">&nbsp;</td></tr>
+    <tr><td style="padding:26px 28px 0;font-family:${FONT};font-size:20px;font-weight:bold;letter-spacing:0.5px;color:${C.text};">
+      RAGE<span style="color:${C.pink};">ROOM</span> CUNEO
+    </td></tr>
+    <tr><td style="padding:22px 28px 0;font-family:${FONT};font-size:13px;color:${C.dim};">
+      All'attenzione di: ${escapeHtml(voucher.buyerName || voucher.recipientName)}
+    </td></tr>
+    <tr><td style="padding:14px 28px 0;font-family:${FONT};font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:${C.yellow};">
+      Buono regalo
+    </td></tr>
+    <tr><td style="padding:8px 28px 0;font-family:${FONT};font-size:26px;line-height:1.15;font-weight:bold;text-transform:uppercase;color:${C.text};">
+      Per <span style="color:${C.pink};">${escapeHtml(voucher.recipientName)}</span>
+    </td></tr>
+    <tr><td style="padding:14px 28px 22px;font-family:${FONT};font-size:15px;line-height:1.55;color:#d8d5cc;">
+      Ciao${voucher.buyerName ? ` ${escapeHtml(voucher.buyerName.split(" ")[0])}` : ""}, grazie! Il buono è pagato e pronto da regalare: puoi stampare questa email, inoltrarla o mandare il codice su WhatsApp.
+    </td></tr>
+
+    <tr><td style="padding:0 28px 22px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="${C.panel2}" style="background:${C.panel2};border:1px solid ${C.line};border-left:3px solid ${C.pink};border-radius:0 10px 10px 0;">
+        <tr><td style="padding:16px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+            <tr><td style="font-family:${FONT};font-size:15px;line-height:1.5;color:#d8d5cc;">Per <strong style="color:${C.text};">${escapeHtml(voucher.recipientName)}</strong>${from}</td></tr>
+            ${message}
+            <tr><td style="padding:14px 0 0;font-family:${FONT};font-size:15px;line-height:1.5;color:#d8d5cc;">${escapeHtml(view.packageName)} · ${escapeHtml(view.peopleLabel)} · sessione da ${view.minutes} minuti<br><span style="color:${C.dim};">${escapeHtml(view.contents)}${voucher.people > 1 ? " a persona" : ""}</span></td></tr>
+            <tr><td style="padding:18px 0 0;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="${C.yellow}" style="background:${C.yellow};border-radius:10px;">
+                <tr><td align="center" style="padding:14px 16px;font-family:${FONT};color:#111111;">
+                  <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:bold;">Codice</div>
+                  <div style="font-size:28px;font-weight:bold;letter-spacing:3px;font-family:Courier New,monospace;color:#111111;">${escapeHtml(voucher.code)}</div>
+                </td></tr>
+              </table>
+            </td></tr>
+            <tr><td style="padding:12px 0 0;font-family:${FONT};font-size:13px;color:${C.dim};">Valido fino a ${escapeHtml(view.expiresLabel)}.</td></tr>
+          </table>
+        </td></tr>
+      </table>
+    </td></tr>
+
+    <tr><td style="padding:0 28px 22px;font-family:${FONT};font-size:14px;line-height:1.6;color:#d8d5cc;">
+      <strong style="color:${C.text};text-transform:uppercase;font-size:12px;letter-spacing:1px;">Come si usa</strong><br>
+      Si prenota su <a href="https://rageroomcuneo.it/#prenota" style="color:${C.yellow};text-decoration:none;">rageroomcuneo.it</a> scegliendo pacchetto, persone, giorno e orario, e si scrive il codice nel campo del buono regalo.
+      Se il buono copre tutto non si paga nulla; con un pacchetto più grande o più persone la differenza si paga online al momento della prenotazione.<br>
+      📍 ${escapeHtml(VENUE_AREA)}
+    </td></tr>
+
+    <tr><td style="height:1px;line-height:1px;font-size:0;background:${C.line};">&nbsp;</td></tr>
+    <tr><td style="padding:18px 28px 24px;font-family:${FONT};font-size:12px;line-height:1.6;color:${C.dim};">
+      Rage Room Cuneo · ${escapeHtml(VENUE_AREA)}<br>
+      <a href="https://rageroomcuneo.it" style="color:${C.yellow};text-decoration:none;">rageroomcuneo.it</a> · <a href="https://wa.me/${OWNER_WHATSAPP}" style="color:${C.dim};text-decoration:none;">WhatsApp 350 973 6066</a> · <a href="mailto:${COMPANY_EMAIL}" style="color:${C.dim};text-decoration:none;">${COMPANY_EMAIL}</a>
+    </td></tr>
+  </table>
+${EMAIL_DOCUMENT_END}`;
 }
 
 function voucherOwnerText(voucher: Voucher): string {
