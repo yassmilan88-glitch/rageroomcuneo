@@ -791,9 +791,9 @@
               <input id="bkEmail" type="email" autocomplete="email" placeholder="tuonome@email.it" required>
             </div>
             <div class="field full">
-              <label for="bkVoucher">Hai un buono regalo? (facoltativo)</label>
-              <input id="bkVoucher" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="16" placeholder="RR-XXXX-XXXX">
-              <div class="bk-voucher-note" id="bkVoucherNote" hidden>Il buono viene scalato dal totale; se lo copre tutto non paghi nulla online.</div>
+              <label for="bkVoucher">Hai un buono regalo o un codice sconto? (facoltativo)</label>
+              <input id="bkVoucher" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="16" placeholder="Scrivi il codice">
+              <div class="bk-voucher-note" id="bkVoucherNote" hidden>Buono o sconto vengono scalati dal totale prima del pagamento; se il buono copre tutto non paghi nulla online.</div>
             </div>
             <div class="field full">
               <label for="bkNotes">Note (facoltative)</label>
@@ -1289,7 +1289,7 @@
   voucherEl.addEventListener('input', function () {
     var on = !!voucherEl.value.trim();
     $('bkVoucherNote').hidden = !on;
-    submitEl.textContent = on ? 'Usa il buono e conferma' : 'Paga ' + euro(total()) + ' e conferma';
+    submitEl.textContent = on ? 'Usa il codice e conferma' : 'Paga ' + euro(total()) + ' e conferma';
   });
 
   formEl.addEventListener('submit', function (ev) {

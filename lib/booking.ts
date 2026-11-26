@@ -199,6 +199,36 @@ export function totalCentsFor(packageId: string, people: number, extras: Extras,
   return (base + extrasCents(extras)) * (date ? priceMultiplierFor(date) : 1);
 }
 
+/**
+ * Codici sconto da dare a mano a singoli clienti. Si scrivono nello stesso
+ * campo del buono regalo. `people`: vale solo per quel numero di persone;
+ * `maxUses`: quante prenotazioni (confermate o in pagamento) possono usarlo.
+ */
+export interface DiscountCode {
+  percent: number;
+  people?: number;
+  maxUses: number;
+}
+export const DISCOUNT_CODES: Record<string, DiscountCode> = {
+  "SQUAD4-K7": { percent: 10, people: 4, maxUses: 1 },
+};
+
+export function findDiscountCode(input: string): (DiscountCode & { code: string }) | null {
+  const code = input.trim().toUpperCase().replace(/\s+/g, "");
+  const found = DISCOUNT_CODES[code];
+  return found ? { code, ...found } : null;
+}
+
+/** Totale scontato, arrotondato al centesimo (es. 160 € −10% = 144 €). */
+export function discountedCents(totalCents: number, percent: number): number {
+  return Math.round((totalCents * (100 - percent)) / 100);
+}
+
+/** Segno lasciato nelle note della prenotazione: serve a contare gli utilizzi del codice. */
+export function discountNoteMarker(code: string): string {
+  return `🏷️ Codice ${code}`;
+}
+
 /** Importo come nel sito: €40, €145, oppure €12,50 se ci sono centesimi. */
 export function formatEuro(cents: number): string {
   return cents % 100 ? `€${(cents / 100).toFixed(2).replace(".", ",")}` : `€${cents / 100}`;
