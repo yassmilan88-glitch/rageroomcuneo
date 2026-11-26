@@ -84,7 +84,7 @@ export default async (req: Request) => {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return badRequest("Inserisci un indirizzo email valido.");
   if (payload.rulesAccepted !== true) return badRequest("Per prenotare devi accettare le regole della sessione.");
 
-  const total = totalCentsFor(pkg.id, people, extras);
+  const total = totalCentsFor(pkg.id, people, extras, date);
 
   // Buono regalo: scala il totale.
   const voucherInput = asText(payload.voucherCode);

@@ -11,6 +11,7 @@ import {
   DEPOSIT_CENTS_PER_PERSON,
   EARLY_CLOSING,
   EXTRA_OPEN_DATES,
+  PRICE_MULTIPLIERS,
   HOLIDAY_HOURS_LABEL,
   LATE_WEEKDAYS,
   OPENING_HOURS_LABEL,
@@ -54,6 +55,7 @@ export default async (req: Request) => {
     // Feste: chiusure straordinarie e aperture extra, per disegnare il calendario.
     closedDates: CLOSED_DATES,
     extraOpenDates: EXTRA_OPEN_DATES,
+    priceMultipliers: PRICE_MULTIPLIERS,
     earlyClosingDates: Object.keys(EARLY_CLOSING),
     holidayHoursLabel: HOLIDAY_HOURS_LABEL,
     openingTime: "14:00",
