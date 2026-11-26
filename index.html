@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"EntertainmentBusiness","name":"Rage Room Cuneo","url":"https://rageroomcuneo.it/","telephone":"+39 350 973 6066","email":"rageroomcuneo@gmail.com","image":"https://rageroomcuneo.it/og-rageroom.jpg","address":{"@type":"PostalAddress","streetAddress":"Via Valle Po 92","addressLocality":"Cuneo","postalCode":"12100","addressRegion":"CN","addressCountry":"IT"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Wednesday","Thursday","Friday"],"opens":"14:00","closes":"22:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday","Sunday"],"opens":"14:00","closes":"23:59"}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg: #0a0a0c;
@@ -37,13 +37,13 @@
   html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
   body{
     background: var(--bg); color: var(--text);
-    font-family:'Inter', sans-serif; font-size:16px; line-height:1.55;
+    font-family:'Inter', sans-serif; font-size:16px; line-height:1.55; font-variant-numeric:tabular-nums;
     -webkit-font-smoothing:antialiased;
     /* Su telefono nulla deve poter creare scorrimento orizzontale. */
     overflow-x:hidden;
   }
-  .display{ font-family:'Anton', sans-serif; text-transform:uppercase; letter-spacing:0.01em; line-height:0.95; }
-  .mono{ font-family:'Space Mono', monospace; }
+  .display{ font-family:'Inter', sans-serif; font-weight:900; text-transform:uppercase; letter-spacing:-0.02em; line-height:0.98; }
+  .mono{ font-family:'Inter', sans-serif; font-weight:600; }
   a{ color:inherit; text-decoration:none; }
   img{ max-width:100%; display:block; }
   .wrap{
@@ -74,7 +74,7 @@
     max-width:1080px; margin:0 auto;
   }
   @media(min-width:520px){ nav{ padding-left:max(24px, env(safe-area-inset-left)); padding-right:max(24px, env(safe-area-inset-right)); } }
-  .logo{ font-family:'Anton'; font-size:18px; text-transform:uppercase; letter-spacing:0.03em; }
+  .logo{ font-family:'Inter', sans-serif; font-weight:900; font-size:18px; text-transform:uppercase; letter-spacing:0.03em; }
   @media(min-width:400px){ .logo{ font-size:20px; } }
   .logo span{ color: var(--pink); }
   .nav-links{ display:none; gap:22px; font-size:14px; font-weight:600; }
@@ -107,7 +107,7 @@
   }
   @media(min-width:520px){ .hero-inner{ padding: 100px 24px 56px; } }
   .eyebrow{
-    display:inline-flex; align-items:center; gap:8px; font-family:'Space Mono'; font-size:12px;
+    display:inline-flex; align-items:center; gap:8px; font-family:'Inter', sans-serif; font-weight:600; font-size:12px;
     letter-spacing:0.12em; text-transform:uppercase; color: var(--yellow); margin-bottom:18px;
   }
   .eyebrow::before{ content:''; width:8px; height:8px; background:var(--pink); border-radius:50%; }
@@ -118,9 +118,9 @@
   .countdown{ display:flex; align-items:flex-end; gap:10px; margin-top:24px; flex-wrap:wrap; }
   .cd-cell{ display:flex; flex-direction:column; align-items:center; min-width:66px; padding:10px 8px;
     background:rgba(19,18,21,0.85); border:1px solid rgba(139,92,246,0.45); border-radius:12px; }
-  .cd-n{ font-family:'Anton', sans-serif; font-size:34px; line-height:1; color:var(--yellow); }
-  .cd-l{ font-family:'Space Mono', monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--dim); margin-top:4px; }
-  .cd-txt{ font-family:'Space Mono', monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#d8d5cc; padding-bottom:8px; }
+  .cd-n{ font-family:'Inter', sans-serif; font-weight:900; font-size:34px; line-height:1; color:var(--yellow); }
+  .cd-l{ font-family:'Inter', sans-serif; font-weight:600; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--dim); margin-top:4px; }
+  .cd-txt{ font-family:'Inter', sans-serif; font-weight:600; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#d8d5cc; padding-bottom:8px; }
   .promo-banner{
     margin-top:20px; display:inline-block; background:rgba(255,214,0,0.1); border:1px solid rgba(255,214,0,0.4);
     color:#ffe9a8; border-radius:14px; padding:18px 24px; font-size:18px; line-height:1.4; font-weight:700; max-width:560px;
@@ -149,7 +149,7 @@
   @media(min-width:760px){ section{ padding: 84px 0; } }
   .section-head{ max-width:640px; margin-bottom:32px; }
   @media(min-width:760px){ .section-head{ margin-bottom:48px; } }
-  .tag{ font-family:'Space Mono'; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--rust); }
+  .tag{ font-family:'Inter', sans-serif; font-weight:600; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--rust); }
   .section-head h2{ font-size: clamp(32px,6vw,52px); margin-top:10px; }
   .section-head p{ color:var(--dim); margin-top:14px; font-size:16px; }
 
@@ -209,12 +209,12 @@
   .wl-consent input[type="checkbox"]{ flex:0 0 auto; margin-top:2px; width:16px; height:16px; accent-color:var(--pink); cursor:pointer; }
   .wl-wa{ display:inline-flex; align-items:center; justify-content:center; gap:8px; margin:14px auto 0; padding:13px 22px; border-radius:999px; border:1px solid var(--line); background:var(--panel-2); color:var(--text); font-family:'Inter',sans-serif; font-weight:700; font-size:13px; text-decoration:none; }
   .wl-wa:hover{ border-color:#25D366; transform:translateY(-2px); }
-  .wl-note{ font-family:'Space Mono'; font-size:11.5px; color:var(--dim); margin-top:18px; letter-spacing:0.02em; }
+  .wl-note{ font-family:'Inter', sans-serif; font-weight:600; font-size:11.5px; color:var(--dim); margin-top:18px; letter-spacing:0.02em; }
   .wl-msg{
     background:rgba(255,46,110,0.09); border:1px solid rgba(255,46,110,0.45); color:#ffb3c8;
     border-radius:12px; padding:12px 15px; font-size:14px; max-width:420px; margin:16px auto 0;
   }
-  .wl-done h3{ font-family:'Anton'; text-transform:uppercase; font-size:clamp(22px,5vw,32px); letter-spacing:0.02em; }
+  .wl-done h3{ font-family:'Inter', sans-serif; font-weight:900; text-transform:uppercase; font-size:clamp(22px,5vw,32px); letter-spacing:0.02em; }
   .wl-done p{ color:var(--dim); font-size:15px; max-width:400px; margin:12px auto 0; }
   .wl-done .wl-check{ font-size:34px; line-height:1; margin-bottom:14px; }
 
@@ -226,8 +226,8 @@
     display:grid; grid-template-columns: 58px 1fr; gap:16px; padding:24px 0;
     border-bottom:1px solid var(--line); align-items:start;
   }
-  .step .num{ font-family:'Anton'; font-size:36px; color: transparent; -webkit-text-stroke: 1.5px var(--pink); }
-  .step h3{ font-size:20px; margin-bottom:6px; text-transform:uppercase; font-family:'Anton'; letter-spacing:0.02em; }
+  .step .num{ font-family:'Inter', sans-serif; font-weight:900; font-size:36px; color: transparent; -webkit-text-stroke: 1.5px var(--pink); }
+  .step h3{ font-size:20px; margin-bottom:6px; text-transform:uppercase; font-family:'Inter', sans-serif; font-weight:900; letter-spacing:0.02em; }
   .step p{ color:var(--dim); font-size:15px; max-width:520px; }
   @media(min-width:480px){
     .step{ grid-template-columns: 90px 1fr; gap:20px; padding:28px 0; }
@@ -251,11 +251,11 @@
   .price-card.featured{ border-color: var(--pink); background: linear-gradient(160deg, #1c1219, var(--panel) 55%); }
   .price-card.featured::before{
     content:'CONSIGLIATO'; position:absolute; top:14px; right:-32px; background:var(--pink); color:#fff;
-    font-family:'Space Mono'; font-size:10px; font-weight:700; padding:4px 36px; transform:rotate(35deg);
+    font-family:'Inter', sans-serif; font-weight:600; font-size:10px; font-weight:700; padding:4px 36px; transform:rotate(35deg);
     letter-spacing:0.05em;
   }
-  .price-card h3{ font-family:'Anton'; font-size:22px; text-transform:uppercase; letter-spacing:0.02em; }
-  .price-card .price{ font-family:'Space Mono'; font-size:38px; font-weight:700; margin:14px 0 4px; }
+  .price-card h3{ font-family:'Inter', sans-serif; font-weight:900; font-size:22px; text-transform:uppercase; letter-spacing:0.02em; }
+  .price-card .price{ font-family:'Inter', sans-serif; font-weight:600; font-size:38px; font-weight:700; margin:14px 0 4px; }
   .price-card .price span{ font-size:14px; color:var(--dim); font-weight:400; }
   .price-card .desc{ color:var(--dim); font-size:14px; margin-bottom:18px; }
   .price-card ul{ list-style:none; margin-bottom:24px; flex:1; }
@@ -267,8 +267,8 @@
   /* -------- Prenota -------- */
   .booking{ display:grid; gap:30px; }
   @media(min-width:520px){ .booking{ gap:36px; } }
-  .bk-label{ display:flex; align-items:center; gap:12px; font-family:'Anton'; text-transform:uppercase; font-size:16px; letter-spacing:0.04em; margin-bottom:16px; }
-  .bk-label .bk-n{ font-family:'Space Mono'; font-size:11px; font-weight:700; color:#111; background:var(--yellow); padding:3px 8px; border-radius:4px; }
+  .bk-label{ display:flex; align-items:center; gap:12px; font-family:'Inter', sans-serif; font-weight:900; text-transform:uppercase; font-size:16px; letter-spacing:0.04em; margin-bottom:16px; }
+  .bk-label .bk-n{ font-family:'Inter', sans-serif; font-weight:600; font-size:11px; font-weight:700; color:#111; background:var(--yellow); padding:3px 8px; border-radius:4px; }
   .bk-cols{ display:grid; grid-template-columns:1fr; gap:30px; }
   @media(min-width:520px){ .bk-cols{ gap:36px; } }
   @media(min-width:880px){ .bk-cols{ grid-template-columns: 330px 1fr; gap:40px; } }
@@ -281,40 +281,40 @@
   }
   .room-opt:hover{ transform:translateY(-2px); border-color:rgba(255,46,110,0.55); }
   .room-opt[aria-pressed="true"]{ border-color:var(--pink); background:linear-gradient(160deg,#1c1219,var(--panel) 60%); }
-  .room-opt .rm-name{ font-family:'Anton'; text-transform:uppercase; font-size:19px; letter-spacing:0.02em; }
-  .room-opt .rm-meta{ font-family:'Space Mono'; font-size:12px; color:var(--dim); margin-top:6px; }
-  .room-opt .rm-price{ font-family:'Space Mono'; font-weight:700; font-size:21px; margin-top:12px; }
+  .room-opt .rm-name{ font-family:'Inter', sans-serif; font-weight:900; text-transform:uppercase; font-size:19px; letter-spacing:0.02em; }
+  .room-opt .rm-meta{ font-family:'Inter', sans-serif; font-weight:600; font-size:12px; color:var(--dim); margin-top:6px; }
+  .room-opt .rm-price{ font-family:'Inter', sans-serif; font-weight:600; font-weight:700; font-size:21px; margin-top:12px; }
 
   .cal{ background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:14px; }
   @media(min-width:520px){ .cal{ padding:18px; } }
   .cal-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:16px; }
-  .cal-title{ font-family:'Anton'; text-transform:uppercase; font-size:17px; letter-spacing:0.03em; }
+  .cal-title{ font-family:'Inter', sans-serif; font-weight:900; text-transform:uppercase; font-size:17px; letter-spacing:0.03em; }
   /* 40px: frecce abbastanza grandi da centrare col pollice sul telefono. */
   .cal-nav{ background:var(--panel-2); border:1px solid var(--line); color:var(--text); width:40px; height:40px; border-radius:10px; cursor:pointer; font-size:16px; flex-shrink:0; }
   .cal-nav:hover:not(:disabled){ border-color:var(--pink); color:var(--pink); }
   .cal-nav:disabled{ opacity:0.28; cursor:not-allowed; }
   .cal-dow, .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:5px; }
   @media(min-width:520px){ .cal-dow, .cal-grid{ gap:6px; } }
-  .cal-dow{ font-family:'Space Mono'; font-size:10px; color:var(--dim); text-align:center; margin-bottom:6px; letter-spacing:0.06em; }
+  .cal-dow{ font-family:'Inter', sans-serif; font-weight:600; font-size:10px; color:var(--dim); text-align:center; margin-bottom:6px; letter-spacing:0.06em; }
   .cal-day{
     aspect-ratio:1; display:flex; align-items:center; justify-content:center; background:var(--panel-2);
-    border:1px solid transparent; border-radius:9px; color:var(--text); font-family:'Space Mono'; font-size:14px; cursor:pointer;
+    border:1px solid transparent; border-radius:9px; color:var(--text); font-family:'Inter', sans-serif; font-weight:600; font-size:14px; cursor:pointer;
     -webkit-tap-highlight-color: rgba(255,46,110,0.25);
   }
   .cal-day:hover:not(:disabled){ border-color:var(--pink); }
   .cal-day:disabled{ background:transparent; color:#4a494e; cursor:not-allowed; }
   .cal-day.sel{ background:var(--pink); color:#fff; font-weight:700; }
   .cal-day.empty{ background:transparent; cursor:default; }
-  .cal-legend{ font-family:'Space Mono'; font-size:11px; color:var(--dim); margin-top:14px; line-height:1.7; }
+  .cal-legend{ font-family:'Inter', sans-serif; font-weight:600; font-size:11px; color:var(--dim); margin-top:14px; line-height:1.7; }
 
-  .slot-date{ font-family:'Space Mono'; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--yellow); margin-bottom:14px; }
+  .slot-date{ font-family:'Inter', sans-serif; font-weight:600; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--yellow); margin-bottom:14px; }
   /* Colonne più strette su telefono: tre orari per riga invece di due, così la
      griglia si vede tutta senza scorrere. */
   .slot-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(88px,1fr)); gap:8px; }
   @media(min-width:520px){ .slot-grid{ grid-template-columns:repeat(auto-fill,minmax(102px,1fr)); gap:10px; } }
   .slot{
     background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px 6px; text-align:center;
-    color:var(--text); font-family:'Space Mono'; font-size:14px; font-weight:700; cursor:pointer;
+    color:var(--text); font-family:'Inter', sans-serif; font-weight:600; font-size:14px; font-weight:700; cursor:pointer;
     min-height:58px; -webkit-tap-highlight-color: rgba(255,46,110,0.25);
     transition:border-color .15s ease, transform .15s ease;
   }
@@ -337,14 +337,14 @@
 
   .bk-recap{
     background:var(--panel-2); border:1px solid var(--line); border-left:3px solid var(--pink);
-    border-radius:0 10px 10px 0; padding:13px 16px; font-family:'Space Mono'; font-size:13px; color:#d8d5cc;
+    border-radius:0 10px 10px 0; padding:13px 16px; font-family:'Inter', sans-serif; font-weight:600; font-size:13px; color:#d8d5cc;
   }
   .bk-recap b{ color:var(--yellow); }
   .bk-form{ display:grid; grid-template-columns:1fr; gap:16px; background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:18px; }
   @media(min-width:520px){ .bk-form{ gap:18px; padding:24px; } }
   @media(min-width:700px){ .bk-form{ grid-template-columns:1fr 1fr; } .bk-form .full{ grid-column:1/-1; } }
   .field label{
-    display:block; font-family:'Space Mono'; font-size:11px; letter-spacing:0.08em;
+    display:block; font-family:'Inter', sans-serif; font-weight:600; font-size:11px; letter-spacing:0.08em;
     text-transform:uppercase; color:var(--dim); margin-bottom:7px;
   }
   .field input, .field select, .field textarea{
@@ -372,7 +372,7 @@
     background:rgba(255,214,0,0.07); border:1px solid rgba(255,214,0,0.35); border-radius:10px;
     padding:13px 16px; font-size:14px; color:#e8e4d8; display:flex; gap:10px; align-items:flex-start;
   }
-  .bk-deposit strong{ color:var(--yellow); font-family:'Space Mono'; }
+  .bk-deposit strong{ color:var(--yellow); font-family:'Inter', sans-serif; font-weight:600; }
   .bk-deposit small{ display:block; color:var(--dim); font-size:12.5px; margin-top:3px; }
   .bk-notice{
     background:rgba(255,46,110,0.09); border:1px solid rgba(255,46,110,0.45); color:#ffb3c8;
@@ -380,8 +380,8 @@
   }
   .bk-done{ background:var(--panel); border:1px solid var(--yellow); border-radius:16px; padding:30px 20px; text-align:center; }
   @media(min-width:520px){ .bk-done{ padding:38px 28px; } }
-  .bk-done h3{ font-family:'Anton'; text-transform:uppercase; font-size:clamp(24px,5vw,34px); letter-spacing:0.02em; }
-  .bk-done .bk-done-meta{ font-family:'Space Mono'; font-size:15px; color:var(--yellow); margin:16px 0 8px; }
+  .bk-done h3{ font-family:'Inter', sans-serif; font-weight:900; text-transform:uppercase; font-size:clamp(24px,5vw,34px); letter-spacing:0.02em; }
+  .bk-done .bk-done-meta{ font-family:'Inter', sans-serif; font-weight:600; font-size:15px; color:var(--yellow); margin:16px 0 8px; }
   .bk-done p{ color:var(--dim); font-size:15px; max-width:460px; margin:0 auto; }
   .bk-done-ctas{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:26px; }
   /* Anche qui su telefono i bottoni vanno a piena larghezza, uno sotto l'altro. */
@@ -407,13 +407,73 @@
   .map-wrap iframe{ width:100%; height:100%; min-height:280px; border:0; filter: grayscale(0.3) invert(0.92) contrast(0.9); }
 
   .cal-holiday{ color:#ffe9a8; }
+  /* -------- Prenotazione in 3 passi -------- */
+  .bw{ max-width:720px; margin:0 auto; background:linear-gradient(170deg,#191322,#111014 55%); border:1px solid #2f2838; border-radius:24px; padding:26px 18px 22px; }
+  @media(min-width:520px){ .bw{ padding:34px 30px 28px; } }
+  .bw-kicker{ font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#b9a3f7; }
+  .bw-title{ font-size:clamp(26px,6vw,36px); font-weight:900; text-transform:uppercase; letter-spacing:-0.01em; line-height:1.05; margin-top:6px; }
+  .bw-steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:20px 0 6px; }
+  .bw-step-tab{ background:none; border:none; color:var(--dim); font:inherit; font-size:13px; font-weight:600; text-align:center; cursor:pointer; padding:0 0 6px; }
+  .bw-step-tab span{ display:block; height:5px; border-radius:9px; background:#3a3344; margin-bottom:8px; }
+  .bw-step-tab.on{ color:var(--text); }
+  .bw-step-tab.on span{ background:var(--violet); }
+  .bw-step-tab:disabled{ cursor:default; }
+  .bw-h{ font-size:20px; font-weight:800; margin:22px 0 12px; }
+  .bw-hint{ font-size:13px; color:var(--dim); margin-top:8px; }
+  .bw-seg{ display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+  .bw-seg button{ background:#2a2433; border:1px solid #3c3447; color:var(--text); border-radius:14px; min-height:56px; font:inherit; font-size:20px; font-weight:800; cursor:pointer; }
+  .bw-seg button[aria-pressed="true"]{ background:#7c3aed; border-color:#c4b5fd; }
+  .bw-seg-2{ grid-template-columns:repeat(2,1fr); margin-top:10px; }
+  .bw-seg-2 button{ font-size:16px; }
+  .bw-seg-2 small{ display:block; font-size:12px; font-weight:600; color:#cfc6dd; }
+  .bw-pkgs{ display:grid; gap:12px; }
+  .bw-pkg{ position:relative; }
+  .bw-badge{ position:absolute; right:12px; top:-11px; background:#7c3aed; color:#fff; font-size:11px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; padding:4px 10px; border-radius:8px; z-index:1; }
+  .bw-pkg-head{ width:100%; display:grid; grid-template-columns:1fr auto 20px; grid-template-areas:"name price chev" "meta meta meta"; align-items:center; gap:4px 12px; text-align:left;
+    background:#211c29; border:1.5px solid #3c3447; border-radius:16px; padding:16px 18px; color:var(--text); font:inherit; cursor:pointer; }
+  .bw-pkg-name{ grid-area:name; font-size:20px; font-weight:900; text-transform:uppercase; letter-spacing:0.01em; }
+  .bw-pkg-meta{ grid-area:meta; font-size:14px; color:#cfc6dd; }
+  .bw-pkg-price{ grid-area:price; font-size:20px; font-weight:800; }
+  .bw-chev{ grid-area:chev; width:10px; height:10px; border-right:2px solid #cfc6dd; border-bottom:2px solid #cfc6dd; transform:rotate(45deg); margin-top:-5px; }
+  .bw-pkg.on .bw-pkg-head{ background:#3b2763; border-color:#a78bfa; }
+  .bw-pkg.on .bw-chev{ transform:rotate(-135deg); margin-top:5px; }
+  .bw-extras{ margin-top:10px; border:1.5px solid #3c3447; border-radius:16px; padding:18px; background:#18141e; }
+  .bw-extras h4{ font-size:17px; font-weight:800; margin-bottom:14px; }
+  .bw-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; }
+  .bw-row-t{ font-size:16px; font-weight:700; }
+  .bw-row-s{ font-size:12.5px; color:var(--dim); margin-top:2px; }
+  .bw-stepper{ display:flex; align-items:center; gap:10px; flex-shrink:0; }
+  .bw-stepper button{ width:44px; height:44px; border-radius:50%; border:1px solid #4a4157; background:none; color:var(--text); font-size:22px; cursor:pointer; }
+  .bw-stepper button:disabled{ opacity:0.35; cursor:not-allowed; }
+  .bw-stepper output{ min-width:20px; text-align:center; font-size:18px; font-weight:800; }
+  .bw-total{ margin-top:22px; background:#2c2240; border-radius:18px; padding:18px; }
+  .bw-total-top{ display:flex; align-items:baseline; justify-content:space-between; font-size:18px; font-weight:700; }
+  .bw-total-top strong{ font-size:34px; font-weight:900; letter-spacing:-0.01em; }
+  .bw-total-sum{ font-size:14px; color:#d8d0e6; margin-top:4px; }
+  .bw-cta{ display:flex; width:100%; align-items:center; justify-content:center; margin-top:14px; min-height:54px; border:none; border-radius:999px; background:#f3efe6; color:#111; font:inherit; font-size:16px; font-weight:800; cursor:pointer; }
+  .bw-cta:disabled{ opacity:0.45; cursor:not-allowed; }
+  .bw-pay{ background:linear-gradient(90deg, var(--pink), var(--violet)); color:#fff; }
+  .bw-back{ background:none; border:none; color:#b9a3f7; font:inherit; font-size:14px; font-weight:700; cursor:pointer; padding:14px 0 10px; }
+  .bw-secure{ font-size:12.5px; color:var(--dim); text-align:center; margin-top:10px; }
+  .bw-cart{ background:#18141e; border:1.5px solid #3c3447; border-radius:16px; padding:16px 18px; margin-bottom:20px; }
+  .bw-cart .ln{ display:flex; justify-content:space-between; gap:12px; padding:7px 0; font-size:15px; border-bottom:1px solid #2a2433; }
+  .bw-cart .ln span:first-child{ color:#cfc6dd; }
+  .bw-cart .ln span:last-child{ font-weight:700; text-align:right; }
+  .bw-cart .ln.tot{ border-bottom:none; font-size:18px; padding-top:12px; }
+  .bw-cart .ln.tot span:last-child{ font-size:24px; font-weight:900; }
+  .cal-day .dot{ position:absolute; bottom:6px; left:50%; transform:translateX(-50%); }
+  .cal-day{ position:relative; }
+  .dot{ display:inline-block; width:6px; height:6px; border-radius:50%; }
+  .dot.ok{ background:#34d399; } .dot.few{ background:#fbbf24; } .dot.full{ background:#f87171; }
+  .cal-key{ display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--dim); margin-top:12px; }
+  .cal-key .dot{ margin-right:6px; }
 
   /* -------- Buono regalo -------- */
   .gift{ background: radial-gradient(110% 80% at 50% 0%, #1a1020 0%, var(--bg) 62%); }
   .gift .tag{ color: var(--violet); }
   .gift-flow{ display:grid; gap:30px; max-width:760px; }
   .gift-perks{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
-  .gift-perks span{ font-family:'Space Mono'; font-size:11px; letter-spacing:0.06em; text-transform:uppercase;
+  .gift-perks span{ font-family:'Inter', sans-serif; font-weight:600; font-size:11px; letter-spacing:0.06em; text-transform:uppercase;
     border:1px solid var(--line); background:var(--panel); border-radius:999px; padding:7px 12px; color:#d8d5cc; }
   .bk-voucher-note{ font-size:13px; color:#ffe9a8; margin-top:6px; }
   .gv-card{
@@ -423,14 +483,14 @@
   }
   .gv-card::before{ content:''; position:absolute; left:0; right:0; top:0; height:10px;
     background: repeating-linear-gradient(-45deg, var(--yellow) 0 14px, #111 14px 28px); }
-  .gv-eyebrow{ font-family:'Space Mono'; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--yellow); margin-top:6px; }
-  .gv-title{ font-family:'Anton'; text-transform:uppercase; font-size:clamp(30px,7vw,44px); line-height:0.98; margin-top:12px; }
+  .gv-eyebrow{ font-family:'Inter', sans-serif; font-weight:600; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--yellow); margin-top:6px; }
+  .gv-title{ font-family:'Inter', sans-serif; font-weight:900; text-transform:uppercase; font-size:clamp(30px,7vw,44px); line-height:0.98; margin-top:12px; }
   .gv-title span{ color:var(--pink); }
   .gv-line{ margin-top:14px; font-size:16px; color:#d8d5cc; }
   .gv-msg{ margin-top:14px; font-style:italic; font-size:17px; color:var(--text); }
   .gv-code{ margin-top:20px; background:var(--yellow); color:#111; border-radius:12px; padding:14px; text-align:center; }
-  .gv-code small{ display:block; font-family:'Space Mono'; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; font-weight:700; }
-  .gv-code strong{ display:block; font-family:'Space Mono'; font-size:clamp(22px,6vw,30px); letter-spacing:0.12em; }
+  .gv-code small{ display:block; font-family:'Inter', sans-serif; font-weight:600; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; font-weight:700; }
+  .gv-code strong{ display:block; font-family:'Inter', sans-serif; font-weight:600; font-size:clamp(22px,6vw,30px); letter-spacing:0.12em; }
   .gv-foot{ margin-top:14px; font-size:13px; color:var(--dim); }
   .gift-done-ctas{ display:flex; flex-wrap:wrap; gap:12px; margin-top:22px; }
   @media print{
@@ -529,7 +589,7 @@
     <div class="steps">
       <div class="step">
         <div class="num">01</div>
-        <div><h3>Prenoti online</h3><p>Scegli il pacchetto, la stanza, il giorno e l'orario dal calendario qui sotto. Blocchi la fascia con una riserva di 5 € a persona, il resto lo paghi in sede.</p></div>
+        <div><h3>Prenoti online</h3><p>Dici quanti siete, scegli il pacchetto e gli extra, poi giorno e orario. Paghi online e ricevi subito la conferma.</p></div>
       </div>
       <div class="step">
         <div class="num">02</div>
@@ -553,8 +613,8 @@
     </div>
     <div class="price-note">
       Ogni sessione dura <strong>15 minuti</strong> con qualsiasi pacchetto: cambia solo quanta roba rompi. Prezzi <strong>a persona</strong>, kit protezione incluso.<br>
-      <strong>In due: 10 € di sconto</strong> sul totale (Base 70 € invece di 80 €). <strong>Extra in sede:</strong> +5 minuti 10 €, oggetti grandi da 25 €.<br>
-      Per prenotare online basta una <strong>riserva di 5 € a persona</strong>, scalata dal totale: il saldo si paga in sede. Se preferisci, puoi anche <strong>saldare tutto online</strong>.
+      <strong>In due: 10 € di sconto</strong> sul totale (Base 70 € invece di 80 €). <strong>Extra</strong> da scegliere in prenotazione: +5 minuti 10 €, oggetti grandi 25 € l'uno.<br>
+      Si prenota e si <strong>paga tutto online</strong>: in sede non paghi nulla.
     </div>
     <div class="pricing-grid">
       <div class="price-card">
@@ -600,88 +660,115 @@
 
 <section id="prenota">
   <div class="wrap">
-    <div class="section-head">
-      <div class="tag">Calendario</div>
-      <h2 class="display">Prenota online</h2>
-      <p>Scegli pacchetto, stanza, giorno e orario, poi riserva la tua room con 5 € a persona per bloccare la fascia. Si parte sabato 19 dicembre: sessioni da 15 minuti, dal mercoledì alla domenica.</p>
-    </div>
-
     <noscript>
       <div class="bk-empty">Per prenotare online serve JavaScript attivo. Puoi prenotare anche su WhatsApp al 350 973 6066 o scrivendo a rageroomcuneo@gmail.com. Apriamo sabato 19 dicembre in Via Valle Po 92, Madonna dell'Olmo (Cuneo): dal mercoledì alla domenica dalle 14:00, sabato e domenica fino a mezzanotte.</div>
     </noscript>
 
-    <div class="bk-notice" id="bkNotice" hidden></div>
-
-    <div class="bk-closed" id="bkClosed" hidden>
-      <strong>Prenotazioni online presto aperte!</strong>
-      Apriranno a breve — iscriviti alla lista d'attesa qui sotto per essere avvisato appena si aprono e non perderti il video GoPro omaggio per i primi 50.
-      <a href="#lista-attesa" class="btn btn-primary" style="margin-top:14px;display:inline-block;">Iscrivimi alla lista d'attesa ↓</a>
-    </div>
-
-    <div class="booking" id="bkFlow" hidden>
-      <div>
-        <div class="bk-label"><span class="bk-n">01</span> Scegli il pacchetto</div>
-        <div class="room-grid" id="bkPackages">
-          <button type="button" class="room-opt" data-package="base" aria-pressed="true">
-            <div class="rm-name">Base</div>
-            <div class="rm-meta">15 min · 15 oggetti piccoli + 1 medio</div>
-            <div class="rm-price">€40<span style="font-size:.55em">/pers.</span></div>
-          </button>
-          <button type="button" class="room-opt" data-package="plus" aria-pressed="false">
-            <div class="rm-name">Plus</div>
-            <div class="rm-meta">15 min · 30 oggetti piccoli + 2 medi</div>
-            <div class="rm-price">€60<span style="font-size:.55em">/pers.</span></div>
-          </button>
-          <button type="button" class="room-opt" data-package="extreme" aria-pressed="false">
-            <div class="rm-name">Extreme</div>
-            <div class="rm-meta">15 min · 40 piccoli + 3 medi + 2 grandi</div>
-            <div class="rm-price">€90<span style="font-size:.55em">/pers.</span></div>
-          </button>
-        </div>
+    <div class="bw" id="bkFlow">
+      <div class="bw-kicker">Rage Room Cuneo</div>
+      <h2 class="bw-title">Prenota la tua rage</h2>
+      <div class="bw-steps" id="bwSteps">
+        <button type="button" class="bw-step-tab on" data-go="1"><span></span>Pacchetto</button>
+        <button type="button" class="bw-step-tab" data-go="2"><span></span>Calendario</button>
+        <button type="button" class="bw-step-tab" data-go="3"><span></span>Carrello</button>
       </div>
 
-      <div>
-        <div class="bk-label"><span class="bk-n">02</span> Chi entra</div>
-        <div class="room-grid" id="bkRooms">
-          <button type="button" class="room-opt" data-room="singola" data-min="1" data-max="1" aria-pressed="false">
-            <div class="rm-name">Stanza Singola</div>
-            <div class="rm-meta">Da solo · 1 persona</div>
-          </button>
-          <button type="button" class="room-opt" data-room="doppia" data-min="1" data-max="2" aria-pressed="false">
-            <div class="rm-name">Stanza Doppia</div>
-            <div class="rm-meta">In due · 10 € di sconto</div>
-          </button>
-          <button type="button" class="room-opt" data-room="festa" data-min="3" data-max="5" aria-pressed="false">
-            <div class="rm-name">Sala Festa</div>
-            <div class="rm-meta">Gruppi da 3 a 5 persone</div>
-          </button>
-        </div>
-      </div>
+      <div class="bk-notice" id="bkNotice" hidden></div>
 
-      <div class="bk-cols">
-        <div>
-          <div class="bk-label"><span class="bk-n">03</span> Scegli il giorno</div>
-          <div class="cal">
-            <div class="cal-head">
-              <button type="button" class="cal-nav" id="bkPrev" aria-label="Mese precedente">←</button>
-              <div class="cal-title" id="bkMonth">Caricamento…</div>
-              <button type="button" class="cal-nav" id="bkNext" aria-label="Mese successivo">→</button>
-            </div>
-            <div class="cal-dow" aria-hidden="true"><div>Lun</div><div>Mar</div><div>Mer</div><div>Gio</div><div>Ven</div><div>Sab</div><div>Dom</div></div>
-            <div class="cal-grid" id="bkDays"></div>
-            <div class="cal-legend">Mer–Ven 14:00 – 22:00 · Sab e Dom 14:00 – 00:00 · Lun e Mar chiusi<br><span class="cal-holiday">🎄 Feste: aperti anche lun 28 e mar 29 dicembre · 24 e 31 dicembre fino alle 19 · chiusi 25 dicembre e 1° gennaio</span></div>
+      <!-- 1. Persone e pacchetto -->
+      <div class="bw-pane" id="bwPane1">
+        <h3 class="bw-h">Quanti siete?</h3>
+        <div class="bw-seg" id="bwPeople">
+          <button type="button" data-n="1" aria-pressed="true">1</button>
+          <button type="button" data-n="2" aria-pressed="false">2</button>
+          <button type="button" data-n="3" aria-pressed="false">3</button>
+          <button type="button" data-n="4" aria-pressed="false">4</button>
+          <button type="button" data-n="5" aria-pressed="false">5</button>
+        </div>
+        <p class="bw-hint" id="bwPeopleHint">Da soli nella stanza singola.</p>
+
+        <h3 class="bw-h">Scegli il tuo pacchetto</h3>
+        <div class="bw-pkgs" id="bwPkgs">
+          <div class="bw-pkg" data-pkg="base">
+            <button type="button" class="bw-pkg-head" aria-expanded="false">
+              <span class="bw-pkg-name">Base</span>
+              <span class="bw-pkg-meta"><span data-objects></span> · 15 minuti</span>
+              <span class="bw-pkg-price" data-price></span>
+              <span class="bw-chev" aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="bw-pkg" data-pkg="plus">
+            <div class="bw-badge">Consigliato</div>
+            <button type="button" class="bw-pkg-head" aria-expanded="false">
+              <span class="bw-pkg-name">Plus</span>
+              <span class="bw-pkg-meta"><span data-objects></span> · 15 minuti</span>
+              <span class="bw-pkg-price" data-price></span>
+              <span class="bw-chev" aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="bw-pkg" data-pkg="extreme">
+            <button type="button" class="bw-pkg-head" aria-expanded="false">
+              <span class="bw-pkg-name">Extreme</span>
+              <span class="bw-pkg-meta"><span data-objects></span> · 15 minuti</span>
+              <span class="bw-pkg-price" data-price></span>
+              <span class="bw-chev" aria-hidden="true"></span>
+            </button>
           </div>
         </div>
-        <div>
-          <div class="bk-label"><span class="bk-n">04</span> Scegli l'orario</div>
-          <div id="bkSlots" aria-live="polite"></div>
+
+        <!-- Extra: si apre sotto il pacchetto scelto -->
+        <div class="bw-extras" id="bwExtras" hidden>
+          <h4>Personalizza la tua esperienza</h4>
+          <div class="bw-row">
+            <div><div class="bw-row-t">Oggetti grandi in più</div><div class="bw-row-s">25 € l'uno: stampanti, monitor, piccoli elettrodomestici</div></div>
+            <div class="bw-stepper">
+              <button type="button" id="bwBigMinus" aria-label="Togli un oggetto grande">−</button>
+              <output id="bwBig">0</output>
+              <button type="button" id="bwBigPlus" aria-label="Aggiungi un oggetto grande">+</button>
+            </div>
+          </div>
+          <div class="bw-row-t" style="margin-top:18px;">Vuoi qualche minuto in più?</div>
+          <div class="bw-seg bw-seg-2" id="bwMinutes">
+            <button type="button" data-m="5" aria-pressed="false">+5 minuti <small>+10 €</small></button>
+            <button type="button" data-m="10" aria-pressed="false">+10 minuti <small>+20 €</small></button>
+          </div>
+        </div>
+
+        <div class="bw-total">
+          <div class="bw-total-top"><span>Totale</span><strong id="bwTotal1">40 €</strong></div>
+          <div class="bw-total-sum" id="bwSum1"></div>
+          <button type="button" class="bw-cta" id="bwTo2">Scegli data e orario →</button>
         </div>
       </div>
 
-      <div>
-        <div class="bk-label"><span class="bk-n">05</span> I tuoi dati</div>
+      <!-- 2. Calendario -->
+      <div class="bw-pane" id="bwPane2" hidden>
+        <button type="button" class="bw-back" data-go="1">← Pacchetto</button>
+        <div class="cal">
+          <div class="cal-head">
+            <button type="button" class="cal-nav" id="bkPrev" aria-label="Mese precedente">←</button>
+            <div class="cal-title" id="bkMonth">Caricamento…</div>
+            <button type="button" class="cal-nav" id="bkNext" aria-label="Mese successivo">→</button>
+          </div>
+          <div class="cal-dow" aria-hidden="true"><div>Lun</div><div>Mar</div><div>Mer</div><div>Gio</div><div>Ven</div><div>Sab</div><div>Dom</div></div>
+          <div class="cal-grid" id="bkDays"></div>
+          <div class="cal-key"><span><i class="dot ok"></i>Libero</span><span><i class="dot few"></i>Pochi posti</span><span><i class="dot full"></i>Pieno</span></div>
+          <div class="cal-legend">Mer–Ven 14:00 – 22:00 · Sab e Dom 14:00 – 00:00 · Lun e Mar chiusi<br><span class="cal-holiday">Feste: aperti anche lun 28 e mar 29 dicembre · 24 e 31 dicembre fino alle 19 · chiusi 25 dicembre e 1° gennaio</span></div>
+        </div>
+        <h3 class="bw-h" id="bwSlotsTitle">Scegli l'orario</h3>
+        <div id="bkSlots" aria-live="polite"></div>
+        <div class="bw-total">
+          <div class="bw-total-top"><span>Totale</span><strong id="bwTotal2">40 €</strong></div>
+          <div class="bw-total-sum" id="bwSum2"></div>
+          <button type="button" class="bw-cta" id="bwTo3" disabled>Vai al carrello →</button>
+        </div>
+      </div>
+
+      <!-- 3. Carrello -->
+      <div class="bw-pane" id="bwPane3" hidden>
+        <button type="button" class="bw-back" data-go="2">← Calendario</button>
+        <div class="bw-cart" id="bwCart"></div>
         <form class="bk-form" id="bkForm" novalidate>
-          <div class="full bk-recap" id="bkRecap">Scegli pacchetto, stanza, giorno e orario per continuare.</div>
           <div class="field">
             <label for="bkName">Nome e cognome</label>
             <input id="bkName" type="text" autocomplete="name" required>
@@ -690,40 +777,23 @@
             <label for="bkPhone">Telefono</label>
             <input id="bkPhone" type="tel" autocomplete="tel" placeholder="329 000 0000" required>
           </div>
-          <div class="field">
+          <div class="field full">
             <label for="bkEmail">Email</label>
             <input id="bkEmail" type="email" autocomplete="email" placeholder="tuonome@email.it" required>
-          </div>
-          <div class="field">
-            <label for="bkPeople">Quante persone</label>
-            <select id="bkPeople"></select>
-          </div>
-          <div class="field full" id="bkPayTypeField">
-            <label>Come vuoi pagare online?</label>
-            <div class="paytype-options" id="bkPayType">
-              <label class="paytype-opt"><input type="radio" name="bkPayType" value="deposit" checked> Solo riserva <small>(5 € a persona)</small></label>
-              <label class="paytype-opt"><input type="radio" name="bkPayType" value="full"> Tutto ora <small id="bkFullPriceHint"></small></label>
-            </div>
           </div>
           <div class="field full">
             <label for="bkVoucher">Hai un buono regalo? (facoltativo)</label>
             <input id="bkVoucher" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="16" placeholder="RR-XXXX-XXXX">
-            <div class="bk-voucher-note" id="bkVoucherNote" hidden>🎁 Con il buono non paghi nulla online: la sessione è già pagata.</div>
+            <div class="bk-voucher-note" id="bkVoucherNote" hidden>Il buono viene scalato dal totale; se lo copre tutto non paghi nulla online.</div>
           </div>
           <div class="field full">
             <label for="bkNotes">Note (facoltative)</label>
-            <textarea id="bkNotes" maxlength="500" placeholder="Compleanno, oggetti tuoi da rompere, richieste particolari…"></textarea>
+            <textarea id="bkNotes" maxlength="400" placeholder="Compleanno, oggetti tuoi da rompere, richieste particolari…"></textarea>
           </div>
           <div class="full bk-error" id="bkError" hidden></div>
-          <div class="full bk-deposit" id="bkDeposit">
-            <span aria-hidden="true">💳</span>
-            <span>
-              <span id="bkDepositLabel">Riserva online</span> <strong id="bkDepositAmount">€5,00</strong><span id="bkDepositTail"> — 5 € a persona, scalati dal totale.</span>
-              <small id="bkDepositNote">Pagamento sicuro con carta. Il saldo della sessione si versa in sede.</small>
-            </span>
-          </div>
           <div class="full">
-            <button type="submit" class="btn btn-primary bk-submit" id="bkSubmit">Riserva la tua room</button>
+            <button type="submit" class="bw-cta bw-pay" id="bkSubmit">Paga e conferma</button>
+            <p class="bw-secure">Pagamento sicuro su Stripe. La conferma ti arriva subito via email.</p>
           </div>
         </form>
       </div>
@@ -732,7 +802,7 @@
     <div class="bk-done" id="bkDone" hidden>
       <h3>Prenotazione confermata</h3>
       <div class="bk-done-meta" id="bkDoneMeta"></div>
-      <p id="bkDoneNote">Ti abbiamo mandato l'email di conferma. Ti aspettiamo! Per spostare o annullare la sessione scrivici su WhatsApp o a rageroomcuneo@gmail.com.</p>
+      <p id="bkDoneNote">Ti abbiamo mandato l'email di conferma. Ti aspettiamo!</p>
       <div class="bk-done-ctas">
         <a class="btn btn-primary" id="bkDoneWa" href="https://wa.me/393509736066" target="_blank" rel="noopener">Avvisaci su WhatsApp</a>
         <button type="button" class="btn btn-ghost" id="bkAgain">Nuova prenotazione</button>
@@ -898,7 +968,7 @@
 </footer>
 
 <script>
-/* Prenotazioni Rage Room Cuneo — calendario, fasce orarie e invio della prenotazione. */
+/* Prenotazioni Rage Room Cuneo: persone e pacchetto, calendario con i posti liberi, carrello e pagamento online. */
 (function () {
   var API_SLOTS = '/api/disponibilita';
   var API_BOOK = '/api/prenota';
@@ -908,579 +978,391 @@
 
   var flow = document.getElementById('bkFlow');
   if (!flow) return;
+  var $ = function (id) { return document.getElementById(id); };
 
-  var roomsEl = document.getElementById('bkRooms');
-  var monthEl = document.getElementById('bkMonth');
-  var daysEl = document.getElementById('bkDays');
-  var prevEl = document.getElementById('bkPrev');
-  var nextEl = document.getElementById('bkNext');
-  var slotsEl = document.getElementById('bkSlots');
-  var recapEl = document.getElementById('bkRecap');
-  var formEl = document.getElementById('bkForm');
-  var errEl = document.getElementById('bkError');
-  var peopleEl = document.getElementById('bkPeople');
-  var submitEl = document.getElementById('bkSubmit');
-  var doneEl = document.getElementById('bkDone');
-  var doneMetaEl = document.getElementById('bkDoneMeta');
-  var doneNoteEl = document.getElementById('bkDoneNote');
-  var doneWaEl = document.getElementById('bkDoneWa');
-  var noticeEl = document.getElementById('bkNotice');
-  var depositAmountEl = document.getElementById('bkDepositAmount');
-  var againEl = document.getElementById('bkAgain');
-  var nameEl = document.getElementById('bkName');
-  var phoneEl = document.getElementById('bkPhone');
-  var emailEl = document.getElementById('bkEmail');
-  var notesEl = document.getElementById('bkNotes');
-  var payTypeEl = document.getElementById('bkPayType');
-  var payTypeFieldEl = document.getElementById('bkPayTypeField');
-  var fullPriceHintEl = document.getElementById('bkFullPriceHint');
-  var depositLabelEl = document.getElementById('bkDepositLabel');
-  var depositTailEl = document.getElementById('bkDepositTail');
-  var depositNoteEl = document.getElementById('bkDepositNote');
-  var voucherEl = document.getElementById('bkVoucher');
-  var voucherNoteEl = document.getElementById('bkVoucherNote');
-  var depositBoxEl = document.getElementById('bkDeposit');
-  var packagesEl = document.getElementById('bkPackages');
-
-  /* Interruttore prenotazioni: deve restare allineato a BOOKING_LIVE in lib/booking.ts.
-     Quando si è pronti ad aprire davvero, mettere true qui e lato server. */
-  var BOOKING_LIVE = true;
-  var bkClosedEl = document.getElementById('bkClosed');
-  var bkFlowEl = document.getElementById('bkFlow');
-  if (!BOOKING_LIVE) {
-    bkClosedEl.hidden = false;
-    bkFlowEl.hidden = true;
-  } else {
-    bkClosedEl.hidden = true;
-    bkFlowEl.hidden = false;
-  }
+  /* Pacchetti: prezzo e oggetti a persona. In due 10 € di sconto sul totale. */
+  var PACKAGES = {
+    base: { name: 'Base', price: 4000, small: 15, medium: 1, large: 0 },
+    plus: { name: 'Plus', price: 6000, small: 30, medium: 2, large: 0 },
+    extreme: { name: 'Extreme', price: 9000, small: 40, medium: 3, large: 2 }
+  };
+  var EXTRA_5MIN = 1000, EXTRA_BIG = 2500, BIG_MAX = 3;
 
   var state = {
-    room: null, roomName: '', roomMin: 1, roomMax: 1,
-    date: null, dateLabel: '', time: null,
-    slots: [], first: null, last: null, cursor: null, loading: false,
-    /* Giorni di apertura con la numerazione di Date.getUTCDay(): 0 = domenica. */
+    step: 1, people: 1, pkg: 'base', big: 0, minutes: 0,
+    date: null, dateLabel: '', time: null, slots: [], loading: false,
+    first: null, last: null, cursor: null, days: {}, daysLoaded: {},
     openWeekdays: [3, 4, 5, 6, 0],
-    /* Feste: chiusure straordinarie e aperture extra (le manda anche l'API). */
     closedDates: ['2026-12-25', '2027-01-01'],
-    extraOpenDates: ['2026-12-28', '2026-12-29'],
-    depositPerPerson: 500,
-    paymentType: 'deposit',
-    pkg: 'base'
+    extraOpenDates: ['2026-12-28', '2026-12-29']
   };
 
-  /* Prezzo pieno per stanza, in centesimi: Singola e Doppia fisse, Festa a persona. */
-  /* Prezzo a persona per pacchetto, in centesimi; in due 10 € di sconto sul totale. */
-  var PACKAGE_PRICE_CENTS = { base: 4000, plus: 6000, extreme: 9000 };
-  var PACKAGE_NAMES = { base: 'Base', plus: 'Plus', extreme: 'Extreme' };
-  function fullPriceCents() {
-    if (!state.room) return 0;
-    var n = peopleCount();
-    return (PACKAGE_PRICE_CENTS[state.pkg] || 0) * n - (n === 2 ? 1000 : 0);
-  }
-  function amountCents() { return state.paymentType === 'full' ? fullPriceCents() : depositCents(); }
-
+  function euro(cents) { var v = cents / 100; return (v % 1 ? v.toFixed(2).replace('.', ',') : String(v)) + ' €'; }
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
   function iso(y, m, d) { return y + '-' + pad(m + 1) + '-' + pad(d); }
-  function parseIso(value) { var p = value.split('-'); return { y: +p[0], m: +p[1] - 1, d: +p[2] }; }
-  function monthIndex(value) { var p = parseIso(value); return p.y * 12 + p.m; }
-  function isHolidayClosed(value) { return state.closedDates.indexOf(value) !== -1; }
-  function isOpenDate(value) {
-    if (isHolidayClosed(value)) return false;
-    if (state.extraOpenDates.indexOf(value) !== -1) return true;
-    var p = parseIso(value);
+  function parseIso(v) { var p = v.split('-'); return { y: +p[0], m: +p[1] - 1, d: +p[2] }; }
+  function monthIndex(v) { var p = parseIso(v); return p.y * 12 + p.m; }
+  function candidates() { return state.people === 1 ? ['singola', 'doppia'] : state.people === 2 ? ['doppia'] : ['festa']; }
+  function isHolidayClosed(v) { return state.closedDates.indexOf(v) !== -1; }
+  function isOpenDate(v) {
+    if (isHolidayClosed(v)) return false;
+    if (state.extraOpenDates.indexOf(v) !== -1) return true;
+    var p = parseIso(v);
     return state.openWeekdays.indexOf(new Date(Date.UTC(p.y, p.m, p.d)).getUTCDay()) !== -1;
   }
-  function euro(cents) { return '€' + (cents / 100).toFixed(2).replace('.', ','); }
-  function peopleCount() { return parseInt(peopleEl.value, 10) || state.roomMin; }
-  function depositCents() { return peopleCount() * state.depositPerPerson; }
-  function slotAt(time) {
-    for (var i = 0; i < state.slots.length; i++) if (state.slots[i].time === time) return state.slots[i];
-    return null;
-  }
-  function isFree(slot) { return state.room ? !!slot.rooms[state.room] : !!slot.available; }
 
-  function showNotice(text) {
-    if (!text) { noticeEl.hidden = true; noticeEl.textContent = ''; return; }
-    noticeEl.textContent = text;
-    noticeEl.hidden = false;
+  /* ---------- Prezzi ---------- */
+  function packagePrice(id, n) { return PACKAGES[id].price * n - (n === 2 ? 1000 : 0); }
+  function total() { return packagePrice(state.pkg, state.people) + (state.minutes / 5) * EXTRA_5MIN + state.big * EXTRA_BIG; }
+  function objectsText(id, n) {
+    var p = PACKAGES[id], parts = [p.small * n + ' oggetti piccoli'];
+    if (p.medium) parts.push(p.medium * n + (p.medium * n === 1 ? ' medio' : ' medi'));
+    if (p.large) parts.push(p.large * n + (p.large * n === 1 ? ' grande' : ' grandi'));
+    return parts.join(' + ');
+  }
+  function summaryText() {
+    var parts = ['Pacchetto ' + PACKAGES[state.pkg].name, state.people + (state.people === 1 ? ' persona' : ' persone'), (15 + state.minutes) + ' minuti'];
+    if (state.big) parts.push(state.big + (state.big === 1 ? ' oggetto grande in più' : ' oggetti grandi in più'));
+    return parts.join(' · ');
   }
 
-  /* ---------- Calendario ---------- */
+  /* ---------- Passo 1: persone, pacchetto, extra ---------- */
+  var peopleHints = { 1: 'Da soli nella stanza singola.', 2: 'In due: 10 € di sconto sul totale.', 3: 'Gruppo nella sala festa.', 4: 'Gruppo nella sala festa.', 5: 'Gruppo nella sala festa, massimo 5 persone.' };
+  function renderStep1() {
+    var pb = $('bwPeople').querySelectorAll('button');
+    for (var i = 0; i < pb.length; i++) pb[i].setAttribute('aria-pressed', +pb[i].getAttribute('data-n') === state.people ? 'true' : 'false');
+    $('bwPeopleHint').textContent = peopleHints[state.people];
+    var cards = $('bwPkgs').querySelectorAll('.bw-pkg');
+    for (var j = 0; j < cards.length; j++) {
+      var id = cards[j].getAttribute('data-pkg'), on = id === state.pkg;
+      cards[j].classList.toggle('on', on);
+      cards[j].querySelector('.bw-pkg-head').setAttribute('aria-expanded', on ? 'true' : 'false');
+      cards[j].querySelector('[data-objects]').textContent = objectsText(id, state.people);
+      cards[j].querySelector('[data-price]').textContent = euro(packagePrice(id, state.people));
+    }
+    // Gli extra si aprono sotto il pacchetto scelto.
+    var extras = $('bwExtras'), sel = $('bwPkgs').querySelector('.bw-pkg.on');
+    if (sel) { sel.parentNode.insertBefore(extras, sel.nextSibling); extras.hidden = false; }
+    $('bwBig').textContent = state.big;
+    $('bwBigMinus').disabled = state.big <= 0;
+    $('bwBigPlus').disabled = state.big >= BIG_MAX;
+    var mb = $('bwMinutes').querySelectorAll('button');
+    for (var k = 0; k < mb.length; k++) mb[k].setAttribute('aria-pressed', +mb[k].getAttribute('data-m') === state.minutes ? 'true' : 'false');
+    renderTotals();
+  }
+  function renderTotals() {
+    var t = euro(total()), s = summaryText();
+    $('bwTotal1').textContent = t; $('bwTotal2').textContent = t;
+    $('bwSum1').textContent = s;
+    var chosen = state.time ? slotAt(state.time) : null;
+    $('bwSum2').textContent = state.date && chosen ? (state.dateLabel || state.date) + ' · ' + chosen.time : s;
+    $('bwTo3').disabled = !(state.date && state.time);
+    $('bkSubmit').textContent = 'Paga ' + t + ' e conferma';
+  }
+
+  $('bwPeople').addEventListener('click', function (ev) {
+    var b = ev.target.closest('button'); if (!b) return;
+    state.people = +b.getAttribute('data-n');
+    state.time = null;
+    renderStep1(); renderCalendar(); renderSlots();
+  });
+  $('bwPkgs').addEventListener('click', function (ev) {
+    var head = ev.target.closest('.bw-pkg-head'); if (!head) return;
+    state.pkg = head.parentNode.getAttribute('data-pkg');
+    renderStep1();
+  });
+  $('bwBigMinus').addEventListener('click', function () { if (state.big > 0) { state.big--; renderStep1(); } });
+  $('bwBigPlus').addEventListener('click', function () { if (state.big < BIG_MAX) { state.big++; renderStep1(); } });
+  $('bwMinutes').addEventListener('click', function (ev) {
+    var b = ev.target.closest('button'); if (!b) return;
+    var m = +b.getAttribute('data-m');
+    state.minutes = state.minutes === m ? 0 : m;
+    renderStep1();
+  });
+
+  /* ---------- Navigazione tra i passi ---------- */
+  function go(step) {
+    if (step >= 3 && !(state.date && state.time)) step = 2;
+    state.step = step;
+    for (var i = 1; i <= 3; i++) $('bwPane' + i).hidden = i !== step;
+    var tabs = $('bwSteps').querySelectorAll('.bw-step-tab');
+    for (var j = 0; j < tabs.length; j++) tabs[j].classList.toggle('on', j < step);
+    if (step === 2) { loadMonth(); if (state.date) loadSlots(); }
+    if (step === 3) renderCart();
+    showError('');
+    flow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  flow.addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-go]'); if (!b) return;
+    go(+b.getAttribute('data-go'));
+  });
+  $('bwTo2').addEventListener('click', function () { go(2); });
+  $('bwTo3').addEventListener('click', function () { go(3); });
+
+  /* ---------- Passo 2: calendario con posti liberi ---------- */
+  var monthEl = $('bkMonth'), daysEl = $('bkDays'), prevEl = $('bkPrev'), nextEl = $('bkNext'), slotsEl = $('bkSlots');
+
+  function dayStatus(v) {
+    var info = state.days[v];
+    if (!info) return '';
+    var free = 0, c = candidates();
+    for (var i = 0; i < c.length; i++) free = Math.max(free, info.free[c[i]] || 0);
+    if (!free) return 'full';
+    return free <= Math.max(2, Math.round(info.slots * 0.3)) ? 'few' : 'ok';
+  }
 
   function renderCalendar() {
     if (!state.cursor || !state.first) return;
     var y = state.cursor.y, m = state.cursor.m;
     monthEl.textContent = MONTHS[m] + ' ' + y;
-
     var current = y * 12 + m;
     prevEl.disabled = current <= monthIndex(state.first);
     nextEl.disabled = current >= monthIndex(state.last);
-
     daysEl.textContent = '';
     var offset = (new Date(Date.UTC(y, m, 1)).getUTCDay() + 6) % 7;
-    var total = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
-
-    for (var i = 0; i < offset; i++) {
-      var blank = document.createElement('div');
-      blank.className = 'cal-day empty';
-      daysEl.appendChild(blank);
-    }
-    for (var d = 1; d <= total; d++) {
-      var value = iso(y, m, d);
-      var open = isOpenDate(value);
+    var totalDays = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+    for (var i = 0; i < offset; i++) { var blank = document.createElement('div'); blank.className = 'cal-day empty'; daysEl.appendChild(blank); }
+    for (var d = 1; d <= totalDays; d++) {
+      var v = iso(y, m, d), open = isOpenDate(v), inRange = v >= state.first && v <= state.last;
+      var st = open && inRange ? dayStatus(v) : '';
       var btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'cal-day' + (value === state.date ? ' sel' : '');
+      btn.className = 'cal-day' + (v === state.date ? ' sel' : '');
       btn.textContent = d;
-      btn.disabled = value < state.first || value > state.last || !open;
-      if (!open) btn.title = isHolidayClosed(value) ? 'Chiuso per le feste' : 'Chiuso: siamo aperti dal mercoledì alla domenica';
-      btn.setAttribute('data-date', value);
-      if (value === state.date) btn.setAttribute('aria-current', 'date');
+      btn.disabled = !inRange || !open || st === 'full';
+      btn.setAttribute('data-date', v);
+      if (!open) btn.title = isHolidayClosed(v) ? 'Chiuso per le feste' : 'Chiuso';
+      else if (st === 'full') btn.title = 'Pieno';
+      if (open && inRange && st) {
+        var dot = document.createElement('i'); dot.className = 'dot ' + st; dot.setAttribute('aria-hidden', 'true'); btn.appendChild(dot);
+        btn.setAttribute('aria-label', d + ' ' + MONTHS[m] + (st === 'few' ? ', pochi posti' : st === 'full' ? ', pieno' : ', libero'));
+      }
       daysEl.appendChild(btn);
     }
+  }
+
+  function loadMonth() {
+    if (!state.cursor) return;
+    var y = state.cursor.y, m = state.cursor.m, key = y + '-' + m;
+    if (state.daysLoaded[key]) return renderCalendar();
+    var from = iso(y, m, 1), to = iso(y, m, new Date(Date.UTC(y, m + 1, 0)).getUTCDate());
+    if (from < state.first) from = state.first;
+    if (to > state.last) to = state.last;
+    if (from > to) return renderCalendar();
+    fetch(API_SLOTS + '?from=' + from + '&to=' + to, { headers: { Accept: 'application/json' } })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data && data.days) { for (var k in data.days) state.days[k] = data.days[k]; state.daysLoaded[key] = true; }
+        renderCalendar();
+      })
+      .catch(function () { renderCalendar(); });
   }
 
   function shiftMonth(step) {
     var next = new Date(Date.UTC(state.cursor.y, state.cursor.m + step, 1));
     state.cursor = { y: next.getUTCFullYear(), m: next.getUTCMonth() };
-    renderCalendar();
+    renderCalendar(); loadMonth();
   }
+  prevEl.addEventListener('click', function () { shiftMonth(-1); });
+  nextEl.addEventListener('click', function () { shiftMonth(1); });
 
-  /* ---------- Fasce orarie ---------- */
-
-  function showMessage(text) {
-    slotsEl.textContent = '';
-    var box = document.createElement('div');
-    box.className = 'bk-empty';
-    box.textContent = text;
-    slotsEl.appendChild(box);
-  }
-
-  function showSkeleton() {
-    slotsEl.textContent = '';
-    var grid = document.createElement('div');
-    grid.className = 'slot-grid';
-    for (var i = 0; i < 12; i++) {
-      var cell = document.createElement('div');
-      cell.className = 'slot-skel';
-      grid.appendChild(cell);
-    }
-    slotsEl.appendChild(grid);
-  }
+  function slotAt(time) { for (var i = 0; i < state.slots.length; i++) if (state.slots[i].time === time) return state.slots[i]; return null; }
+  function isFree(slot) { var c = candidates(); for (var i = 0; i < c.length; i++) if (slot.rooms[c[i]]) return true; return false; }
+  function showMessage(text) { slotsEl.textContent = ''; var box = document.createElement('div'); box.className = 'bk-empty'; box.textContent = text; slotsEl.appendChild(box); }
 
   function renderSlots() {
-    if (state.loading) return showSkeleton();
+    if (state.loading) {
+      slotsEl.textContent = '';
+      var g = document.createElement('div'); g.className = 'slot-grid';
+      for (var s = 0; s < 9; s++) { var c = document.createElement('div'); c.className = 'slot-skel'; g.appendChild(c); }
+      return slotsEl.appendChild(g);
+    }
     if (!state.date) return showMessage('Scegli un giorno dal calendario per vedere gli orari liberi.');
-    if (isHolidayClosed(state.date)) return showMessage('In questo giorno siamo chiusi per le feste. Scegli un\'altra data.');
-    if (!isOpenDate(state.date)) return showMessage('Il lunedì e il martedì siamo chiusi. Scegli un giorno da mercoledì a domenica.');
     if (!state.slots.length) return showMessage('Nessun orario disponibile per questo giorno.');
-
     slotsEl.textContent = '';
-    var head = document.createElement('div');
-    head.className = 'slot-date';
-    head.textContent = state.dateLabel || state.date;
-    slotsEl.appendChild(head);
-
-    var grid = document.createElement('div');
-    grid.className = 'slot-grid';
+    var head = document.createElement('div'); head.className = 'slot-date'; head.textContent = state.dateLabel || state.date; slotsEl.appendChild(head);
+    var grid = document.createElement('div'); grid.className = 'slot-grid';
     var anyFree = false;
-
     state.slots.forEach(function (slot) {
-      var free = isFree(slot);
-      if (free) anyFree = true;
+      var free = isFree(slot); if (free) anyFree = true;
       var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'slot';
-      btn.disabled = !free;
+      btn.type = 'button'; btn.className = 'slot'; btn.disabled = !free;
       btn.setAttribute('aria-pressed', state.time === slot.time ? 'true' : 'false');
       btn.setAttribute('data-time', slot.time);
-      btn.appendChild(document.createTextNode(slot.time));
-      var range = document.createElement('span');
-      range.textContent = '→ ' + slot.end;
-      btn.appendChild(range);
+      btn.textContent = slot.time;
       if (!free) btn.title = slot.past ? 'Orario già passato' : 'Già prenotato';
       grid.appendChild(btn);
     });
     slotsEl.appendChild(grid);
-
-    if (!anyFree) {
-      var note = document.createElement('div');
-      note.className = 'bk-empty';
-      note.style.marginTop = '14px';
-      note.textContent = state.room
-        ? 'Questa stanza è tutta prenotata per il giorno scelto. Prova un altro giorno o un\'altra stanza.'
-        : 'Tutto pieno per il giorno scelto. Prova con un\'altra data.';
-      slotsEl.appendChild(note);
-    }
+    if (!anyFree) { var note = document.createElement('div'); note.className = 'bk-empty'; note.style.marginTop = '14px'; note.textContent = 'Tutto pieno per questo giorno. Prova un\'altra data.'; slotsEl.appendChild(note); }
   }
 
   function loadSlots() {
-    if (!state.date) return;
-    state.loading = true;
-    renderSlots();
-
+    if (!state.date) return renderSlots();
+    state.loading = true; renderSlots();
     fetch(API_SLOTS + '?date=' + encodeURIComponent(state.date), { headers: { Accept: 'application/json' } })
-      .then(function (res) {
-        return res.json().then(function (data) { return { ok: res.ok, data: data }; });
-      })
-      .then(function (result) {
+      .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+      .then(function (r) {
         state.loading = false;
-        if (!result.ok) {
-          state.slots = [];
-          state.time = null;
-          showMessage(result.data && result.data.error ? result.data.error : 'Impossibile caricare gli orari. ' + FALLBACK);
-          updateRecap();
-          return;
-        }
-        state.slots = result.data.slots || [];
-        state.dateLabel = result.data.dateLabel || state.date;
+        if (!r.ok) { state.slots = []; state.time = null; showMessage((r.data && r.data.error) || 'Impossibile caricare gli orari. ' + FALLBACK); renderTotals(); return; }
+        state.slots = r.data.slots || [];
+        state.dateLabel = r.data.dateLabel || state.date;
         var chosen = state.time ? slotAt(state.time) : null;
         if (!chosen || !isFree(chosen)) state.time = null;
-        renderSlots();
-        updateRecap();
+        renderSlots(); renderTotals();
       })
-      .catch(function () {
-        state.loading = false;
-        state.slots = [];
-        showMessage('Connessione non disponibile. ' + FALLBACK);
-      });
+      .catch(function () { state.loading = false; state.slots = []; showMessage('Connessione non disponibile. ' + FALLBACK); });
   }
-
-  /* ---------- Stanza, persone, riepilogo ---------- */
-
-  function renderPeople() {
-    peopleEl.textContent = '';
-    if (!state.room) {
-      var placeholder = document.createElement('option');
-      placeholder.textContent = 'Scegli prima la stanza';
-      peopleEl.appendChild(placeholder);
-      peopleEl.disabled = true;
-      updateDeposit();
-      return;
-    }
-    for (var n = state.roomMin; n <= state.roomMax; n++) {
-      var opt = document.createElement('option');
-      opt.value = n;
-      opt.textContent = n + (n === 1 ? ' persona' : ' persone');
-      peopleEl.appendChild(opt);
-    }
-    peopleEl.disabled = state.roomMin === state.roomMax;
-    updateDeposit();
-  }
-
-  /* L'acconto è di 5 € a persona; se il cliente sceglie di pagare tutto mostriamo il prezzo pieno. */
-  function updateDeposit() {
-    var people = state.room ? peopleCount() : 0;
-    var full = state.room ? fullPriceCents() : 0;
-    if (fullPriceHintEl) fullPriceHintEl.textContent = state.room ? '(' + euro(full) + ')' : '';
-
-    if (state.paymentType === 'full' && state.room) {
-      depositAmountEl.textContent = euro(full);
-      depositLabelEl.textContent = 'Pagamento completo online';
-      depositTailEl.textContent = ' — sessione saldata per intero.';
-      depositNoteEl.textContent = 'Pagamento sicuro con carta. Non c\'è nulla da pagare in sede.';
-    } else {
-      depositAmountEl.textContent = state.room ? euro(depositCents()) : euro(state.depositPerPerson);
-      depositLabelEl.textContent = 'Riserva online';
-      depositTailEl.textContent = ' — 5 € a persona, scalati dal totale.';
-      depositNoteEl.textContent = 'Pagamento sicuro con carta. Il saldo della sessione si versa in sede.';
-    }
-    depositAmountEl.title = people ? people + ' × ' + euro(state.depositPerPerson) : '';
-  }
-
-  function selectRoom(btn) {
-    state.room = btn.getAttribute('data-room');
-    state.roomName = btn.querySelector('.rm-name').textContent;
-    state.roomMin = +btn.getAttribute('data-min');
-    state.roomMax = +btn.getAttribute('data-max');
-
-    var options = roomsEl.querySelectorAll('.room-opt');
-    for (var i = 0; i < options.length; i++) {
-      options[i].setAttribute('aria-pressed', options[i] === btn ? 'true' : 'false');
-    }
-
-    var chosen = state.time ? slotAt(state.time) : null;
-    if (chosen && !isFree(chosen)) state.time = null;
-
-    renderPeople();
-    renderSlots();
-    updateRecap();
-  }
-
-  function updateRecap() {
-    var chosen = state.time ? slotAt(state.time) : null;
-    var parts = [
-      'Pacchetto ' + PACKAGE_NAMES[state.pkg],
-      state.room ? state.roomName : 'Stanza da scegliere',
-      state.date ? (state.dateLabel || state.date) : 'giorno da scegliere',
-      chosen ? chosen.time + '–' + chosen.end : 'orario da scegliere'
-    ];
-    if (state.room) {
-      parts.push((state.paymentType === 'full' ? 'pagamento intero ' : 'riserva ') + euro(amountCents()));
-    }
-    var ready = state.room && state.date && state.time;
-    recapEl.textContent = (ready ? '✓ ' : '') + parts.join('  ·  ');
-  }
-
-  function showError(message) {
-    if (!message) {
-      errEl.hidden = true;
-      errEl.textContent = '';
-      return;
-    }
-    errEl.textContent = message;
-    errEl.hidden = false;
-  }
-
-  function hasVoucher() { return !!(voucherEl && voucherEl.value.trim()); }
-  function submitLabel() {
-    if (hasVoucher()) return 'Prenota con il buono';
-    return state.paymentType === 'full' ? 'Prenota e paga tutto' : 'Riserva la tua room';
-  }
-  /* Con il buono regalo spariscono riserva e pagamento: la sessione è già pagata. */
-  function updateVoucherUi() {
-    var on = hasVoucher();
-    voucherNoteEl.hidden = !on;
-    payTypeFieldEl.hidden = on;
-    depositBoxEl.hidden = on;
-    updateSubmitLabel();
-  }
-  function updateSubmitLabel() {
-    if (!submitEl.disabled) submitEl.textContent = submitLabel();
-  }
-
-  /* ---------- Eventi ---------- */
-
-  roomsEl.addEventListener('click', function (ev) {
-    var btn = ev.target.closest('.room-opt');
-    if (btn) selectRoom(btn);
-  });
-
-  function selectPackage(id) {
-    if (!PACKAGE_PRICE_CENTS[id]) return;
-    state.pkg = id;
-    var all = packagesEl.querySelectorAll('.room-opt');
-    for (var i = 0; i < all.length; i++) all[i].setAttribute('aria-pressed', all[i].getAttribute('data-package') === id ? 'true' : 'false');
-    updateDeposit();
-    updateRecap();
-  }
-  packagesEl.addEventListener('click', function (ev) {
-    var btn = ev.target.closest('.room-opt');
-    if (btn) selectPackage(btn.getAttribute('data-package'));
-  });
 
   daysEl.addEventListener('click', function (ev) {
-    var btn = ev.target.closest('.cal-day');
-    if (!btn || btn.disabled || !btn.getAttribute('data-date')) return;
-    state.date = btn.getAttribute('data-date');
-    state.dateLabel = '';
-    state.time = null;
-    renderCalendar();
-    updateRecap();
-    loadSlots();
+    var btn = ev.target.closest('.cal-day'); if (!btn || btn.disabled || !btn.getAttribute('data-date')) return;
+    state.date = btn.getAttribute('data-date'); state.dateLabel = ''; state.time = null;
+    renderCalendar(); renderTotals(); loadSlots();
   });
-
   slotsEl.addEventListener('click', function (ev) {
-    var btn = ev.target.closest('.slot');
-    if (!btn || btn.disabled) return;
+    var btn = ev.target.closest('.slot'); if (!btn || btn.disabled) return;
     state.time = btn.getAttribute('data-time');
-    renderSlots();
-    updateRecap();
-    showError('');
+    renderSlots(); renderTotals();
   });
 
-  prevEl.addEventListener('click', function () { shiftMonth(-1); });
-  nextEl.addEventListener('click', function () { shiftMonth(1); });
+  /* ---------- Passo 3: carrello e pagamento ---------- */
+  var formEl = $('bkForm'), errEl = $('bkError'), submitEl = $('bkSubmit');
+  var nameEl = $('bkName'), phoneEl = $('bkPhone'), emailEl = $('bkEmail'), notesEl = $('bkNotes'), voucherEl = $('bkVoucher');
 
-  peopleEl.addEventListener('change', function () {
-    updateDeposit();
-    updateRecap();
-  });
-
-  voucherEl.addEventListener('input', updateVoucherUi);
-
-  payTypeEl.addEventListener('change', function (ev) {
-    if (ev.target.name !== 'bkPayType') return;
-    state.paymentType = ev.target.value;
-    updateDeposit();
-    updateRecap();
-    updateSubmitLabel();
-  });
-
-  // I pulsanti dei prezzi preselezionano il pacchetto corrispondente.
-  var presets = document.querySelectorAll('[data-package-preset]');
-  for (var p = 0; p < presets.length; p++) {
-    presets[p].addEventListener('click', function (ev) {
-      selectPackage(ev.currentTarget.getAttribute('data-package-preset'));
+  function renderCart() {
+    var cart = $('bwCart'); cart.textContent = '';
+    var chosen = state.time ? slotAt(state.time) : null;
+    var end = '';
+    if (chosen) { var p = chosen.time.split(':'); var mins = (+p[0]) * 60 + (+p[1]) + 15 + state.minutes; end = pad(Math.floor(mins / 60) % 24) + ':' + pad(mins % 60); }
+    var lines = [
+      ['Pacchetto ' + PACKAGES[state.pkg].name + ' · ' + state.people + (state.people === 1 ? ' persona' : ' persone'), euro(packagePrice(state.pkg, state.people))],
+      ['Oggetti', objectsText(state.pkg, state.people)]
+    ];
+    if (state.big) lines.push([state.big + (state.big === 1 ? ' oggetto grande in più' : ' oggetti grandi in più'), euro(state.big * EXTRA_BIG)]);
+    if (state.minutes) lines.push(['+' + state.minutes + ' minuti', euro((state.minutes / 5) * EXTRA_5MIN)]);
+    lines.push(['Quando', (state.dateLabel || state.date) + (chosen ? ', ' + chosen.time + '–' + end : '')]);
+    lines.push(['Dove', 'Via Valle Po 92, Madonna dell\'Olmo']);
+    lines.forEach(function (l) {
+      var row = document.createElement('div'); row.className = 'ln';
+      var a = document.createElement('span'); a.textContent = l[0];
+      var b = document.createElement('span'); b.textContent = l[1];
+      row.appendChild(a); row.appendChild(b); cart.appendChild(row);
     });
+    var tot = document.createElement('div'); tot.className = 'ln tot';
+    var ta = document.createElement('span'); ta.textContent = 'Totale';
+    var tb = document.createElement('span'); tb.textContent = euro(total());
+    tot.appendChild(ta); tot.appendChild(tb); cart.appendChild(tot);
+    renderTotals();
   }
+
+  function showError(message) { errEl.textContent = message || ''; errEl.hidden = !message; }
+  function showNotice(text) { var n = $('bkNotice'); n.textContent = text || ''; n.hidden = !text; }
+
+  voucherEl.addEventListener('input', function () {
+    var on = !!voucherEl.value.trim();
+    $('bkVoucherNote').hidden = !on;
+    submitEl.textContent = on ? 'Usa il buono e conferma' : 'Paga ' + euro(total()) + ' e conferma';
+  });
 
   formEl.addEventListener('submit', function (ev) {
     ev.preventDefault();
     showError('');
-
-    if (!state.room) return showError('Scegli chi entra: la stanza (punto 02).');
-    if (!state.date) return showError('Scegli il giorno (punto 03).');
-    if (!state.time) return showError('Scegli l\'orario (punto 04).');
+    if (!state.date || !state.time) return go(2);
     if (nameEl.value.trim().length < 2) return showError('Inserisci il tuo nome e cognome.');
     if (phoneEl.value.replace(/\D/g, '').length < 8) return showError('Inserisci un numero di telefono valido.');
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailEl.value.trim())) return showError('Inserisci un indirizzo email valido.');
 
     var payload = {
-      room: state.room,
-      package: state.pkg,
-      date: state.date,
-      time: state.time,
-      people: peopleCount(),
-      name: nameEl.value.trim(),
-      phone: phoneEl.value.trim(),
-      email: emailEl.value.trim(),
-      notes: notesEl.value.trim(),
-      paymentType: state.paymentType,
-      voucherCode: voucherEl.value.trim()
+      people: state.people, package: state.pkg, extraMinutes: state.minutes, extraBig: state.big,
+      date: state.date, time: state.time,
+      name: nameEl.value.trim(), phone: phoneEl.value.trim(), email: emailEl.value.trim(),
+      notes: notesEl.value.trim(), voucherCode: voucherEl.value.trim()
     };
-
-    submitEl.disabled = true;
-    submitEl.textContent = 'Invio in corso…';
-
-    fetch(API_BOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-      .then(function (res) {
-        return res.json().then(function (data) { return { status: res.status, ok: res.ok, data: data }; });
-      })
-      .then(function (result) {
-        if (!result.ok) {
-          submitEl.disabled = false;
-          submitEl.textContent = submitLabel();
-          showError((result.data && result.data.error) || 'Prenotazione non riuscita. ' + FALLBACK);
-          if (result.status === 409) loadSlots();
+    var label = submitEl.textContent;
+    submitEl.disabled = true; submitEl.textContent = 'Un attimo…';
+    fetch(API_BOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+      .then(function (res) { return res.json().then(function (data) { return { status: res.status, ok: res.ok, data: data }; }); })
+      .then(function (r) {
+        if (!r.ok) {
+          submitEl.disabled = false; submitEl.textContent = label;
+          showError((r.data && r.data.error) || 'Prenotazione non riuscita. ' + FALLBACK);
+          if (r.status === 409) { state.time = null; go(2); showNotice(r.data.error); }
           return;
         }
-
-        // Con il gateway attivo si prosegue sulla pagina di pagamento sicura:
-        // la prenotazione si conferma solo a riserva incassata.
-        if (result.data.payment && result.data.payment.url) {
-          submitEl.textContent = 'Apro il pagamento…';
-          window.location.assign(result.data.payment.url);
-          return;
-        }
-
-        submitEl.disabled = false;
-        submitEl.textContent = submitLabel();
-        showConfirmed(result.data.booking, result.data.whatsappUrl, result.data.voucher);
+        if (r.data.payment && r.data.payment.url) { submitEl.textContent = 'Apro il pagamento…'; window.location.assign(r.data.payment.url); return; }
+        submitEl.disabled = false; submitEl.textContent = label;
+        showConfirmed(r.data.booking, r.data.whatsappUrl, r.data.voucher);
       })
-      .catch(function () {
-        submitEl.disabled = false;
-        submitEl.textContent = submitLabel();
-        showError('Connessione non disponibile. ' + FALLBACK);
-      });
+      .catch(function () { submitEl.disabled = false; submitEl.textContent = label; showError('Connessione non disponibile. ' + FALLBACK); });
   });
 
   /* ---------- Conferma ---------- */
-
+  var doneEl = $('bkDone');
   function showConfirmed(booking, whatsappUrl, voucher) {
-    doneMetaEl.textContent = booking.roomName + '  ·  ' + booking.dateLabel + '  ·  ' + booking.time + '–' + booking.end;
-    doneNoteEl.textContent = voucher
-      ? 'Prenotata con il buono regalo ' + voucher.code + ' — codice #' + booking.id + '. Ti abbiamo mandato l\'email di conferma. ' +
-        (voucher.extraDueCents ? 'In sede saldi solo ' + euro(voucher.extraDueCents) + ' per le persone in più.' : 'Non c\'è nulla da pagare in sede.')
+    $('bkDoneMeta').textContent = booking.roomName + '  ·  ' + booking.dateLabel + '  ·  ' + booking.time + '–' + booking.end;
+    var note = voucher
+      ? 'Prenotata con il buono regalo ' + voucher.code + ' — codice #' + booking.id + '. Ti abbiamo mandato l\'email di conferma.'
       : booking.paid
-      ? (booking.isFullPayment
-          ? 'Pagamento di ' + euro(booking.depositCents) + ' ricevuto per intero — codice #' + booking.id + '. Ti abbiamo mandato l\'email di conferma. Non c\'è nulla da pagare in sede.'
-          : 'Riserva di ' + euro(booking.depositCents) + ' ricevuta — codice #' + booking.id + '. Ti abbiamo mandato l\'email di conferma. Il saldo si paga in sede.')
-      : 'Codice #' + booking.id + '. Ti abbiamo mandato l\'email di conferma. Per spostare o annullare scrivici su WhatsApp o a rageroomcuneo@gmail.com.';
-    if (booking.gopromo) {
-      doneNoteEl.textContent += ' 🎥 Sei tra i primi 50: il video POV con la GoPro della tua sessione è in omaggio!';
-    }
-    if (whatsappUrl) doneWaEl.href = whatsappUrl;
+        ? 'Pagamento di ' + euro(booking.depositCents) + ' ricevuto — codice #' + booking.id + '. Ti abbiamo mandato l\'email di conferma. In sede non paghi nulla.'
+        : 'Codice #' + booking.id + '. Ti abbiamo mandato l\'email di conferma.';
+    if (booking.gopromo) note += ' Sei tra i primi 50: il video POV con la GoPro della tua sessione è in omaggio!';
+    $('bkDoneNote').textContent = note;
+    if (whatsappUrl) $('bkDoneWa').href = whatsappUrl;
     showNotice('');
-    flow.hidden = true;
-    doneEl.hidden = false;
+    flow.hidden = true; doneEl.hidden = false;
     doneEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
-
-  againEl.addEventListener('click', function () {
-    doneEl.hidden = true;
-    flow.hidden = false;
-    state.time = null;
-    nameEl.value = '';
-    phoneEl.value = '';
-    emailEl.value = '';
-    notesEl.value = '';
-    voucherEl.value = '';
-    updateVoucherUi();
+  $('bkAgain').addEventListener('click', function () {
+    doneEl.hidden = true; flow.hidden = false;
+    state.time = null; nameEl.value = ''; phoneEl.value = ''; emailEl.value = ''; notesEl.value = ''; voucherEl.value = '';
     submitEl.disabled = false;
-    submitEl.textContent = submitLabel();
-    showError('');
-    showNotice('');
-    updateRecap();
-    loadSlots();
-    flow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    state.days = {}; state.daysLoaded = {};
+    go(1);
   });
 
-  /* ---------- Avvio ---------- */
+  // I pulsanti dei prezzi aprono il pacchetto corrispondente.
+  var presets = document.querySelectorAll('[data-package-preset]');
+  for (var p = 0; p < presets.length; p++) {
+    presets[p].addEventListener('click', function (ev) {
+      var id = ev.currentTarget.getAttribute('data-package-preset');
+      if (PACKAGES[id]) { state.pkg = id; renderStep1(); go(1); }
+    });
+  }
 
-  /* Ritorno dalla pagina di pagamento: mostriamo l'esito reale della riserva. */
+  /* Ritorno dalla pagina di pagamento. */
   function handleReturnFromPayment() {
     var params = new URLSearchParams(window.location.search);
     var outcome = params.get('prenotazione');
     if (!outcome) return;
-
-    var id = params.get('id');
-    var token = params.get('token');
-    if (window.history && window.history.replaceState) {
-      window.history.replaceState({}, '', window.location.pathname + '#prenota');
-    }
-
-    if (outcome === 'annullata') {
-      showNotice('Pagamento annullato: la fascia è tornata libera. Puoi riprovare quando vuoi.');
-      return;
-    }
+    var id = params.get('id'), token = params.get('token');
+    if (window.history && window.history.replaceState) window.history.replaceState({}, '', window.location.pathname + '#prenota');
+    if (outcome === 'annullata') return showNotice('Pagamento annullato: l\'orario è tornato libero. Puoi riprovare quando vuoi.');
     if (outcome !== 'ok' || !id || !token) return;
-
-    fetch(API_BOOKING + '?id=' + encodeURIComponent(id) + '&token=' + encodeURIComponent(token), {
-      headers: { Accept: 'application/json' }
-    })
+    fetch(API_BOOKING + '?id=' + encodeURIComponent(id) + '&token=' + encodeURIComponent(token), { headers: { Accept: 'application/json' } })
       .then(function (res) { return res.json(); })
       .then(function (data) {
         if (!data.ok || !data.booking) return;
         if (data.booking.status === 'confirmed') return showConfirmed(data.booking);
-        showNotice('Stiamo ancora aspettando la conferma del pagamento. Ricarica tra qualche istante: appena arriva ricevi l\'email di conferma.');
+        showNotice('Stiamo aspettando la conferma del pagamento. Ricarica tra qualche istante: appena arriva ricevi l\'email di conferma.');
       })
-      .catch(function () { /* la conferma arriva comunque via email */ });
+      .catch(function () {});
   }
 
-  renderPeople();
-  if (BOOKING_LIVE) {
-    showSkeleton();
-    handleReturnFromPayment();
-
-    fetch(API_SLOTS, { headers: { Accept: 'application/json' } })
-      .then(function (res) { return res.json(); })
-      .then(function (cfg) {
-        state.first = cfg.firstBookableDate;
-        state.last = cfg.lastBookableDate;
-        if (cfg.openWeekdays && cfg.openWeekdays.length) state.openWeekdays = cfg.openWeekdays;
-        if (cfg.closedDates) state.closedDates = cfg.closedDates;
-        if (cfg.extraOpenDates) state.extraOpenDates = cfg.extraOpenDates;
-        if (cfg.depositCentsPerPerson) state.depositPerPerson = cfg.depositCentsPerPerson;
-        // Il calendario si apre sul primo giorno in cui siamo davvero aperti.
-        state.date = cfg.firstOpenDate || state.first;
-        var start = parseIso(state.date);
-        state.cursor = { y: start.y, m: start.m };
-        updateDeposit();
-        renderCalendar();
-        updateRecap();
-        loadSlots();
-      })
-      .catch(function () {
-        monthEl.textContent = 'Calendario non disponibile';
-        showMessage('Non riesco a contattare il sistema di prenotazioni. ' + FALLBACK);
-      });
-  }
+  renderStep1();
+  handleReturnFromPayment();
+  fetch(API_SLOTS, { headers: { Accept: 'application/json' } })
+    .then(function (res) { return res.json(); })
+    .then(function (cfg) {
+      state.first = cfg.firstBookableDate; state.last = cfg.lastBookableDate;
+      if (cfg.openWeekdays && cfg.openWeekdays.length) state.openWeekdays = cfg.openWeekdays;
+      if (cfg.closedDates) state.closedDates = cfg.closedDates;
+      if (cfg.extraOpenDates) state.extraOpenDates = cfg.extraOpenDates;
+      var start = parseIso(cfg.firstOpenDate || state.first);
+      state.cursor = { y: start.y, m: start.m };
+      renderCalendar();
+      if (state.step === 2) loadMonth();
+    })
+    .catch(function () { monthEl.textContent = 'Calendario non disponibile'; });
 })();
 
 /* --- Buono regalo: scelta, pagamento su Stripe e buono pronto da stampare --- */

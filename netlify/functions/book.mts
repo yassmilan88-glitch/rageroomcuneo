@@ -3,17 +3,22 @@ import { randomUUID } from "node:crypto";
 import {
   BOOKING_LIVE,
   HOLD_MINUTES,
+  MAX_PEOPLE,
+  SESSION_MINUTES,
+  candidateRoomsFor,
   dateRejectionReason,
-  depositCentsFor,
+  extrasLabel,
   formatDateIt,
   getPackage,
   getRoom,
   isSlotInPast,
-  priceCentsFor,
+  isValidExtras,
   slotEndTime,
   slotTimesFor,
+  totalCentsFor,
 } from "../../lib/booking.js";
 import {
+  type BookingRow,
   attachCheckoutSession,
   claimSlot,
   confirmAndNotify,
@@ -22,27 +27,27 @@ import {
   releaseBooking,
 } from "../../lib/bookings-store.js";
 import { OWNER_WHATSAPP } from "../../lib/notify.js";
-import { createDepositCheckout, isPaymentEnabled } from "../../lib/payments.js";
+import { createBookingCheckout, isPaymentEnabled } from "../../lib/payments.js";
 import {
+  type Voucher,
   findVoucher,
   markVoucherRedeemed,
   normalizeVoucherCode,
-  unmarkVoucherRedeemed,
-  voucherCoverage,
   voucherRejectionReason,
-  type Voucher,
 } from "../../lib/vouchers.js";
 
 function badRequest(message: string, status = 400) {
   return Response.json({ ok: false, error: message }, { status });
 }
 
+/**
+ * Nuova prenotazione. Si paga tutto online: la fascia resta bloccata finché il
+ * cliente completa il pagamento su Stripe. Un buono regalo scala il totale;
+ * se lo copre tutto, la prenotazione si conferma subito.
+ */
 export default async (req: Request) => {
   if (!BOOKING_LIVE) {
-    return badRequest(
-      "Prenotazioni in arrivo! Iscriviti alla lista d'attesa per essere avvisato appena aprono.",
-      403,
-    );
+    return badRequest("Le prenotazioni online non sono ancora aperte.", 403);
   }
 
   let payload: Record<string, unknown>;
@@ -55,37 +60,32 @@ export default async (req: Request) => {
   const asText = (value: unknown) => (typeof value === "string" ? value.trim() : "");
   const date = asText(payload.date);
   const time = asText(payload.time);
-  const roomId = asText(payload.room);
-  const packageId = asText(payload.package) || "base";
   const name = asText(payload.name);
   const phone = asText(payload.phone);
   const email = asText(payload.email);
-  const notes = asText(payload.notes).slice(0, 500);
+  const userNotes = asText(payload.notes).slice(0, 400);
   const people = Number(payload.people);
+  const pkg = getPackage(asText(payload.package) || "base");
+  const extras = { minutes: Number(payload.extraMinutes) || 0, big: Number(payload.extraBig) || 0 };
 
   const dateRejection = dateRejectionReason(date);
   if (dateRejection) return badRequest(dateRejection);
-
   if (!slotTimesFor(date).includes(time)) return badRequest("Fascia oraria non valida.");
   if (isSlotInPast(date, time)) return badRequest("Questa fascia oraria è già passata.");
 
-  const room = getRoom(roomId);
-  if (!room) return badRequest("Stanza non valida.");
-  const pkg = getPackage(packageId);
-  if (!pkg) return badRequest("Scegli il pacchetto: Base, Plus o Extreme.");
-  const fullName = `${room.name} · Pacchetto ${pkg.name}`;
-
-  if (!Number.isInteger(people) || people < room.minPeople || people > room.maxPeople) {
-    return badRequest(
-      `${room.name}: il numero di persone deve essere tra ${room.minPeople} e ${room.maxPeople}.`,
-    );
+  if (!Number.isInteger(people) || people < 1 || people > MAX_PEOPLE) {
+    return badRequest(`Potete essere da 1 a ${MAX_PEOPLE} persone.`);
   }
+  if (!pkg) return badRequest("Scegli il pacchetto: Base, Plus o Extreme.");
+  if (!isValidExtras(extras)) return badRequest("Extra non validi.");
 
   if (name.length < 2 || name.length > 80) return badRequest("Inserisci il tuo nome e cognome.");
   if (phone.replace(/\D/g, "").length < 8) return badRequest("Inserisci un numero di telefono valido.");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return badRequest("Inserisci un indirizzo email valido.");
 
-  // Buono regalo: se c'è, la sessione è già pagata e non serve la riserva.
+  const total = totalCentsFor(pkg.id, people, extras);
+
+  // Buono regalo: scala il totale.
   const voucherInput = asText(payload.voucherCode);
   let voucher: Voucher | null = null;
   if (voucherInput) {
@@ -106,123 +106,75 @@ export default async (req: Request) => {
     const rejection = voucherRejectionReason(voucher, date);
     if (rejection) return badRequest(rejection);
   }
+  const voucherCents = voucher ? Math.min(voucher.valueCents, total) : 0;
+  const onlineCents = total - voucherCents;
 
-  const slotTaken = () =>
-    badRequest(
-      `${room.name} è appena stata prenotata alle ${time}. Scegli un altro orario o un'altra stanza.`,
-      409,
-    );
+  const notes = [voucher ? `🎁 Buono ${voucher.code}` : "", userNotes].filter(Boolean).join(" · ").slice(0, 500);
+  const withPayment = isPaymentEnabled() && onlineCents > 0;
 
-  if (voucher) return bookWithVoucher();
-
-  const withDeposit = isPaymentEnabled();
-  const paymentTypeRaw = asText(payload.paymentType);
-  // La scelta "paga tutto ora" ha senso solo se il gateway è attivo: senza
-  // Stripe la prenotazione si conferma comunque e il saldo si versa in sede.
-  const isFullPayment = withDeposit && paymentTypeRaw === "full";
-  const amount = isFullPayment ? priceCentsFor(pkg.id, people) : depositCentsFor(people);
-
-  async function bookWithVoucher() {
-    const v = voucher as Voucher;
-    const { coveredCents, extraDueCents } = voucherCoverage(v, pkg!.id, people);
-    let claimed;
-    try {
-      claimed = await claimSlot({
+  // La stanza si assegna da sola in base a quanti siete: la prima libera tra quelle adatte.
+  let saved: BookingRow | null = null;
+  try {
+    for (const roomId of candidateRoomsFor(people)) {
+      saved = await claimSlot({
         slotDate: date,
         slotTime: time,
-        room: room!.id,
-        package: pkg!.id,
+        room: roomId,
+        package: pkg.id,
+        extraMinutes: extras.minutes,
+        extraBig: extras.big,
         people,
         name,
         phone,
         email,
-        notes: `🎁 Buono ${v.code}${notes ? ` · ${notes}` : ""}`.slice(0, 500),
+        notes,
         status: "pending",
-        depositCents: coveredCents,
+        // Valore totale della sessione (buono + pagamento online).
+        depositCents: total,
         publicToken: randomUUID(),
         holdExpiresAt: new Date(Date.now() + HOLD_MINUTES * 60_000),
       });
-    } catch (error) {
-      console.error("Errore salvataggio prenotazione con buono", error);
-      return badRequest("Non è stato possibile salvare la prenotazione. Riprova o scrivici su WhatsApp.", 500);
+      if (saved) break;
     }
-    if (!claimed) return slotTaken();
-
-    // Il buono si segna come usato prima di confermare: se Stripe non risponde
-    // la fascia torna libera e il buono resta valido.
-    try {
-      await markVoucherRedeemed(v, `#${claimed.id} ${date} ${time}`);
-    } catch (error) {
-      console.error("Errore nel segnare il buono come usato", error);
-      await releaseBooking(claimed.id);
-      return badRequest("Non riesco a registrare il buono adesso. Riprova tra poco o scrivici su WhatsApp.", 502);
-    }
-
-    let confirmed;
-    try {
-      confirmed = await confirmAndNotify(claimed, { paid: true, voucherCode: v.code, extraDueCents });
-    } catch (error) {
-      console.error("Errore conferma prenotazione con buono", error);
-      await releaseBooking(claimed.id);
-      await unmarkVoucherRedeemed(v).catch(() => undefined);
-      return badRequest("Non è stato possibile confermare la prenotazione. Riprova o scrivici su WhatsApp.", 500);
-    }
-
-    const summary =
-      `Ciao! Ho prenotato con il buono regalo ${v.code}: ${fullName} — ${formatDateIt(date)} alle ${time} ` +
-      `(${people} ${people === 1 ? "persona" : "persone"}). Nome: ${name}. Codice #${confirmed.id}`;
-    return Response.json(
-      {
-        ok: true,
-        booking: await publicViewWithPromo(confirmed),
-        voucher: { code: v.code, extraDueCents },
-        whatsappUrl: `https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(summary)}`,
-      },
-      { status: 201 },
-    );
-  }
-
-  let saved;
-  try {
-    saved = await claimSlot({
-      slotDate: date,
-      slotTime: time,
-      room: room.id,
-      package: pkg.id,
-      people,
-      name,
-      phone,
-      email,
-      notes,
-      // Con l'acconto attivo la fascia resta bloccata solo finché il cliente
-      // completa il pagamento su Stripe.
-      status: withDeposit ? "pending" : "confirmed",
-      depositCents: amount,
-      publicToken: randomUUID(),
-      holdExpiresAt: withDeposit ? new Date(Date.now() + HOLD_MINUTES * 60_000) : null,
-    });
   } catch (error) {
     console.error("Errore salvataggio prenotazione", error);
     return badRequest("Non è stato possibile salvare la prenotazione. Riprova o scrivici su WhatsApp.", 500);
   }
+  if (!saved) {
+    return badRequest(`Alle ${time} è appena stato prenotato tutto. Scegli un altro orario.`, 409);
+  }
 
-  if (!saved) return slotTaken();
-
+  const room = getRoom(saved.room);
+  const extrasText = extrasLabel(extras);
+  const fullName = `${room?.name ?? saved.room} · Pacchetto ${pkg.name}${extrasText ? ` · ${extrasText}` : ""}`;
   const dateLabel = formatDateIt(date);
-  const end = slotEndTime(time, pkg.minutes);
+  const end = slotEndTime(time, SESSION_MINUTES + extras.minutes);
 
-  // Nessun gateway configurato: la prenotazione vale subito e l'acconto si
-  // salda in sede, così il sito continua a funzionare durante la messa a punto.
-  if (!withDeposit) {
-    const confirmed = await confirmAndNotify(saved, { paid: false });
+  // Niente da pagare online (buono che copre tutto, o pagamenti non configurati):
+  // si conferma subito.
+  if (!withPayment) {
+    if (voucher) {
+      try {
+        await markVoucherRedeemed(voucher, `#${saved.id} ${date} ${time}`);
+      } catch (error) {
+        console.error("Errore nel segnare il buono come usato", error);
+        await releaseBooking(saved.id);
+        return badRequest("Non riesco a registrare il buono adesso. Riprova tra poco o scrivici su WhatsApp.", 502);
+      }
+    }
+    const confirmed = await confirmAndNotify(saved, {
+      paid: Boolean(voucher),
+      voucherCode: voucher?.code,
+      voucherCents: voucher ? voucherCents : undefined,
+    });
     const summary =
       `Ciao! Ho prenotato online: ${fullName} — ${dateLabel} alle ${time} ` +
       `(${people} ${people === 1 ? "persona" : "persone"}). Nome: ${name}. Codice #${confirmed.id}`;
-
     return Response.json(
       {
         ok: true,
         booking: await publicViewWithPromo(confirmed),
+        voucher: voucher ? { code: voucher.code } : undefined,
         whatsappUrl: `https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(summary)}`,
       },
       { status: 201 },
@@ -230,7 +182,7 @@ export default async (req: Request) => {
   }
 
   try {
-    const checkout = await createDepositCheckout({
+    const checkout = await createBookingCheckout({
       bookingId: saved.id,
       publicToken: saved.publicToken,
       email,
@@ -240,8 +192,8 @@ export default async (req: Request) => {
       time,
       end,
       people,
-      depositCents: amount,
-      isFullPayment,
+      amountCents: onlineCents,
+      voucher: voucher ? { code: voucher.code, paymentIntentId: voucher.paymentIntentId, cents: voucherCents } : undefined,
       // L'origine della richiesta è già quella su cui sta navigando il cliente:
       // così il ritorno da Stripe resta sul dominio giusto anche nelle preview.
       origin: new URL(req.url).origin || process.env.URL || "",
@@ -252,18 +204,15 @@ export default async (req: Request) => {
       {
         ok: true,
         booking: publicView(saved),
-        payment: { url: checkout.url, amountCents: amount, holdMinutes: HOLD_MINUTES },
+        payment: { url: checkout.url, amountCents: onlineCents, holdMinutes: HOLD_MINUTES },
       },
       { status: 201 },
     );
   } catch (error) {
-    console.error("Errore creazione pagamento acconto", error);
+    console.error("Errore creazione pagamento", error);
     // La fascia torna libera subito, senza aspettare la scadenza del blocco.
     await releaseBooking(saved.id);
-    return badRequest(
-      "Non riesco ad aprire il pagamento della riserva. Riprova tra poco o scrivici su WhatsApp.",
-      502,
-    );
+    return badRequest("Non riesco ad aprire il pagamento. Riprova tra poco o scrivici su WhatsApp.", 502);
   }
 };
 

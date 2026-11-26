@@ -6,7 +6,16 @@
 import { and, count, eq, lte, sql } from "drizzle-orm";
 import { db } from "../db/index.js";
 import { bookings } from "../db/schema.js";
-import { DEFAULT_PACKAGE, depositCentsFor, formatDateIt, getPackage, getRoom, slotEndTime } from "./booking.js";
+import {
+  DEFAULT_PACKAGE,
+  SESSION_MINUTES,
+  depositCentsFor,
+  extrasLabel,
+  formatDateIt,
+  getPackage,
+  getRoom,
+  slotEndTime,
+} from "./booking.js";
 import { notifyBooking } from "./notify.js";
 
 export type BookingRow = typeof bookings.$inferSelect;
@@ -33,6 +42,8 @@ export interface NewBooking {
   slotTime: string;
   room: string;
   package: string;
+  extraMinutes: number;
+  extraBig: number;
   people: number;
   name: string;
   phone: string;
@@ -58,6 +69,8 @@ export async function claimSlot(values: NewBooking): Promise<BookingRow | null> 
       setWhere: isSlotReleased,
       set: {
         package: values.package,
+        extraMinutes: values.extraMinutes,
+        extraBig: values.extraBig,
         people: values.people,
         name: values.name,
         phone: values.phone,
@@ -133,17 +146,19 @@ function isFullPayment(row: BookingRow): boolean {
 export function publicView(row: BookingRow) {
   const room = getRoom(row.room);
   const pkg = getPackage(row.package) ?? getPackage(DEFAULT_PACKAGE);
+  const extras = extrasLabel({ minutes: row.extraMinutes, big: row.extraBig });
   return {
     id: row.id,
     date: row.slotDate,
     dateLabel: formatDateIt(row.slotDate),
     time: row.slotTime,
-    end: slotEndTime(row.slotTime, pkg?.minutes),
+    end: slotEndTime(row.slotTime, (pkg?.minutes ?? SESSION_MINUTES) + row.extraMinutes),
     room: row.room,
     package: pkg?.id ?? row.package,
     packageName: pkg?.name ?? row.package,
-    // Nome completo mostrato al cliente e nelle notifiche: stanza e pacchetto.
-    roomName: `${room?.name ?? row.room} · Pacchetto ${pkg?.name ?? row.package}`,
+    extras,
+    // Nome completo mostrato al cliente e nelle notifiche: stanza, pacchetto, extra.
+    roomName: `${room?.name ?? row.room} · Pacchetto ${pkg?.name ?? row.package}${extras ? ` · ${extras}` : ""}`,
     people: row.people,
     status: row.status,
     depositCents: row.depositCents,
@@ -164,7 +179,7 @@ export async function publicViewWithPromo(row: BookingRow) {
  */
 export async function confirmAndNotify(
   row: BookingRow,
-  options: { paid: boolean; voucherCode?: string; extraDueCents?: number } = { paid: true },
+  options: { paid: boolean; voucherCode?: string; voucherCents?: number } = { paid: true },
 ): Promise<BookingRow> {
   const now = new Date();
 
@@ -201,7 +216,7 @@ export async function confirmAndNotify(
     gopromo,
     paid: options.paid,
     voucherCode: options.voucherCode,
-    extraDueCents: options.extraDueCents,
+    voucherCents: options.voucherCents,
   });
 
   return claimed;

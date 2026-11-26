@@ -40,11 +40,13 @@ export interface BookingNotification {
   paid: boolean;
   /** Codice del buono regalo usato per pagare la sessione, se c'è. */
   voucherCode?: string;
-  /** Quanto resta da saldare in sede oltre al buono (es. persone in più). */
-  extraDueCents?: number;
+  /** Quanto copre il buono; il resto (depositCents - voucherCents) è pagato online. */
+  voucherCents?: number;
 }
 
 const peopleLabel = (people: number) => `${people} ${people === 1 ? "persona" : "persone"}`;
+const voucherPart = (b: BookingNotification) => Math.min(b.voucherCents ?? b.depositCents, b.depositCents);
+const onlinePart = (b: BookingNotification) => Math.max(0, b.depositCents - voucherPart(b));
 
 export function escapeHtml(value: string): string {
   return value
@@ -58,8 +60,8 @@ export function escapeHtml(value: string): string {
 export function bookingSummaryText(booking: BookingNotification): string {
   const paymentLabel = booking.isFullPayment ? "Pagato per intero" : "Riserva";
   const paymentLine = booking.voucherCode
-    ? `Pagato con buono regalo ${booking.voucherCode} (${formatEuro(booking.depositCents)})` +
-      (booking.extraDueCents ? ` + ${formatEuro(booking.extraDueCents)} da incassare in sede` : "")
+    ? `Pagato: buono regalo ${booking.voucherCode} (${formatEuro(voucherPart(booking))})` +
+      (onlinePart(booking) ? ` + ${formatEuro(onlinePart(booking))} online` : "")
     : booking.paid
       ? `${paymentLabel} incassato: ${formatEuro(booking.depositCents)}`
       : `Riserva da incassare: ${formatEuro(booking.depositCents)}`;
@@ -79,7 +81,7 @@ export function bookingSummaryText(booking: BookingNotification): string {
 
 function ownerEmailHtml(booking: BookingNotification): string {
   const rows: [string, string][] = [
-    ["Stanza", booking.roomName],
+    ["Sessione", booking.roomName],
     ["Giorno", booking.dateLabel],
     ["Orario", `${booking.time}–${booking.end}`],
     ["Persone", peopleLabel(booking.people)],
@@ -89,8 +91,8 @@ function ownerEmailHtml(booking: BookingNotification): string {
     booking.voucherCode
       ? [
           "Buono regalo",
-          `${booking.voucherCode} — ${formatEuro(booking.depositCents)}` +
-            (booking.extraDueCents ? ` (+ ${formatEuro(booking.extraDueCents)} da incassare in sede)` : ""),
+          `${booking.voucherCode} — ${formatEuro(voucherPart(booking))}` +
+            (onlinePart(booking) ? ` + ${formatEuro(onlinePart(booking))} pagati online` : ""),
         ]
       : [
           booking.isFullPayment ? "Pagamento" : "Riserva",
@@ -126,9 +128,7 @@ function customerEmailHtml(booking: BookingNotification): string {
     ? `<tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">Buono regalo</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(booking.voucherCode)}</td></tr>`
     : `<tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">${booking.isFullPayment ? "Pagamento" : "Riserva"}</td><td style="padding:6px 0;font-weight:600;">${formatEuro(booking.depositCents)} ${booking.paid ? (booking.isFullPayment ? "pagato per intero online" : "pagato online") : "da saldare"}</td></tr>`;
   const balanceText = booking.voucherCode
-    ? booking.extraDueCents
-      ? `Il buono copre ${formatEuro(booking.depositCents)}: in sede saldi solo ${formatEuro(booking.extraDueCents)}.`
-      : "La sessione è pagata con il buono regalo: non c'è nulla da pagare in sede."
+    ? "La sessione è pagata: non c'è nulla da pagare in sede."
     : booking.isFullPayment
       ? "Hai già saldato tutto: non c'è nulla da pagare in sede."
       : "Il saldo della sessione si paga in sede.";
@@ -137,7 +137,7 @@ function customerEmailHtml(booking: BookingNotification): string {
   <p style="margin:0 0 16px;font-size:15px;">Ciao ${escapeHtml(booking.name)}, ti aspettiamo da Rage Room Cuneo.</p>
   <table style="border-collapse:collapse;font-size:15px;">
     <tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">Codice</td><td style="padding:6px 0;font-weight:600;">#${booking.id}</td></tr>
-    <tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">Stanza</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(booking.roomName)}</td></tr>
+    <tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">Sessione</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(booking.roomName)}</td></tr>
     <tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">Giorno</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(booking.dateLabel)}</td></tr>
     <tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">Orario</td><td style="padding:6px 0;font-weight:600;">${booking.time}–${booking.end}</td></tr>
     <tr><td style="padding:6px 14px 6px 0;color:#8a8a92;font-size:13px;">Persone</td><td style="padding:6px 0;font-weight:600;">${peopleLabel(booking.people)}</td></tr>

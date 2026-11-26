@@ -1,8 +1,6 @@
 /**
- * Gateway di pagamento dell'acconto (Stripe Checkout).
- *
- * L'acconto è di 5 € a persona: si paga online al momento della prenotazione,
- * il saldo della sessione si versa in sede.
+ * Pagamento online delle sessioni (Stripe Checkout): si paga sempre tutto
+ * online al momento della prenotazione, compresi gli extra.
  *
  * Si attiva quando su Netlify sono impostate `STRIPE_SECRET_KEY` e
  * `STRIPE_WEBHOOK_SECRET`. Finché non lo sono, il sito continua a prendere
@@ -30,29 +28,41 @@ export interface CheckoutRequest {
   publicToken: string;
   email: string;
   name: string;
+  /** Descrizione completa: stanza, pacchetto, extra. */
   roomName: string;
   dateLabel: string;
   time: string;
   end: string;
   people: number;
-  depositCents: number;
-  /** true se il cliente ha scelto di pagare l'intero importo online. */
-  isFullPayment: boolean;
+  /** Importo da pagare online, in centesimi. */
+  amountCents: number;
+  /** Buono regalo usato per una parte del totale, se c'è. */
+  voucher?: { code: string; paymentIntentId: string; cents: number };
   /** Origine del sito, per costruire gli URL di ritorno. */
   origin: string;
 }
 
-/** Crea la sessione di pagamento e restituisce id e URL a cui mandare il cliente. */
-export async function createDepositCheckout(
+/** Crea la sessione di pagamento (sempre l'intero importo) e restituisce id e URL. */
+export async function createBookingCheckout(
   request: CheckoutRequest,
 ): Promise<{ id: string; url: string }> {
   const stripe = getStripe();
-  const perPerson = Math.round(request.depositCents / request.people);
-  // Verso il cliente si parla sempre di "riserva", mai di "acconto".
-  const label = request.isFullPayment ? "Pagamento completo" : "Riserva";
-  const detail = request.isFullPayment
-    ? "Pagamento a persona, sessione saldata per intero."
-    : "Riserva a persona, saldo in sede.";
+  const peopleText = `${request.people} ${request.people === 1 ? "persona" : "persone"}`;
+  const voucherText = request.voucher ? ` Buono regalo ${request.voucher.code} già scalato.` : "";
+
+  const metadata: Record<string, string> = {
+    bookingId: String(request.bookingId),
+    room: request.roomName.slice(0, 200),
+    slot: `${request.dateLabel} ${request.time}`,
+    people: String(request.people),
+    name: request.name.slice(0, 80),
+    paymentType: "full",
+  };
+  if (request.voucher) {
+    metadata.voucher_code = request.voucher.code;
+    metadata.voucher_pi = request.voucher.paymentIntentId;
+    metadata.voucher_cents = String(request.voucher.cents);
+  }
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
@@ -63,25 +73,19 @@ export async function createDepositCheckout(
     expires_at: Math.floor(Date.now() / 1000) + HOLD_MINUTES * 60,
     line_items: [
       {
-        quantity: request.people,
+        quantity: 1,
         price_data: {
           currency: DEPOSIT_CURRENCY,
-          unit_amount: perPerson,
+          unit_amount: request.amountCents,
           product_data: {
-            name: `${label} ${request.roomName} — Rage Room Cuneo`,
-            description: `${request.dateLabel}, ${request.time}–${request.end}. ${detail}`,
+            name: `Rage Room Cuneo — ${request.roomName}`,
+            description: `${request.dateLabel}, ${request.time}–${request.end}, ${peopleText}.${voucherText}`,
           },
         },
       },
     ],
-    metadata: {
-      bookingId: String(request.bookingId),
-      room: request.roomName,
-      slot: `${request.dateLabel} ${request.time}`,
-      people: String(request.people),
-      name: request.name,
-      paymentType: request.isFullPayment ? "full" : "deposit",
-    },
+    metadata,
+    payment_intent_data: { metadata },
     success_url: `${request.origin}/?prenotazione=ok&id=${request.bookingId}&token=${request.publicToken}#prenota`,
     cancel_url: `${request.origin}/?prenotazione=annullata#prenota`,
   });

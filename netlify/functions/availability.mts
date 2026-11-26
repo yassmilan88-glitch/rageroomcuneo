@@ -1,8 +1,12 @@
 import type { Config } from "@netlify/functions";
-import { and, eq, inArray } from "drizzle-orm";
+import { and, eq, gte, inArray, lte } from "drizzle-orm";
 import { db } from "../../db/index.js";
 import { bookings } from "../../db/schema.js";
 import {
+  MAX_PEOPLE,
+  PACKAGES,
+  addDays,
+  isValidDate,
   CLOSED_DATES,
   DEPOSIT_CENTS_PER_PERSON,
   EARLY_CLOSING,
@@ -32,7 +36,10 @@ import { isSlotHeld } from "../../lib/bookings-store.js";
  * la disponibilità di ogni fascia oraria stanza per stanza.
  */
 export default async (req: Request) => {
-  const requestedDate = new URL(req.url).searchParams.get("date");
+  const params = new URL(req.url).searchParams;
+  const requestedDate = params.get("date");
+  const from = params.get("from");
+  const to = params.get("to");
 
   const base = {
     sessionMinutes: SESSION_MINUTES,
@@ -54,7 +61,38 @@ export default async (req: Request) => {
     lateClosingTime: "00:00",
     openingHoursLabel: OPENING_HOURS_LABEL,
     depositCentsPerPerson: DEPOSIT_CENTS_PER_PERSON,
+    packages: PACKAGES,
+    maxPeople: MAX_PEOPLE,
   };
+
+  // Intervallo di giorni: quante fasce restano libere per stanza, giorno per giorno.
+  if (from && to) {
+    if (!isValidDate(from) || !isValidDate(to) || to < from || addDays(from, 45) < to) {
+      return Response.json({ ...base, error: "Intervallo non valido." }, { status: 400 });
+    }
+    const rows: { slotDate: string; slotTime: string; room: string }[] = [];
+    try {
+      rows.push(
+        ...(await db
+          .select({ slotDate: bookings.slotDate, slotTime: bookings.slotTime, room: bookings.room })
+          .from(bookings)
+          .where(and(gte(bookings.slotDate, from), lte(bookings.slotDate, to), isSlotHeld))),
+      );
+    } catch (error) {
+      console.error("Errore lettura disponibilità del mese", error);
+      return Response.json({ ...base, error: "Disponibilità non leggibile ora." }, { status: 503 });
+    }
+    const taken = new Set(rows.map((row) => `${row.slotDate}|${row.slotTime}|${row.room}`));
+    const days: Record<string, { slots: number; free: Record<string, number> }> = {};
+    for (let day = from; day <= to; day = addDays(day, 1)) {
+      if (dateRejectionReason(day)) continue;
+      const times = slotTimesFor(day).filter((time) => !isSlotInPast(day, time));
+      const free: Record<string, number> = {};
+      for (const room of ROOMS) free[room.id] = times.filter((time) => !taken.has(`${day}|${time}|${room.id}`)).length;
+      days[day] = { slots: slotTimesFor(day).length, free };
+    }
+    return Response.json({ ...base, from, to, days }, { headers: { "Cache-Control": "no-store" } });
+  }
 
   // Nessuna data: il frontend chiede solo le regole per impostare il calendario.
   if (!requestedDate) {

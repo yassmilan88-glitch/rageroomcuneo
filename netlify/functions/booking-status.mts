@@ -1,6 +1,7 @@
 import type { Config } from "@netlify/functions";
 import { timingSafeEqual } from "node:crypto";
-import { confirmAndNotify, findById, publicViewWithPromo } from "../../lib/bookings-store.js";
+import { findById, publicViewWithPromo } from "../../lib/bookings-store.js";
+import { finalizePaidBooking } from "../../lib/finalize.js";
 import { getStripe, isPaymentEnabled } from "../../lib/payments.js";
 
 function tokenMatches(expected: string, provided: string): boolean {
@@ -41,7 +42,7 @@ export default async (req: Request) => {
     try {
       const session = await getStripe().checkout.sessions.retrieve(booking.stripeSessionId);
       if (session.payment_status === "paid") {
-        booking = await confirmAndNotify(booking, { paid: true });
+        booking = await finalizePaidBooking(booking, session);
       }
     } catch (error) {
       console.error("Errore verifica pagamento su Stripe", error);

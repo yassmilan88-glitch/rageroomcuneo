@@ -94,21 +94,63 @@ export interface Package {
   minutes: number;
   /** Prezzo a persona, in centesimi. */
   priceCents: number;
+  /** Oggetti a persona: piccoli, medi, grandi. */
+  small: number;
+  medium: number;
+  large: number;
   contents: string;
 }
 
-/** Pacchetti, prezzo a persona: stessa durata, cambiano gli oggetti da rompere. */
+/** Pacchetti, prezzo a persona: stessa durata, cambiano gli oggetti da rompere (a persona). */
 export const PACKAGES: Package[] = [
-  { id: "base", name: "Base", minutes: SESSION_MINUTES, priceCents: 4000, contents: "15 oggetti piccoli + 1 medio" },
-  { id: "plus", name: "Plus", minutes: SESSION_MINUTES, priceCents: 6000, contents: "30 oggetti piccoli + 2 medi" },
-  { id: "extreme", name: "Extreme", minutes: SESSION_MINUTES, priceCents: 9000, contents: "40 oggetti piccoli + 3 medi + 2 grandi" },
+  { id: "base", name: "Base", minutes: SESSION_MINUTES, priceCents: 4000, small: 15, medium: 1, large: 0, contents: "15 oggetti piccoli + 1 medio" },
+  { id: "plus", name: "Plus", minutes: SESSION_MINUTES, priceCents: 6000, small: 30, medium: 2, large: 0, contents: "30 oggetti piccoli + 2 medi" },
+  { id: "extreme", name: "Extreme", minutes: SESSION_MINUTES, priceCents: 9000, small: 40, medium: 3, large: 2, contents: "40 oggetti piccoli + 3 medi + 2 grandi" },
 ];
+
+/** Persone ammesse per prenotazione e stanze adatte, in ordine di preferenza. */
+export const MAX_PEOPLE = 5;
+export function candidateRoomsFor(people: number): RoomId[] {
+  if (people === 1) return ["singola", "doppia"];
+  if (people === 2) return ["doppia"];
+  if (people >= 3 && people <= MAX_PEOPLE) return ["festa"];
+  return [];
+}
 
 export const DEFAULT_PACKAGE: PackageId = "base";
 /** In due si scalano 10 € dal totale (es. Base: 70 € invece di 80 €). */
 export const COUPLE_DISCOUNT_CENTS = 1000;
-/** Extra che si aggiungono in sede. */
-export const EXTRAS_LABEL = "Extra in sede: +5 minuti 10 € · oggetti grandi da 25 €";
+/** Extra a tendina in prenotazione: minuti in più e oggetti grandi in più. */
+export const EXTRA_MINUTES_OPTIONS = [0, 5, 10];
+export const EXTRA_CENTS_PER_5_MINUTES = 1000;
+export const EXTRA_BIG_MAX = 3;
+export const EXTRA_BIG_CENTS = 2500;
+
+export interface Extras {
+  minutes: number;
+  big: number;
+}
+
+export function isValidExtras(extras: Extras): boolean {
+  return (
+    EXTRA_MINUTES_OPTIONS.includes(extras.minutes) &&
+    Number.isInteger(extras.big) &&
+    extras.big >= 0 &&
+    extras.big <= EXTRA_BIG_MAX
+  );
+}
+
+export function extrasCents(extras: Extras): number {
+  return (extras.minutes / 5) * EXTRA_CENTS_PER_5_MINUTES + extras.big * EXTRA_BIG_CENTS;
+}
+
+/** Descrizione breve degli extra, vuota se non ce ne sono. */
+export function extrasLabel(extras: Extras): string {
+  const parts: string[] = [];
+  if (extras.minutes) parts.push(`+${extras.minutes} min`);
+  if (extras.big) parts.push(`${extras.big} ${extras.big === 1 ? "oggetto grande" : "oggetti grandi"} in più`);
+  return parts.join(" · ");
+}
 
 export function getPackage(packageId: string): Package | undefined {
   return PACKAGES.find((pkg) => pkg.id === packageId);
@@ -133,6 +175,12 @@ export function priceCentsFor(packageId: string, people: number): number {
   const pkg = getPackage(packageId);
   if (!pkg || !Number.isInteger(people) || people < 1) return 0;
   return pkg.priceCents * people - (people === 2 ? COUPLE_DISCOUNT_CENTS : 0);
+}
+
+/** Totale della prenotazione: pacchetto per le persone, più gli extra. */
+export function totalCentsFor(packageId: string, people: number, extras: Extras): number {
+  const base = priceCentsFor(packageId, people);
+  return base ? base + extrasCents(extras) : 0;
 }
 
 export function formatEuro(cents: number): string {

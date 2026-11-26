@@ -1,10 +1,7 @@
 import type { Config } from "@netlify/functions";
 import type Stripe from "stripe";
-import {
-  confirmAndNotify,
-  findByCheckoutSession,
-  releaseBooking,
-} from "../../lib/bookings-store.js";
+import { findByCheckoutSession, releaseBooking } from "../../lib/bookings-store.js";
+import { finalizePaidBooking } from "../../lib/finalize.js";
 import { getStripe, isPaymentEnabled } from "../../lib/payments.js";
 import { deliverVoucher } from "../../lib/vouchers.js";
 
@@ -62,7 +59,7 @@ export default async (req: Request) => {
           console.error("Nessuna prenotazione per la sessione Stripe", session.id);
           break;
         }
-        await confirmAndNotify(booking, { paid: true });
+        await finalizePaidBooking(booking, session);
         break;
       }
 
