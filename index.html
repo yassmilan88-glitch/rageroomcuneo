@@ -343,6 +343,19 @@
     .bk-done-ctas .btn{ justify-content:center; width:100%; }
   }
 
+  /* -------- Feste -------- */
+  .party-card{
+    display:grid; gap:22px; align-items:center; max-width:960px;
+    background: linear-gradient(160deg, #1c1220, var(--panel) 58%); border:1px solid rgba(255,46,110,0.38);
+    border-radius:20px; padding:28px 22px;
+  }
+  @media(min-width:760px){ .party-card{ grid-template-columns:1fr auto; gap:36px; padding:38px 34px; } }
+  .party-card h2{ font-size:clamp(28px,5.4vw,44px); margin-top:10px; }
+  .party-card p{ color:#d8d5cc; margin-top:12px; font-size:16px; max-width:540px; }
+  .btn-wa{ background:#25D366; color:#0b1a10; justify-content:center; }
+  @media(max-width:519px){ .party-card .btn{ width:100%; } }
+  .bk-wa-link{ color:var(--yellow); font-weight:700; text-decoration:underline; text-underline-offset:3px; }
+
   /* -------- Contatti -------- */
   .contact-grid{ display:grid; grid-template-columns:1fr; gap:32px; }
   @media(min-width:820px){ .contact-grid{ grid-template-columns: 1fr 1fr; gap:0; } }
@@ -432,6 +445,20 @@
   .bk-rules u{ color:#d8d5cc; text-underline-offset:3px; }
   .bk-rules ul{ margin:10px 0 0; padding-left:18px; line-height:1.6; }
 
+  .slot.taken span{ color:var(--pink); font-weight:700; text-decoration:none; }
+  .slot.taken{ text-decoration:none; opacity:0.6; }
+  .slot.taken b{ text-decoration:line-through; font-weight:700; }
+  .bk-gift{
+    margin-top:12px; width:100%; display:flex; align-items:center; justify-content:space-between; gap:14px; text-align:left;
+    background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:15px 18px; color:inherit; font:inherit; cursor:pointer;
+  }
+  .bk-gift strong{ display:block; font-weight:800; font-size:15px; }
+  .bk-gift small{ display:block; color:var(--dim); font-size:12.5px; margin-top:2px; }
+  .bk-gift[aria-pressed="true"]{ border-color:var(--violet); background:linear-gradient(160deg,#1a1225,var(--panel) 60%); }
+  .bk-switch{ position:relative; flex-shrink:0; width:46px; height:26px; border-radius:999px; background:var(--panel-2); border:1px solid var(--line); transition:background .15s ease; }
+  .bk-switch::after{ content:''; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:#6e6c73; transition:transform .15s ease, background .15s ease; }
+  .bk-gift[aria-pressed="true"] .bk-switch{ background:var(--violet); border-color:var(--violet); }
+  .bk-gift[aria-pressed="true"] .bk-switch::after{ transform:translateX(20px); background:#fff; }
   /* Barra in fondo: totale e pulsante sempre a portata di pollice. */
   .bk-bar{
     position:sticky; bottom:0; z-index:20; margin:0 calc(-1 * max(18px, env(safe-area-inset-left)));
@@ -447,12 +474,6 @@
   .bk-bar .bk-error{ margin-bottom:10px; }
 
   /* -------- Buono regalo -------- */
-  .gift{ background: radial-gradient(110% 80% at 50% 0%, #1a1020 0%, var(--bg) 62%); }
-  .gift .tag{ color: var(--violet); }
-  .gift-flow{ display:grid; gap:30px; max-width:760px; }
-  .gift-perks{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
-  .gift-perks span{ font-family:'Inter', sans-serif; font-weight:600; font-size:11px; letter-spacing:0.06em; text-transform:uppercase;
-    border:1px solid var(--line); background:var(--panel); border-radius:999px; padding:7px 12px; color:#d8d5cc; }
   .gv-card{
     position:relative; overflow:hidden; max-width:560px; border-radius:22px; padding:30px 26px;
     background: linear-gradient(160deg, #1c1220, #0d0c0f 60%); border:2px solid var(--violet);
@@ -494,7 +515,7 @@
       <a href="#come-funziona">Come funziona</a>
       <a href="#prezzi">Prezzi</a>
       <a href="#prenota">Prenota</a>
-      <a href="#regala">Regala</a>
+      <a href="#feste">Feste</a>
       <a href="#contatti">Contatti</a>
     </div>
     <div class="nav-actions">
@@ -520,7 +541,6 @@
     </div>
     <div class="hero-ctas">
       <a href="#prenota" class="btn btn-primary">💥 Prenota la tua sessione</a>
-      <a href="#regala" class="btn btn-ghost">🎁 Regala una sessione</a>
     </div>
     <div class="promo-banner">🎥 I primi 50 prenotati ricevono il video POV con la GoPro della propria sessione in omaggio!</div>
   </div>
@@ -589,7 +609,7 @@
       <h2 class="display">Prezzi</h2>
     </div>
     <div class="price-note">
-      Ogni sessione dura <strong>15 minuti</strong>, kit protezione incluso: il pacchetto cambia solo quanta roba rompi. Prezzi <strong>a persona</strong>: più siete, meno paga ognuno. Si paga tutto online.
+      Ogni sessione dura <strong>15 minuti</strong>, kit protezione incluso: il pacchetto cambia solo quanta roba rompi. Prezzi <strong>a persona</strong>: più siete, meno paga ognuno. Ogni persona in più aggiunge 5 oggetti piccoli. Si paga tutto online.
     </div>
     <div class="pricing-grid">
       <div class="price-card">
@@ -661,6 +681,7 @@
           <button type="button" class="bk-chip" data-n="4" aria-pressed="false">4</button>
           <button type="button" class="bk-chip" data-n="5" aria-pressed="false">5</button>
         </div>
+        <p class="bk-hint">Più di 5 o una festa? <a class="bk-wa-link" href="https://wa.me/393509736066?text=Ciao%21%20Vorrei%20organizzare%20una%20festa%20alla%20Rage%20Room%20%28compleanno%20/%20addio%20al%20celibato%20o%20nubilato%29.%20Siamo%20in%20...%20persone%2C%20il%20giorno%20..." target="_blank" rel="noopener">Scrivici su WhatsApp</a></p>
       </div>
 
       <!-- 2. Pacchetto -->
@@ -701,6 +722,37 @@
             </div>
           </div>
         </details>
+        <button type="button" class="bk-gift" id="bkGift" aria-pressed="false">
+          <span><strong>È un regalo?</strong><small>Paghi ora e ricevi il buono via email: chi lo riceve sceglie giorno e orario.</small></span>
+          <i class="bk-switch" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <!-- 3 (regalo). Dati del buono: al posto di giorno, orario e dati -->
+      <div class="bk-block" id="bkGiftBlock" hidden>
+        <div class="bk-label"><span class="bk-n">3</span>Dati del regalo</div>
+        <form class="bk-form" id="gfForm" novalidate>
+          <div class="field">
+            <label for="gfBuyer">Il tuo nome</label>
+            <input id="gfBuyer" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="gfEmail">La tua email</label>
+            <input id="gfEmail" type="email" autocomplete="email" inputmode="email" placeholder="Qui ti mandiamo il buono" required>
+          </div>
+          <div class="field full">
+            <label for="gfRecipient">A chi lo regali</label>
+            <input id="gfRecipient" type="text" autocomplete="off" placeholder="Nome di chi riceve il regalo" required>
+          </div>
+          <details class="bk-more full">
+            <summary>Aggiungi un messaggio</summary>
+            <div class="field">
+              <label for="gfMessage">Messaggio sul buono</label>
+              <textarea id="gfMessage" maxlength="300" placeholder="Es. Per quando il capo ti fa impazzire. Buon Natale!"></textarea>
+            </div>
+          </details>
+        </form>
+        <p class="bk-hint">Il buono vale 12 mesi: lo stampi o lo mandi su WhatsApp.</p>
       </div>
 
       <!-- 3. Giorno -->
@@ -780,86 +832,6 @@
         <button type="button" class="btn btn-ghost" id="bkAgain">Nuova prenotazione</button>
       </div>
     </div>
-  </div>
-</section>
-
-<div class="hazard thin"></div>
-
-<section id="regala" class="gift">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="tag">Idea regalo · Natale</div>
-      <h2 class="display">Regala una <span style="color:var(--pink)">sessione</span></h2>
-      <p>Il regalo per chi ha bisogno di sfogarsi. Lo paghi online e ricevi subito il buono via email, da stampare o da mandare su WhatsApp. Chi lo riceve prenota quando vuole.</p>
-      <div class="gift-perks"><span>Valido 12 mesi</span><span>Arriva subito via email</span><span>Si usa dal calendario</span></div>
-    </div>
-
-    <div class="bk-notice" id="gfNotice" hidden></div>
-
-    <div class="gift-flow" id="gfFlow">
-      <div>
-        <div class="bk-label"><span class="bk-n">01</span> Che pacchetto regali</div>
-        <div class="room-grid" id="gfRooms">
-          <button type="button" class="room-opt" data-package="base" aria-pressed="false">
-            <div class="rm-name">Base</div>
-            <div class="rm-meta">15 min · 15 oggetti piccoli + 1 medio</div>
-            <div class="rm-price">€40<span style="font-size:.55em">/pers.</span></div>
-          </button>
-          <button type="button" class="room-opt" data-package="plus" aria-pressed="false">
-            <div class="rm-name">Plus</div>
-            <div class="rm-meta">15 min · 30 oggetti piccoli + 2 medi</div>
-            <div class="rm-price">€60<span style="font-size:.55em">/pers.</span></div>
-          </button>
-          <button type="button" class="room-opt" data-package="extreme" aria-pressed="false">
-            <div class="rm-name">Extreme</div>
-            <div class="rm-meta">15 min · 40 piccoli + 3 medi + 2 grandi</div>
-            <div class="rm-price">€90<span style="font-size:.55em">/pers.</span></div>
-          </button>
-        </div>
-      </div>
-
-      <div>
-        <div class="bk-label"><span class="bk-n">02</span> I dati del buono</div>
-        <form class="bk-form" id="gfForm" novalidate>
-          <div class="field full" id="gfPeopleField">
-            <label for="gfPeople">Per quante persone</label>
-            <select id="gfPeople">
-              <option value="1">1 persona</option>
-              <option value="2" selected>2 persone · il più scelto</option>
-              <option value="3">3 persone</option>
-              <option value="4">4 persone</option>
-              <option value="5">5 persone</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="gfBuyer">Il tuo nome</label>
-            <input id="gfBuyer" type="text" autocomplete="name" required>
-          </div>
-          <div class="field">
-            <label for="gfEmail">La tua email (ti mandiamo qui il buono)</label>
-            <input id="gfEmail" type="email" autocomplete="email" placeholder="tuonome@email.it" required>
-          </div>
-          <div class="field full">
-            <label for="gfRecipient">Per chi è</label>
-            <input id="gfRecipient" type="text" autocomplete="off" placeholder="Nome di chi riceve il regalo" required>
-          </div>
-          <div class="field full">
-            <label for="gfMessage">Dedica (facoltativa)</label>
-            <textarea id="gfMessage" maxlength="300" placeholder="Es. Per quando il capo ti fa impazzire. Buon Natale!"></textarea>
-          </div>
-          <div class="full bk-error" id="gfError" hidden></div>
-          <div class="full bk-deposit">
-            <span aria-hidden="true">🎁</span>
-            <span>Totale buono <strong id="gfTotal">€—</strong>
-              <small>Pagamento sicuro con carta. Il buono arriva subito via email ed è valido 12 mesi.</small>
-            </span>
-          </div>
-          <div class="full">
-            <button type="submit" class="btn btn-primary bk-submit" id="gfSubmit">Compra il buono</button>
-          </div>
-        </form>
-      </div>
-    </div>
 
     <div id="gfDone" hidden>
       <div class="gv-card" id="gvCard">
@@ -877,6 +849,21 @@
         <button type="button" class="btn btn-primary" id="gvPrint">🖨️ Stampa il buono</button>
         <a class="btn btn-ghost" id="gvShare" href="#" target="_blank" rel="noopener">💬 Mandalo su WhatsApp</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<div class="hazard thin"></div>
+
+<section id="feste">
+  <div class="wrap">
+    <div class="party-card">
+      <div>
+        <div class="tag">Gruppi</div>
+        <h2 class="display">Feste, compleanni e addii al celibato</h2>
+        <p>Compleanni, addii al celibato e al nubilato, serate tra amici o colleghi: scrivici su WhatsApp con il giorno e quanti siete, ti rispondiamo noi.</p>
+      </div>
+      <a class="btn btn-wa" href="https://wa.me/393509736066?text=Ciao%21%20Vorrei%20organizzare%20una%20festa%20alla%20Rage%20Room%20%28compleanno%20/%20addio%20al%20celibato%20o%20nubilato%29.%20Siamo%20in%20...%20persone%2C%20il%20giorno%20..." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.86 9.86 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.06c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.89-1.25-4.78-4.15-4.93-4.34-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.26-.28.57-.36.76-.36h.55c.18 0 .42-.07.65.5.24.58.81 2 .88 2.15.07.15.11.32.02.51-.09.19-.14.31-.28.47-.14.16-.29.36-.42.48-.14.14-.28.29-.13.56.16.28.7 1.16 1.51 1.88 1.04.93 1.92 1.22 2.19 1.36.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.28.37-.23.62-.14.26.09 1.63.77 1.91.91.28.14.47.21.53.33.07.12.07.68-.17 1.36z"/></svg> Scrivici su WhatsApp</a>
     </div>
   </div>
 </section>
@@ -928,7 +915,7 @@
     <a href="#come-funziona">Come funziona</a>
     <a href="#prezzi">Prezzi</a>
     <a href="#prenota">Prenota</a>
-    <a href="#regala">Regala</a>
+    <a href="#feste">Feste</a>
     <a href="#contatti">Contatti</a>
   </div>
   <div>Rage Room Cuneo — Madonna dell'Olmo (Cuneo)</div>
@@ -954,6 +941,7 @@
 
   var flow = document.getElementById('bkFlow');
   if (!flow) return;
+  var gfForm;
   var $ = function (id) { return document.getElementById(id); };
 
   /* Pacchetti: prezzo e oggetti a persona. Il prezzo a testa scende di 5 € per ogni persona in più. */
@@ -965,7 +953,7 @@
   var EXTRA_5MIN = 1000, EXTRA_BIG = 2500, BIG_MAX = 3, GROUP_STEP = 500;
 
   var state = {
-    people: 1, pkg: 'base', big: 0, minutes: 0,
+    people: 1, pkg: 'base', big: 0, minutes: 0, gift: false,
     date: null, dateLabel: '', time: null, slots: [], loading: false, busy: false,
     first: null, firstOpen: null, last: null, days: {}, daysReady: false, showAll: false,
     openWeekdays: [3, 4, 5, 6, 0],
@@ -978,6 +966,8 @@
   var daysEl = $('bkDays'), moreDaysEl = $('bkMoreDays'), slotsEl = $('bkSlots');
   var errEl = $('bkError'), submitEl = $('bkSubmit'), formEl = $('bkForm');
   var nameEl = $('bkName'), phoneEl = $('bkPhone'), emailEl = $('bkEmail'), notesEl = $('bkNotes'), voucherEl = $('bkVoucher');
+  var giftBtn = $('bkGift'), giftBlock = $('bkGiftBlock'), extrasEl = $('bwExtras');
+  var gfBuyer = $('gfBuyer'), gfEmail = $('gfEmail'), gfRecipient = $('gfRecipient'), gfMessage = $('gfMessage');
 
   function euro(cents) { var v = cents / 100; return '€' + (v % 1 ? v.toFixed(2).replace('.', ',') : String(v)); }
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
@@ -1000,11 +990,17 @@
   function perPerson(id, n) { return PACKAGES[id].price - GROUP_STEP * (n - 1); }
   function packagePrice(id, n) { return perPerson(id, n) * n; }
   function multiplier() { return (state.date && state.multipliers[state.date]) || 1; }
-  function total() { return (packagePrice(state.pkg, state.people) + (state.minutes / 5) * EXTRA_5MIN + state.big * EXTRA_BIG) * multiplier(); }
+  function total() {
+    // Il buono regalo vale il pacchetto: extra e prezzo festivo si scelgono quando si prenota.
+    if (state.gift) return packagePrice(state.pkg, state.people);
+    return (packagePrice(state.pkg, state.people) + (state.minutes / 5) * EXTRA_5MIN + state.big * EXTRA_BIG) * multiplier();
+  }
+  /* Gli oggetti sono per sessione, non a persona: ogni persona in più aggiunge solo 5 oggetti piccoli. */
+  var SMALL_PER_EXTRA_PERSON = 5;
   function objectsText(id, n) {
-    var p = PACKAGES[id], parts = [p.small * n + ' oggetti piccoli'];
-    if (p.medium) parts.push(p.medium * n + (p.medium * n === 1 ? ' medio' : ' medi'));
-    if (p.large) parts.push(p.large * n + (p.large * n === 1 ? ' grande' : ' grandi'));
+    var p = PACKAGES[id], parts = [p.small + SMALL_PER_EXTRA_PERSON * (n - 1) + ' oggetti piccoli'];
+    if (p.medium) parts.push(p.medium + (p.medium === 1 ? ' medio' : ' medi'));
+    if (p.large) parts.push(p.large + (p.large === 1 ? ' grande' : ' grandi'));
     return parts.join(' + ');
   }
   function extrasText() {
@@ -1017,7 +1013,13 @@
   /* ---------- Barra in fondo ---------- */
   function renderBar() {
     $('bwTotal').textContent = euro(total());
-    var parts = [PACKAGES[state.pkg].name, state.people + (state.people === 1 ? ' persona' : ' persone')];
+    var who = state.people + (state.people === 1 ? ' persona' : ' persone');
+    if (state.gift) {
+      $('bwSum').textContent = 'Buono regalo · ' + PACKAGES[state.pkg].name + ' · ' + who;
+      if (!state.busy) submitEl.textContent = 'Paga ' + euro(total());
+      return;
+    }
+    var parts = [PACKAGES[state.pkg].name, who];
     if (extrasText()) parts.push(extrasText());
     if (state.date) parts.push(dayLabel(state.date) + (state.time ? ' ore ' + state.time : ''));
     if (multiplier() > 1) parts.push('festivo x' + multiplier());
@@ -1051,8 +1053,24 @@
     var sum = $('bwExtrasSum'), ex = extrasText();
     sum.textContent = ex || 'facoltativo';
     sum.classList.toggle('on', !!ex);
+    giftBtn.setAttribute('aria-pressed', state.gift ? 'true' : 'false');
     renderBar();
   }
+
+  /* Regalo: al posto di giorno, orario e dati compaiono i dati del buono. */
+  function applyMode() {
+    extrasEl.hidden = state.gift;
+    dayBlock.hidden = state.gift;
+    timeBlock.hidden = state.gift || !state.date;
+    dataBlock.hidden = state.gift || !state.time;
+    giftBlock.hidden = !state.gift;
+  }
+  giftBtn.addEventListener('click', function () {
+    state.gift = !state.gift;
+    showError('');
+    applyMode(); renderChoice();
+    if (state.gift) reveal(giftBlock);
+  });
 
   $('bwPeople').addEventListener('click', function (ev) {
     var b = ev.target.closest('button'); if (!b) return;
@@ -1176,19 +1194,30 @@
       for (var s = 0; s < 6; s++) { var c = document.createElement('div'); c.className = 'slot-skel'; g.appendChild(c); }
       return slotsEl.appendChild(g);
     }
-    var free = state.slots.filter(isFree);
-    if (!free.length) return slotMessage(state.slots.length ? 'Tutto pieno per questo giorno: scegli un\'altra data.' : 'Nessun orario disponibile per questo giorno.');
+    // Gli orari già passati non si mostrano; quelli occupati sì, barrati.
+    var visible = state.slots.filter(function (slot) { return !slot.past; });
+    if (!visible.length) return slotMessage('Nessun orario disponibile per questo giorno.');
     slotsEl.textContent = '';
     var grid = document.createElement('div'); grid.className = 'slot-grid';
-    free.forEach(function (slot) {
-      var btn = document.createElement('button');
-      btn.type = 'button'; btn.className = 'slot';
-      btn.setAttribute('aria-pressed', state.time === slot.time ? 'true' : 'false');
+    var anyFree = false;
+    visible.forEach(function (slot) {
+      var free = isFree(slot), btn = document.createElement('button');
+      btn.type = 'button';
       btn.setAttribute('data-time', slot.time);
-      btn.textContent = slot.time;
+      if (free) {
+        anyFree = true;
+        btn.className = 'slot';
+        btn.setAttribute('aria-pressed', state.time === slot.time ? 'true' : 'false');
+        btn.textContent = slot.time;
+      } else {
+        btn.className = 'slot taken'; btn.disabled = true;
+        btn.innerHTML = '<b>' + slot.time + '</b><span>occupato</span>';
+        btn.setAttribute('aria-label', slot.time + ', occupato');
+      }
       grid.appendChild(btn);
     });
     slotsEl.appendChild(grid);
+    if (!anyFree) { var note = document.createElement('div'); note.className = 'bk-empty'; note.style.marginTop = '12px'; note.textContent = 'Tutto pieno per questo giorno: scegli un\'altra data.'; slotsEl.appendChild(note); }
   }
   function loadSlots() {
     if (!state.date) return renderSlots();
@@ -1228,6 +1257,7 @@
   function submit() {
     if (state.busy) return;
     showError('');
+    if (state.gift) return submitGift();
     if (!state.date) return reveal(dayBlock);
     if (!state.time) return reveal(timeBlock);
     if (nameEl.value.trim().length < 2) return fail('Scrivi nome e cognome.', nameEl);
@@ -1256,6 +1286,26 @@
         showConfirmed(r.data.booking, r.data.whatsappUrl, r.data.voucher);
       })
       .catch(function () { done(); showError('Connessione non disponibile. ' + FALLBACK); });
+  }
+
+  gfForm = $('gfForm');
+  gfForm.addEventListener('submit', function (ev) { ev.preventDefault(); submit(); });
+  function submitGift() {
+    if (gfBuyer.value.trim().length < 2) return fail('Scrivi il tuo nome.', gfBuyer);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(gfEmail.value.trim())) return fail('Scrivi un\'email valida: lì ti mandiamo il buono.', gfEmail);
+    if (!gfRecipient.value.trim()) return fail('Scrivi il nome di chi riceve il regalo.', gfRecipient);
+    state.busy = true; submitEl.disabled = true; submitEl.textContent = 'Apro il pagamento…';
+    fetch('/api/buono', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ package: state.pkg, people: state.people, buyerName: gfBuyer.value.trim(), buyerEmail: gfEmail.value.trim(), recipientName: gfRecipient.value.trim(), message: gfMessage.value.trim() })
+    })
+      .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+      .then(function (r) {
+        if (r.ok && r.data.payment && r.data.payment.url) return window.location.assign(r.data.payment.url);
+        state.busy = false; submitEl.disabled = false; renderBar();
+        showError((r.data && r.data.error) || 'Pagamento non disponibile. ' + FALLBACK);
+      })
+      .catch(function () { state.busy = false; submitEl.disabled = false; renderBar(); showError('Connessione non disponibile. ' + FALLBACK); });
   }
 
   /* ---------- Conferma ---------- */
@@ -1292,9 +1342,54 @@
     });
   }
 
+  /* Buono regalo pagato: card pronta da stampare o mandare su WhatsApp. */
+  var giftDoneEl = $('gfDone');
+  function showVoucher(v) {
+    var forEl = $('gvFor'); forEl.textContent = '';
+    forEl.appendChild(document.createTextNode('Per '));
+    var b1 = document.createElement('strong'); b1.textContent = v.recipientName; forEl.appendChild(b1);
+    if (v.buyerName) { forEl.appendChild(document.createTextNode(', da parte di ')); var b2 = document.createElement('strong'); b2.textContent = v.buyerName; forEl.appendChild(b2); }
+    var msgEl = $('gvMsg');
+    msgEl.hidden = !v.message;
+    msgEl.textContent = v.message ? '“' + v.message + '”' : '';
+    $('gvWhat').textContent = v.packageName + ' · ' + v.peopleLabel + ' · sessione da 15 minuti';
+    $('gvCode').textContent = v.code;
+    $('gvFoot').textContent = 'Valido fino al ' + v.expiresLabel + '.';
+    var text = 'Ti ho regalato una sessione alla Rage Room Cuneo! ' + v.packageName + ' (' + v.peopleLabel + ').' +
+      (v.message ? ' "' + v.message + '"' : '') + ' Codice: ' + v.code +
+      '. Prenota su https://rageroomcuneo.it/#prenota scrivendo il codice nel campo "Buono regalo". Valido fino al ' + v.expiresLabel + '.';
+    $('gvShare').href = 'https://wa.me/?text=' + encodeURIComponent(text);
+    showNotice('');
+    flow.hidden = true; giftDoneEl.hidden = false;
+    giftDoneEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  $('gvPrint').addEventListener('click', function () { window.print(); });
+  function handleGiftReturn(params) {
+    var outcome = params.get('buono'), sessionId = params.get('session');
+    if (window.history && window.history.replaceState) window.history.replaceState({}, '', window.location.pathname + '#prenota');
+    if (outcome === 'annullato') return showNotice('Pagamento annullato: nessun addebito. Puoi riprovare quando vuoi.');
+    if (outcome !== 'ok' || !sessionId) return;
+    showNotice('Pagamento ricevuto, preparo il tuo buono…');
+    var tries = 0;
+    (function poll() {
+      fetch('/api/buono-stato?session=' + encodeURIComponent(sessionId), { headers: { Accept: 'application/json' } })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data.ok && data.voucher) return showVoucher(data.voucher);
+          if (++tries < 6) return setTimeout(poll, 2500);
+          showNotice('Il pagamento è in elaborazione: il buono ti arriva via email appena confermato. Per dubbi scrivici su WhatsApp.');
+        })
+        .catch(function () {
+          if (++tries < 6) return setTimeout(poll, 2500);
+          showNotice('Il buono ti arriva via email. Per dubbi scrivici su WhatsApp al 350 973 6066.');
+        });
+    })();
+  }
+
   /* Ritorno dalla pagina di pagamento. */
   function handleReturnFromPayment() {
     var params = new URLSearchParams(window.location.search);
+    if (params.get('buono')) return handleGiftReturn(params);
     var outcome = params.get('prenotazione');
     if (!outcome) return;
     var id = params.get('id'), token = params.get('token');
@@ -1332,127 +1427,6 @@
       box.textContent = 'Calendario non disponibile in questo momento. ' + FALLBACK;
       daysEl.appendChild(box);
     });
-})();
-
-/* --- Buono regalo: scelta, pagamento su Stripe e buono pronto da stampare --- */
-(function () {
-  var flow = document.getElementById('gfFlow');
-  if (!flow) return;
-  var PRICES = { base: 4000, plus: 6000, extreme: 9000 };
-  var roomsEl = document.getElementById('gfRooms');
-  var peopleField = document.getElementById('gfPeopleField');
-  var peopleEl = document.getElementById('gfPeople');
-  var totalEl = document.getElementById('gfTotal');
-  var formEl = document.getElementById('gfForm');
-  var errEl = document.getElementById('gfError');
-  var submitEl = document.getElementById('gfSubmit');
-  var noticeEl = document.getElementById('gfNotice');
-  var doneEl = document.getElementById('gfDone');
-  var room = null;
-
-  function euro(cents) { return '€' + (cents / 100).toFixed(2).replace('.', ','); }
-  function total() {
-    if (!room) return 0;
-    var n = parseInt(peopleEl.value, 10) || 1;
-    return (PRICES[room] - 500 * (n - 1)) * n;
-  }
-  function refresh() {
-    totalEl.textContent = room ? euro(total()) : '€—';
-    submitEl.textContent = room ? 'Compra il buono — ' + euro(total()) : 'Compra il buono';
-  }
-  function showError(text) { errEl.textContent = text || ''; errEl.hidden = !text; }
-  function showNotice(text) { noticeEl.textContent = text || ''; noticeEl.hidden = !text; }
-
-  roomsEl.addEventListener('click', function (ev) {
-    var btn = ev.target.closest('.room-opt');
-    if (!btn) return;
-    room = btn.getAttribute('data-package');
-    var all = roomsEl.querySelectorAll('.room-opt');
-    for (var i = 0; i < all.length; i++) all[i].setAttribute('aria-pressed', all[i] === btn ? 'true' : 'false');
-    showError('');
-    refresh();
-  });
-  peopleEl.addEventListener('change', refresh);
-
-  formEl.addEventListener('submit', function (ev) {
-    ev.preventDefault();
-    showError('');
-    var buyer = document.getElementById('gfBuyer').value.trim();
-    var email = document.getElementById('gfEmail').value.trim();
-    var recipient = document.getElementById('gfRecipient').value.trim();
-    var message = document.getElementById('gfMessage').value.trim();
-    if (!room) return showError('Scegli il pacchetto da regalare (punto 01).');
-    if (buyer.length < 2) return showError('Scrivi il tuo nome.');
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return showError('Scrivi un\'email valida: lì ti mandiamo il buono.');
-    if (!recipient) return showError('Scrivi il nome di chi riceve il regalo.');
-
-    submitEl.disabled = true;
-    submitEl.textContent = 'Apro il pagamento…';
-    fetch('/api/buono', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ package: room, people: parseInt(peopleEl.value, 10) || 1, buyerName: buyer, buyerEmail: email, recipientName: recipient, message: message })
-    })
-      .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
-      .then(function (r) {
-        if (r.ok && r.data.payment && r.data.payment.url) return window.location.assign(r.data.payment.url);
-        submitEl.disabled = false;
-        refresh();
-        showError((r.data && r.data.error) || 'Pagamento non disponibile. Riprova o scrivici su WhatsApp al 350 973 6066.');
-      })
-      .catch(function () {
-        submitEl.disabled = false;
-        refresh();
-        showError('Connessione non disponibile. Riprova o scrivici su WhatsApp al 350 973 6066.');
-      });
-  });
-
-  function showVoucher(v) {
-    document.getElementById('gvFor').innerHTML = '';
-    var forEl = document.getElementById('gvFor');
-    forEl.appendChild(document.createTextNode('Per '));
-    var b = document.createElement('strong'); b.textContent = v.recipientName; forEl.appendChild(b);
-    if (v.buyerName) { forEl.appendChild(document.createTextNode(', da parte di ')); var b2 = document.createElement('strong'); b2.textContent = v.buyerName; forEl.appendChild(b2); }
-    var msgEl = document.getElementById('gvMsg');
-    msgEl.hidden = !v.message;
-    msgEl.textContent = v.message ? '“' + v.message + '”' : '';
-    document.getElementById('gvWhat').textContent = v.packageName + ' · ' + v.peopleLabel + ' · sessione da 15 minuti';
-    document.getElementById('gvCode').textContent = v.code;
-    document.getElementById('gvFoot').textContent = 'Valido fino al ' + v.expiresLabel + '.';
-    var text = '🎁 Ti ho regalato una sessione alla Rage Room Cuneo! ' + v.packageName + ' (' + v.peopleLabel + ').' +
-      (v.message ? ' "' + v.message + '"' : '') + ' Codice: ' + v.code +
-      '. Prenota su https://rageroomcuneo.it/#prenota scrivendo il codice nel campo "Buono regalo". Valido fino al ' + v.expiresLabel + '.';
-    document.getElementById('gvShare').href = 'https://wa.me/?text=' + encodeURIComponent(text);
-    flow.hidden = true;
-    doneEl.hidden = false;
-    showNotice('');
-    doneEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-  document.getElementById('gvPrint').addEventListener('click', function () { window.print(); });
-
-  var params = new URLSearchParams(window.location.search);
-  var outcome = params.get('buono');
-  if (!outcome) return;
-  var sessionId = params.get('session');
-  if (window.history && window.history.replaceState) window.history.replaceState({}, '', window.location.pathname + '#regala');
-  if (outcome === 'annullato') return showNotice('Pagamento annullato: nessun addebito. Puoi riprovare quando vuoi.');
-  if (outcome !== 'ok' || !sessionId) return;
-
-  showNotice('Pagamento ricevuto, preparo il tuo buono…');
-  var tries = 0;
-  (function poll() {
-    fetch('/api/buono-stato?session=' + encodeURIComponent(sessionId), { headers: { Accept: 'application/json' } })
-      .then(function (res) { return res.json(); })
-      .then(function (data) {
-        if (data.ok && data.voucher) return showVoucher(data.voucher);
-        if (++tries < 6) return setTimeout(poll, 2500);
-        showNotice('Il pagamento è in elaborazione: il buono ti arriva via email appena confermato. Per dubbi scrivici su WhatsApp.');
-      })
-      .catch(function () {
-        if (++tries < 6) return setTimeout(poll, 2500);
-        showNotice('Il buono ti arriva via email. Per dubbi scrivici su WhatsApp al 350 973 6066.');
-      });
-  })();
 })();
 
 /* --- Conto alla rovescia all'apertura: sabato 19 dicembre 2026, ore 14:00 --- */

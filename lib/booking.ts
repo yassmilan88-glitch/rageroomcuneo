@@ -68,6 +68,24 @@ export const PRICE_MULTIPLIERS: Record<string, number> = {
   "2027-01-01": 2,
 };
 
+/**
+ * Orari già occupati da prenotazioni prese fuori dal sito (telefono, WhatsApp,
+ * prevendita): data → orari di inizio. Il calendario li mostra come "occupato"
+ * per tutti e il sito non li vende. Per liberarne uno basta toglierlo da qui.
+ * (Domenica 20 la prenotazione delle 17:00 occupa le fasce 16:40 e 17:20.)
+ */
+export const RESERVED_SLOTS: Record<string, string[]> = {
+  "2026-12-19": ["15:20", "18:00", "20:40"],
+  "2026-12-20": ["15:20", "16:40", "17:20", "20:00"],
+  "2026-12-23": ["18:40"],
+  "2026-12-25": ["14:00"],
+  "2026-12-26": ["17:20"],
+};
+
+export function isReservedSlot(date: string, time: string): boolean {
+  return (RESERVED_SLOTS[date] ?? []).includes(time);
+}
+
 export function priceMultiplierFor(date: string): number {
   return PRICE_MULTIPLIERS[date] ?? 1;
 }
@@ -116,7 +134,11 @@ export interface Package {
   contents: string;
 }
 
-/** Pacchetti, prezzo a persona: stessa durata, cambiano gli oggetti da rompere (a persona). */
+/**
+ * Pacchetti, prezzo a persona: stessa durata, cambiano gli oggetti da rompere.
+ * Gli oggetti sono per sessione (non a persona): ogni persona in più aggiunge solo
+ * 5 oggetti piccoli, medi e grandi restano quelli del pacchetto.
+ */
 export const PACKAGES: Package[] = [
   { id: "base", name: "Base", minutes: SESSION_MINUTES, priceCents: 4000, small: 15, medium: 1, large: 0, contents: "15 oggetti piccoli + 1 medio" },
   { id: "plus", name: "Plus", minutes: SESSION_MINUTES, priceCents: 6000, small: 30, medium: 2, large: 0, contents: "30 oggetti piccoli + 2 medi" },
@@ -165,6 +187,18 @@ export function extrasLabel(extras: Extras): string {
   if (extras.minutes) parts.push(`+${extras.minutes} min`);
   if (extras.big) parts.push(`${extras.big} ${extras.big === 1 ? "oggetto grande" : "oggetti grandi"} in più`);
   return parts.join(" · ");
+}
+
+/** Oggetti piccoli aggiunti per ogni persona in più. */
+export const SMALL_PER_EXTRA_PERSON = 5;
+
+/** Oggetti della sessione per un gruppo di `people` persone, es. "20 oggetti piccoli + 1 medio". */
+export function packageContentsFor(pkg: Package, people: number): string {
+  const extraPeople = Math.max(0, people - 1);
+  const parts = [`${pkg.small + SMALL_PER_EXTRA_PERSON * extraPeople} oggetti piccoli`];
+  if (pkg.medium) parts.push(`${pkg.medium} ${pkg.medium === 1 ? "medio" : "medi"}`);
+  if (pkg.large) parts.push(`${pkg.large} ${pkg.large === 1 ? "grande" : "grandi"}`);
+  return parts.join(" + ");
 }
 
 export function getPackage(packageId: string): Package | undefined {

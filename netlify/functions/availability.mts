@@ -25,6 +25,7 @@ import {
   firstOpenBookableDate,
   formatDateIt,
   isOpenDay,
+  isReservedSlot,
   isSlotInPast,
   lastBookableDate,
   slotEndTime,
@@ -90,7 +91,7 @@ export default async (req: Request) => {
       if (dateRejectionReason(day)) continue;
       const times = slotTimesFor(day).filter((time) => !isSlotInPast(day, time));
       const free: Record<string, number> = {};
-      for (const room of ROOMS) free[room.id] = times.filter((time) => !taken.has(`${day}|${time}|${room.id}`)).length;
+      for (const room of ROOMS) free[room.id] = times.filter((time) => !isReservedSlot(day, time) && !taken.has(`${day}|${time}|${room.id}`)).length;
       days[day] = { slots: slotTimesFor(day).length, free };
     }
     return Response.json({ ...base, from, to, days }, { headers: { "Cache-Control": "no-store" } });
@@ -151,9 +152,10 @@ export default async (req: Request) => {
 
   const slots = slotTimes.map((time) => {
     const past = isSlotInPast(requestedDate, time);
+    const reserved = isReservedSlot(requestedDate, time);
     const rooms: Record<string, boolean> = {};
     for (const room of ROOMS) {
-      rooms[room.id] = !past && !takenKeys.has(`${time}|${room.id}`);
+      rooms[room.id] = !past && !reserved && !takenKeys.has(`${time}|${room.id}`);
     }
     return {
       time,
